@@ -3236,8 +3236,8 @@ a7a3bb5b952f"]
 }, Open  ]]
 }, Open  ]]
 },
-WindowSize->{724, 792},
-WindowMargins->{{Automatic, 7}, {7, Automatic}},
+WindowSize->{724, 791},
+WindowMargins->{{Automatic, 8}, {Automatic, 8}},
 TaggingRules-><|"TryRealOnly" -> False|>,
 FrontEndVersion->"13.0 for Mac OS X ARM (64-bit) (December 2, 2021)",
 StyleDefinitions->"Default.nb",

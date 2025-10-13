@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[    206731,       6098]
-NotebookOptionsPosition[    188256,       5834]
-NotebookOutlinePosition[    188651,       5850]
-CellTagsIndexPosition[    188608,       5847]
+NotebookDataLength[    212316,       6257]
+NotebookOptionsPosition[    193156,       5981]
+NotebookOutlinePosition[    193551,       5997]
+CellTagsIndexPosition[    193508,       5994]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -5829,6 +5829,153 @@ Cell[BoxData[
     RowBox[{"cos", "(", "\[Phi]1", ")"}]}]}], TraditionalForm]], "Output",
  CellChangeTimes->{3.9686644751020603`*^9, 3.9686646323010397`*^9},
  CellLabel->"Out[60]=",ExpressionUUID->"eedca4d5-0cab-4483-b9a7-9d89d76775bc"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Install", "[", "\"\<LoopTools\>\"", "]"}], ";"}]], "Input",
+ CellChangeTimes->{{3.9693554089568443`*^9, 3.969355432302548*^9}},
+ CellLabel->"In[1]:=",ExpressionUUID->"95ffa378-d546-4cd4-a30f-7235baab9e21"],
+
+Cell["\<\
+ ====================================================
+   FF 2.0, a package to evaluate one-loop integrals
+ written by G. J. van Oldenborgh, NIKHEF-H, Amsterdam
+ ====================================================
+ for the algorithms used see preprint NIKHEF-H 89/17,
+ 'New Algorithms for One-loop Integrals', by G.J. van
+ Oldenborgh and J.A.M. Vermaseren, published in 
+ Zeitschrift fuer Physik C46(1990)425.
+ ====================================================\
+\>", "Print",
+ CellChangeTimes->{3.96935543368034*^9},
+ CellLabel->
+  "During evaluation of \
+In[1]:=",ExpressionUUID->"db827370-0bfa-4925-996a-e8d93de2d1ed"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"M", "[", "0", "]"}], "=", 
+  RowBox[{
+  "Import", "[", 
+   "\"\</Users/brageandreastrefjord/Desktop/Github/Master_Thesis/Mathematica/\
+loopTest.m\>\"", "]"}]}]], "Input",
+ CellChangeTimes->{{3.96935543676455*^9, 3.9693554677229652`*^9}},
+ CellLabel->"In[3]:=",ExpressionUUID->"a5e063a9-fc39-48bb-b6c4-963a0ac15802"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   FractionBox[
+    RowBox[{
+     SuperscriptBox[
+      RowBox[{"SMP", "(", "\<\"e\"\>", ")"}], "2"], " ", 
+     RowBox[{"IndexDelta", "(", 
+      RowBox[{"A", ",", "B"}], ")"}], " ", 
+     RowBox[{"FeynCalc`A0", "(", 
+      SuperscriptBox[
+       RowBox[{"MSf", "(", 
+        RowBox[{"A", ",", "2", ",", "i"}], ")"}], "2"], ")"}]}], 
+    RowBox[{"16", " ", 
+     SuperscriptBox["\[Pi]", "2"]}]], "-", 
+   RowBox[{
+    FractionBox["1", 
+     RowBox[{"8", " ", 
+      SuperscriptBox["\[Pi]", "2"]}]], 
+    RowBox[{
+     SuperscriptBox[
+      RowBox[{"SMP", "(", "\<\"e\"\>", ")"}], "2"], " ", 
+     RowBox[{"IndexDelta", "(", 
+      RowBox[{"A", ",", "B"}], ")"}], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       SuperscriptBox[
+        RowBox[{"MSf", "(", 
+         RowBox[{"A", ",", "2", ",", "i"}], ")"}], "2"], "+", 
+       RowBox[{"Pair", "(", 
+        RowBox[{
+         RowBox[{"Momentum", "(", 
+          RowBox[{"p", ",", "D"}], ")"}], ",", 
+         RowBox[{"Momentum", "(", 
+          RowBox[{"p", ",", "D"}], ")"}]}], ")"}]}], ")"}], " ", 
+     RowBox[{"FeynCalc`B0", "(", 
+      RowBox[{
+       RowBox[{"Pair", "(", 
+        RowBox[{
+         RowBox[{"Momentum", "(", 
+          RowBox[{"p", ",", "D"}], ")"}], ",", 
+         RowBox[{"Momentum", "(", 
+          RowBox[{"p", ",", "D"}], ")"}]}], ")"}], ",", "0", ",", 
+       SuperscriptBox[
+        RowBox[{"MSf", "(", 
+         RowBox[{"A", ",", "2", ",", "i"}], ")"}], "2"]}], ")"}]}]}]}], 
+  TraditionalForm]], "Output",
+ CellChangeTimes->{{3.969355458357708*^9, 3.9693554682883053`*^9}},
+ CellLabel->"Out[3]=",ExpressionUUID->"4d13165b-973d-4012-85d1-15e191dc958b"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.969355469853077*^9, 
+  3.969355491050497*^9}},ExpressionUUID->"92e89ca2-abce-42ae-a84e-\
+8c77800edb35"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"FCI", "(", 
+   RowBox[{
+    FractionBox[
+     RowBox[{
+      SuperscriptBox[
+       RowBox[{"SMP", "(", "\<\"e\"\>", ")"}], "2"], " ", 
+      RowBox[{"IndexDelta", "(", 
+       RowBox[{"A", ",", "B"}], ")"}], " ", 
+      RowBox[{"FeynCalc`A0", "(", 
+       SuperscriptBox[
+        RowBox[{"MSf", "(", 
+         RowBox[{"A", ",", "2", ",", "i"}], ")"}], "2"], ")"}]}], 
+     RowBox[{"16", " ", 
+      SuperscriptBox["\[Pi]", "2"]}]], "-", 
+    RowBox[{
+     FractionBox["1", 
+      RowBox[{"8", " ", 
+       SuperscriptBox["\[Pi]", "2"]}]], 
+     RowBox[{
+      SuperscriptBox[
+       RowBox[{"SMP", "(", "\<\"e\"\>", ")"}], "2"], " ", 
+      RowBox[{"IndexDelta", "(", 
+       RowBox[{"A", ",", "B"}], ")"}], " ", 
+      RowBox[{"(", 
+       RowBox[{
+        SuperscriptBox[
+         RowBox[{"MSf", "(", 
+          RowBox[{"A", ",", "2", ",", "i"}], ")"}], "2"], "+", 
+        RowBox[{"Pair", "(", 
+         RowBox[{
+          RowBox[{"Momentum", "(", 
+           RowBox[{"p", ",", "D"}], ")"}], ",", 
+          RowBox[{"Momentum", "(", 
+           RowBox[{"p", ",", "D"}], ")"}]}], ")"}]}], ")"}], " ", 
+      RowBox[{"FeynCalc`B0", "(", 
+       RowBox[{
+        RowBox[{"Pair", "(", 
+         RowBox[{
+          RowBox[{"Momentum", "(", 
+           RowBox[{"p", ",", "D"}], ")"}], ",", 
+          RowBox[{"Momentum", "(", 
+           RowBox[{"p", ",", "D"}], ")"}]}], ")"}], ",", "0", ",", 
+        SuperscriptBox[
+         RowBox[{"MSf", "(", 
+          RowBox[{"A", ",", "2", ",", "i"}], ")"}], "2"]}], ")"}]}]}]}], 
+   ")"}], TraditionalForm]], "Output",
+ CellChangeTimes->{{3.9693554749672623`*^9, 3.969355478039403*^9}},
+ CellLabel->"Out[5]=",ExpressionUUID->"ec5df88d-5c82-436a-a201-9b9af2a33017"]
 }, Open  ]]
 }, Open  ]]
 },
@@ -6097,7 +6244,19 @@ Cell[CellGroupData[{
 Cell[186826, 5794, 383, 8, 73, "Input",ExpressionUUID->"63c6852b-9791-4357-bf22-6b868f408fd8"],
 Cell[187212, 5804, 314, 7, 30, "Output",ExpressionUUID->"11514bfe-88fb-4534-89aa-5b1ac71fdc0b"],
 Cell[187529, 5813, 245, 5, 30, "Output",ExpressionUUID->"0d6891f4-50fb-4ec4-a79c-a5447badb9ea"],
-Cell[187777, 5820, 451, 10, 53, "Output",ExpressionUUID->"eedca4d5-0cab-4483-b9a7-9d89d76775bc"]
+Cell[187777, 5820, 451, 10, 30, "Output",ExpressionUUID->"eedca4d5-0cab-4483-b9a7-9d89d76775bc"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[188265, 5835, 240, 4, 30, "Input",ExpressionUUID->"95ffa378-d546-4cd4-a30f-7235baab9e21"],
+Cell[188508, 5841, 633, 14, 160, "Print",ExpressionUUID->"db827370-0bfa-4925-996a-e8d93de2d1ed"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[189178, 5860, 350, 8, 94, "Input",ExpressionUUID->"a5e063a9-fc39-48bb-b6c4-963a0ac15802"],
+Cell[189531, 5870, 1665, 48, 112, "Output",ExpressionUUID->"4d13165b-973d-4012-85d1-15e191dc958b"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[191233, 5923, 152, 3, 30, "Input",ExpressionUUID->"92e89ca2-abce-42ae-a84e-8c77800edb35"],
+Cell[191388, 5928, 1740, 49, 136, "Output",ExpressionUUID->"ec5df88d-5c82-436a-a201-9b9af2a33017"]
 }, Open  ]]
 }, Open  ]]
 }

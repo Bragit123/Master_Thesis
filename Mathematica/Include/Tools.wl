@@ -18,6 +18,12 @@ ZSimplify[amp_]:=amp //
 	ReplaceAll[#,{2SMP["sin_W"]^2 KroneckerDelta[A,B]-USf[2,i][A,1] Conjugate[USf[2,i][B,1]]->-2 ZliAB}]&
 
 
+(*Prettify Z couplings*)
+MakeBoxes[ZliAB,TraditionalForm]:=SubsuperscriptBox["Z",SubscriptBox["l","i"],"AB"];
+MakeBoxes[Zql,TraditionalForm]:=SubscriptBox["Z",SubscriptBox["q","L"]];
+MakeBoxes[Zqr,TraditionalForm]:=SubscriptBox["Z",SubscriptBox["q","R"]];
+
+
 Begin["`Private`"];
 
 

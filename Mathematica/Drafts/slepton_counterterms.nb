@@ -1,0 +1,3979 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 13.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[    164379,       3971]
+NotebookOptionsPosition[    161706,       3916]
+NotebookOutlinePosition[    162100,       3932]
+CellTagsIndexPosition[    162057,       3929]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"description", "=", "\"\<Slepton counterterms\>\""}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"If", "[", " ", 
+   RowBox[{
+    RowBox[{"$FrontEnd", " ", "===", " ", "Null"}], ",", "\n", "\t", 
+    RowBox[{
+     RowBox[{"$FeynCalcStartupMessages", " ", "=", " ", "False"}], ";", "\n", 
+     "\t", 
+     RowBox[{"Print", "[", "description", "]"}], ";"}]}], "\n", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"If", "[", " ", 
+   RowBox[{
+    RowBox[{"$Notebooks", " ", "===", " ", "False"}], ",", "\n", "\t", 
+    RowBox[{"$FeynCalcStartupMessages", " ", "=", " ", "False"}]}], "\n", 
+   "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"$LoadAddOns", "=", 
+   RowBox[{"{", "\"\<FeynArts\>\"", "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"<<", "FeynCalc`"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"$FAVerbose", "=", "0"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"FCCheckVersion", "[", 
+   RowBox[{"9", ",", "3", ",", "1"}], "]"}], ";"}]}], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.9646803415556602`*^9, 3.9646804244730387`*^9}, {
+  3.9646804651197557`*^9, 3.964680530456822*^9}, {3.965123681181912*^9, 
+  3.965123681837039*^9}, {3.969511072157485*^9, 3.9695111038396807`*^9}, {
+  3.9792947864544783`*^9, 3.979294789678461*^9}},
+ CellLabel->"In[1]:=",ExpressionUUID->"9c22a82c-b9de-4035-b3f1-dca392812def"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ FormBox[
+  InterpretationBox[
+   RowBox[{
+    StyleBox["\<\"FeynCalc \"\>", "Text",
+     StripOnInput->False,
+     FontWeight->Bold], "\[InvisibleSpace]", 
+    StyleBox["\<\"10.1.0 (stable version). For help, use the \"\>", "Text",
+     StripOnInput->False], "\[InvisibleSpace]", 
+    StyleBox[
+     TagBox[
+      ButtonBox[
+       RowBox[{
+        RowBox[{"online", " ", "documentation"}], ","}],
+       BaseStyle->"Hyperlink",
+       ButtonData:>{
+         URL["https://feyncalc.github.io/referenceDev"], None},
+       ButtonNote->"https://feyncalc.github.io/referenceDev"],
+      DisplayForm], "Text",
+     StripOnInput->False], "\[InvisibleSpace]", 
+    StyleBox["\<\" visit the \"\>", "Text",
+     StripOnInput->False], "\[InvisibleSpace]", 
+    StyleBox[
+     TagBox[
+      ButtonBox["forum",
+       BaseStyle->"Hyperlink",
+       ButtonData:>{
+         URL["https://github.com/FeynCalc/feyncalc/discussions"], None},
+       ButtonNote->"https://github.com/FeynCalc/feyncalc/discussions/"],
+      DisplayForm], "Text",
+     StripOnInput->False], "\[InvisibleSpace]", 
+    StyleBox["\<\" and have a look at the supplied \"\>", "Text",
+     StripOnInput->False], "\[InvisibleSpace]", 
+    StyleBox[
+     TagBox[
+      ButtonBox[
+       RowBox[{"examples", "."}],
+       BaseStyle->"Hyperlink",
+       ButtonFunction:>SystemOpen[
+         FileNameJoin[{FeynCalc`$FeynCalcDirectory, "Examples"}]],
+       Evaluator->Automatic,
+       Method->"Preemptive"],
+      DisplayForm], "Text",
+     StripOnInput->False], "\[InvisibleSpace]", 
+    StyleBox["\<\" The PDF-version of the manual can be downloaded \"\>", 
+     "Text",
+     StripOnInput->False], "\[InvisibleSpace]", 
+    StyleBox[
+     TagBox[
+      ButtonBox[
+       RowBox[{"here", "."}],
+       BaseStyle->"Hyperlink",
+       ButtonData:>{
+         URL[
+         "https://github.com/FeynCalc/feyncalc-manual/releases/download/dev-\
+manual/FeynCalcManual.pdf"], None},
+       ButtonNote->
+        "https://github.com/FeynCalc/feyncalc-manual/releases/download/dev-\
+manual/FeynCalcManual.pdf"],
+      DisplayForm], "Text",
+     StripOnInput->False]}],
+   SequenceForm[
+    Style["FeynCalc ", "Text", Bold], 
+    Style["10.1.0 (stable version). For help, use the ", "Text"], 
+    Style[
+     DisplayForm[
+      ButtonBox["online documentation,", ButtonData :> {
+         URL["https://feyncalc.github.io/referenceDev"], None}, BaseStyle -> 
+       "Hyperlink", ButtonNote -> "https://feyncalc.github.io/referenceDev"]],
+      "Text"], 
+    Style[" visit the ", "Text"], 
+    Style[
+     DisplayForm[
+      ButtonBox["forum", ButtonData :> {
+         URL["https://github.com/FeynCalc/feyncalc/discussions"], None}, 
+       BaseStyle -> "Hyperlink", ButtonNote -> 
+       "https://github.com/FeynCalc/feyncalc/discussions/"]], "Text"], 
+    Style[" and have a look at the supplied ", "Text"], 
+    Style[
+     DisplayForm[
+      ButtonBox[
+      "examples.", BaseStyle -> "Hyperlink", ButtonFunction :> SystemOpen[
+         FileNameJoin[{FeynCalc`$FeynCalcDirectory, "Examples"}]], Evaluator -> 
+       Automatic, Method -> "Preemptive"]], "Text"], 
+    Style[" The PDF-version of the manual can be downloaded ", "Text"], 
+    Style[
+     DisplayForm[
+      ButtonBox["here.", ButtonData :> {
+         URL[
+         "https://github.com/FeynCalc/feyncalc-manual/releases/download/dev-\
+manual/FeynCalcManual.pdf"], None}, BaseStyle -> "Hyperlink", ButtonNote -> 
+       "https://github.com/FeynCalc/feyncalc-manual/releases/download/dev-\
+manual/FeynCalcManual.pdf"]], "Text"]],
+   Editable->False], TraditionalForm]], "Print",
+ CellChangeTimes->{
+  3.969511120114327*^9, 3.9792956571847258`*^9, 3.979295721598564*^9, {
+   3.979296397365028*^9, 3.979296397619084*^9}, 3.979296569336402*^9, {
+   3.979654102165284*^9, 3.97965410234449*^9}, 3.979654146004437*^9},
+ CellLabel->
+  "During evaluation of \
+In[1]:=",ExpressionUUID->"f4938e67-8ba6-4c09-af5d-139f61dfb387"],
+
+Cell[BoxData[
+ FormBox[
+  StyleBox["\<\"If you use FeynCalc in your research, please evaluate \
+FeynCalcHowToCite[] to learn how to cite this software.\"\>", "Text",
+   StripOnInput->False], TraditionalForm]], "Print",
+ CellChangeTimes->{
+  3.969511120114327*^9, 3.9792956571847258`*^9, 3.979295721598564*^9, {
+   3.979296397365028*^9, 3.979296397619084*^9}, 3.979296569336402*^9, {
+   3.979654102165284*^9, 3.97965410234449*^9}, 3.979654146005869*^9},
+ CellLabel->
+  "During evaluation of \
+In[1]:=",ExpressionUUID->"7f83f760-9536-44c3-8973-74147138007b"],
+
+Cell[BoxData[
+ FormBox[
+  StyleBox["\<\"Please keep in mind that the proper academic attribution of \
+our work is crucial to ensure the future development of this package!\"\>", 
+   "Text",
+   StripOnInput->False,
+   FontSlant->Italic], TraditionalForm]], "Print",
+ CellChangeTimes->{
+  3.969511120114327*^9, 3.9792956571847258`*^9, 3.979295721598564*^9, {
+   3.979296397365028*^9, 3.979296397619084*^9}, 3.979296569336402*^9, {
+   3.979654102165284*^9, 3.97965410234449*^9}, 3.979654146006489*^9},
+ CellLabel->
+  "During evaluation of \
+In[1]:=",ExpressionUUID->"7bf7398a-9e41-4053-a670-367629cc9a1f"],
+
+Cell[BoxData[
+ FormBox[
+  InterpretationBox[
+   RowBox[{
+    StyleBox["\<\"FeynArts \"\>", "Text",
+     StripOnInput->False,
+     FontWeight->Bold], "\[InvisibleSpace]", 
+    StyleBox["\<\"3.12 (24 May 2024) patched for use with FeynCalc, for \
+documentation see the \"\>", "Text",
+     StripOnInput->False], "\[InvisibleSpace]", 
+    StyleBox[
+     TagBox[
+      ButtonBox["manual",
+       BaseStyle->"Hyperlink",
+       ButtonFunction:>SystemOpen[
+         First[
+          FileNames[{"*.pdf", "*.PDF"}, 
+           FileNameJoin[{FeynCalc`$FeynArtsDirectory, "manual"}]]]],
+       Evaluator->Automatic,
+       Method->"Preemptive"],
+      DisplayForm], "Text",
+     StripOnInput->False], "\[InvisibleSpace]", 
+    StyleBox["\<\" or visit \"\>", "Text",
+     StripOnInput->False], "\[InvisibleSpace]", 
+    StyleBox[
+     TagBox[
+      ButtonBox[
+       RowBox[{"www", ".", "feynarts", ".", "de", "."}],
+       BaseStyle->"Hyperlink",
+       ButtonData:>{
+         URL["http://www.feynarts.de/"], None},
+       ButtonNote->"www.feynarts.de/"],
+      DisplayForm], "Text",
+     StripOnInput->False]}],
+   SequenceForm[
+    Style["FeynArts ", "Text", Bold], 
+    Style[
+    "3.12 (24 May 2024) patched for use with FeynCalc, for documentation see \
+the ", "Text"], 
+    Style[
+     DisplayForm[
+      ButtonBox[
+      "manual", BaseStyle -> "Hyperlink", ButtonFunction :> SystemOpen[
+         First[
+          FileNames[{"*.pdf", "*.PDF"}, 
+           FileNameJoin[{FeynCalc`$FeynArtsDirectory, "manual"}]]]], 
+       Evaluator -> Automatic, Method -> "Preemptive"]], "Text"], 
+    Style[" or visit ", "Text"], 
+    Style[
+     DisplayForm[
+      ButtonBox["www.feynarts.de.", ButtonData :> {
+         URL["http://www.feynarts.de/"], None}, BaseStyle -> "Hyperlink", 
+       ButtonNote -> "www.feynarts.de/"]], "Text"]],
+   Editable->False], TraditionalForm]], "Print",
+ CellChangeTimes->{
+  3.969511120114327*^9, 3.9792956571847258`*^9, 3.979295721598564*^9, {
+   3.979296397365028*^9, 3.979296397619084*^9}, 3.979296569336402*^9, {
+   3.979654102165284*^9, 3.97965410234449*^9}, 3.979654146032803*^9},
+ CellLabel->
+  "During evaluation of \
+In[1]:=",ExpressionUUID->"b7d56d48-f204-4a15-be17-fa23ac0fe76c"],
+
+Cell[BoxData[
+ FormBox[
+  StyleBox["\<\"If you use FeynArts in your research, please cite\"\>", "Text",
+   StripOnInput->False], TraditionalForm]], "Print",
+ CellChangeTimes->{
+  3.969511120114327*^9, 3.9792956571847258`*^9, 3.979295721598564*^9, {
+   3.979296397365028*^9, 3.979296397619084*^9}, 3.979296569336402*^9, {
+   3.979654102165284*^9, 3.97965410234449*^9}, 3.9796541460336723`*^9},
+ CellLabel->
+  "During evaluation of \
+In[1]:=",ExpressionUUID->"f69a7e31-5a59-469c-aaca-ff53ed75de7b"],
+
+Cell[BoxData[
+ FormBox[
+  StyleBox["\<\" \[Bullet] T. Hahn, Comput. Phys. Commun., 140, 418-431, \
+2001, arXiv:hep-ph/0012260\"\>", "Text",
+   StripOnInput->False], TraditionalForm]], "Print",
+ CellChangeTimes->{
+  3.969511120114327*^9, 3.9792956571847258`*^9, 3.979295721598564*^9, {
+   3.979296397365028*^9, 3.979296397619084*^9}, 3.979296569336402*^9, {
+   3.979654102165284*^9, 3.97965410234449*^9}, 3.979654146034204*^9},
+ CellLabel->
+  "During evaluation of \
+In[1]:=",ExpressionUUID->"16bad695-6e69-482e-b9f5-9b1ecd6d4703"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"$ToolsRoot", "=", 
+   RowBox[{"ParentDirectory", "[", 
+    RowBox[{"NotebookDirectory", "[", "]"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"AppendTo", "[", 
+   RowBox[{"$Path", ",", 
+    RowBox[{"FileNameJoin", "[", 
+     RowBox[{"{", 
+      RowBox[{"$ToolsRoot", ",", "\"\<Include\>\""}], "}"}], "]"}]}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"<<", "Tools`"}], "\[IndentingNewLine]", 
+ RowBox[{"<<", "PrettyNotation`"}]}], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.979296546694806*^9, 3.979296553275406*^9}},
+ CellLabel->"In[8]:=",ExpressionUUID->"299aba99-57fe-4912-b065-94e8199a2142"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"MakeBoxes", "[", 
+    RowBox[{"p1", ",", " ", "TraditionalForm"}], "]"}], " ", ":=", " ", 
+   "\"\<\\!\\(\\*SubscriptBox[\\(p\\),\\(1\\)]\\)\>\""}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"MakeBoxes", "[", 
+    RowBox[{"p2", ",", " ", "TraditionalForm"}], "]"}], " ", ":=", " ", 
+   "\"\<\\!\\(\\*SubscriptBox[\\(p\\),\\(2\\)]\\)\>\""}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"MakeBoxes", "[", 
+     RowBox[{"k1", ",", " ", "TraditionalForm"}], "]"}], " ", ":=", " ", 
+    "\"\<\\!\\(\\*SubscriptBox[\\(k\\),\\(1\\)]\\)\>\""}], ";"}], 
+  " "}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"MakeBoxes", "[", 
+    RowBox[{"k2", ",", " ", "TraditionalForm"}], "]"}], " ", ":=", " ", 
+   "\"\<\\!\\(\\*SubscriptBox[\\(k\\),\\(2\\)]\\)\>\""}], ";"}]}], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.964683174387928*^9, 3.964683175011085*^9}, {
+  3.96936569507195*^9, 3.969365702298203*^9}},
+ CellLabel->"In[12]:=",ExpressionUUID->"34e40d05-78cd-4b55-b7ea-8c9f1c6ab148"],
+
+Cell[CellGroupData[{
+
+Cell["LO diagrams to combine for interference terms", "Section",
+ CellChangeTimes->{{3.9693667794353943`*^9, 
+  3.9693667912574673`*^9}},ExpressionUUID->"5583d82b-69e3-490a-847c-\
+231c5ee78c9c"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"diagsCT", "[", "0", "]"}], "=", 
+   RowBox[{"InsertFields", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"CreateCTTopologies", "[", 
+      RowBox[{"1", ",", 
+       RowBox[{"2", "->", "2"}]}], "]"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"F", "[", 
+         RowBox[{"3", ",", 
+          RowBox[{"{", "quarkGen", "}"}]}], "]"}], ",", 
+        RowBox[{"-", 
+         RowBox[{"F", "[", 
+          RowBox[{"3", ",", 
+           RowBox[{"{", "quarkGen", "}"}]}], "]"}]}]}], "}"}], "->", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"-", 
+         RowBox[{"S", "[", 
+          RowBox[{"12", ",", 
+           RowBox[{"{", 
+            RowBox[{"B", ",", "i"}], "}"}]}], "]"}]}], ",", 
+        RowBox[{"S", "[", 
+         RowBox[{"12", ",", 
+          RowBox[{"{", 
+           RowBox[{"A", ",", "i"}], "}"}]}], "]"}]}], "}"}]}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"Model", "->", "MSSMCT"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"InsertionLevel", "->", 
+      RowBox[{"{", "Classes", "}"}]}], ",", "\[IndentingNewLine]", 
+     RowBox[{"ExcludeParticles", "->", 
+      RowBox[{"{", 
+       RowBox[{"S", "[", 
+        RowBox[{"1", "|", "2", "|", "3", "|", "4"}], "]"}], "}"}]}]}], 
+    "\[IndentingNewLine]", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Paint", "[", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"diagsCT", "[", "0", "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ColumnsXRows", "->", 
+     RowBox[{"{", 
+      RowBox[{"4", ",", "2"}], "}"}]}], ",", "\[IndentingNewLine]", 
+    RowBox[{"SheetHeader", "->", "None"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"Numbering", "->", "Simple"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ImageSize", "->", 
+     RowBox[{"{", 
+      RowBox[{"512", ",", "256"}], "}"}]}]}], "\[IndentingNewLine]", "]"}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.979295042903658*^9, 3.97929504345039*^9}, {
+  3.979295084794087*^9, 3.979295254108067*^9}, {3.979295401246461*^9, 
+  3.979295409323174*^9}, {3.979295553256369*^9, 3.979295554735462*^9}, {
+  3.9792956049496727`*^9, 3.979295637438789*^9}, {3.979295675795884*^9, 
+  3.979295678889954*^9}, {3.979295979545417*^9, 3.979295980487831*^9}},
+ CellLabel->"In[16]:=",ExpressionUUID->"79d31d50-0184-4a8d-8eee-92bbad82ee55"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ FormBox[
+  GraphicsBox[{InsetBox[
+     GraphicsBox[
+      TagBox[
+       TooltipBox[
+        {Thickness[0.005], 
+         LineBox[{{-3.637978807091713*^-12, 15.}, {6.000000000001819, 10.}}], 
+         PolygonBox[{{3.4609327677584254`, 12.115889360201312`}, {
+          2.2829934723757828`, 12.576822127959739`}, {2.7951409921073664`, 
+          13.191399151637638`}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubscriptBox["u", "quarkGen"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {2.6125141805200567, 11.914057016624067},
+           ImageScaled[{1, 1}]], 
+         LineBox[{{0., 5.000000000001819}, {6.000000000001819, 
+          10.000000000001819`}}], 
+         PolygonBox[{{2.5390672322415746`, 7.1158893602013125`}, {
+          3.7170065276242172`, 7.576822127959737}, {3.2048590078926336`, 
+          8.191399151637638}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubscriptBox["u", "quarkGen"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {3.387485819479944, 6.914057016624067}, 
+          ImageScaled[{0, 1}]], 
+         {Dashing[{0.030000000000000002`, 0.030000000000000002`}], 
+          LineBox[{{20.00000000000182, 15.000000000001819`}, {14., 
+           9.999999999998181}}]}, 
+         PolygonBox[{{16.539067232241575`, 12.115889360201312`}, {
+          17.204859007892633`, 13.191399151637638`}, {17.717006527624218`, 
+          12.576822127959739`}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubsuperscriptBox[
+              OverscriptBox["e", "~"], "i", "B"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {16.61251418052006, 13.085942983375933}, 
+          ImageScaled[{1, 0}]], 
+         {Dashing[{0.030000000000000002`, 0.030000000000000002`}], 
+          LineBox[{{19.99999999999818, 5.000000000001819}, {14., 10.}}]}, 
+         PolygonBox[{{17.460932767758425`, 7.1158893602013125`}, {
+          16.795140992107367`, 8.191399151637638}, {16.282993472375782`, 
+          7.576822127959737}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubsuperscriptBox[
+              OverscriptBox["e", "~"], "i", "A"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {17.38748581947994, 8.085942983375933}, 
+          ImageScaled[{0, 0}]], LineBox[CompressedData["
+1:eJw9lH9MlVUYx89Fu8YYf7QwEC6X93IOXn7Gj1Nmmfi4NhAY44JNLkHjh3IA
+WUFEszBBRzHbItEh8totZxGhuWRADDbbGL+TE+KFFaClMkVNGUTOgtm9Hfrj
+Odu7d5+dve85z/N8v19LQVlGoQchJF09a28XWVuR8P+LMFh+7kLTZRkB5Olj
+K8mRDB6OHf/spK44L5eYdjNouFFjyheK7b75rWUMns9y5UbxNfZyFFQzaCkp
+yFt1hwOBwo3Vhxh4nPL1HpWKi98b8HmLQVrpIjTpit8f741KY7BvcX5kn1C8
+65irysogI7BOcK64oar59iqFILPzloEotv2QvDBO4e8Ng8YJGQZk6cfo9eco
+nC/PaP9CV6zV9k/XUwh5PXNsv1B8uPnU8GEK2sGHmS9xxTfn/UtrKXRaefE6
+ojj048qKkxQmZydNV2QokH82zJ/topA1K8+c1hXbk+zm3yh0CLtZCMW2e3nz
+ngxWa0f7Y7nie4bz5S8yWH8n4uK/bqvqX7w1+w0G6QslKz9JxaMnyjZWMpjw
+TTjXpCvuc0a+U8OgNevdnr1CcRsfNh5kcM3c6BPL1/bNU/lFDPY86fvK5d6s
+zqv/fTGBQUq/6zUpFe/yPNoZyKDDuTyj64rtfS1DSxQcUSEpRUIxubbQOUSh
+u+Lluhe44rbGnVfPUnh8pLvWQBTHXA+r/4RCGolJGJchQI4aD92toTDbc3v6
+tK647eeKZ+oolPCg1CKh2FZwP/FzCgNHnN2cK97a+NGDSxRuPWUMI0TxUtd3
+k/MUrBdaOqRkap4z1Pksg3C/6BxdV9wwYsiMZ+DY1rZZCMVL9otaPoPpiBte
+nCuOebxz7gBD3RHtlRNjqj+hU9ojKSnuFw5mqnopfv/r3YmvhaD4/5nd2amc
+UzxfW135xe0OxvvFV0clSRmM92+WNzua9WCsz5oYYC0UwVh/h/tKbywPxv54
+VSd96HJbsH8p9cMfjEkL9rfQOdvVrFuw/2lR3qpeC86ne7vhEucWnN/b3jve
+NBALzvf+H6UPxqWG8w9q/zTRoWuoj0d/9u4pERrqp9LUZNzCNdRXH5uyeRAN
+9dfkVVbl0INQn1/GpQ1wHoT6taWIvsvSjPrOSbYP5wsz6t/RrkevuAPRH/2e
+VttxPRD905OZXhLOA9Ff35uzzwxKE/rPZ+nAcq4woT8HB7JffeIOQP/mDP0V
+p+sB6O+tlrjyLTwA/b83zFI9Kf0xH1xXJ+6UCX/Mj57IbTu8iD/mS2vqOvhG
+34T5MwdkZDvfhPkUXnx9bkr6YX6Znd869ws/zDejy62WL+rwPw898pg=
+          "]], 
+         InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox["\[Gamma]",
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {10., 9.0548}, 
+          ImageScaled[{Rational[1, 2], 1}]], 
+         {PointSize[0.04], PointBox[{6., 10.}], 
+          {Thickness[0.015], LineBox[{{13.5, 9.5}, {14.5, 10.5}}], 
+           LineBox[{{13.5, 10.5}, {14.5, 9.5}}]}}, InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox["1",
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->11.729454545454546`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            11.729454545454546`]& ], {10., -0.5}, 
+          ImageScaled[{Rational[1, 2], 0}]]},
+        "\"aebe/cfdf/ef.m\"",
+        TooltipStyle->"TextStyling"],
+       Annotation[#, "aebe/cfdf/ef.m", "Tooltip"]& ],
+      AspectRatio->1,
+      PlotRange->{{-1, 21}, {-1, 21}}], {0, 22}, {0, 0}, {22, 22}], InsetBox[
+     GraphicsBox[
+      TagBox[
+       TooltipBox[
+        {Thickness[0.005], 
+         LineBox[{{-3.637978807091713*^-12, 15.}, {6.000000000001819, 10.}}], 
+         PolygonBox[{{3.4609327677584254`, 12.115889360201312`}, {
+          2.2829934723757828`, 12.576822127959739`}, {2.7951409921073664`, 
+          13.191399151637638`}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubscriptBox["u", "quarkGen"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {2.6125141805200567, 11.914057016624067},
+           ImageScaled[{1, 1}]], 
+         LineBox[{{0., 5.000000000001819}, {6.000000000001819, 
+          10.000000000001819`}}], 
+         PolygonBox[{{2.5390672322415746`, 7.1158893602013125`}, {
+          3.7170065276242172`, 7.576822127959737}, {3.2048590078926336`, 
+          8.191399151637638}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubscriptBox["u", "quarkGen"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {3.387485819479944, 6.914057016624067}, 
+          ImageScaled[{0, 1}]], 
+         {Dashing[{0.030000000000000002`, 0.030000000000000002`}], 
+          LineBox[{{20.00000000000182, 15.000000000001819`}, {14., 
+           9.999999999998181}}]}, 
+         PolygonBox[{{16.539067232241575`, 12.115889360201312`}, {
+          17.204859007892633`, 13.191399151637638`}, {17.717006527624218`, 
+          12.576822127959739`}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubsuperscriptBox[
+              OverscriptBox["e", "~"], "i", "B"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {16.61251418052006, 13.085942983375933}, 
+          ImageScaled[{1, 0}]], 
+         {Dashing[{0.030000000000000002`, 0.030000000000000002`}], 
+          LineBox[{{19.99999999999818, 5.000000000001819}, {14., 10.}}]}, 
+         PolygonBox[{{17.460932767758425`, 7.1158893602013125`}, {
+          16.795140992107367`, 8.191399151637638}, {16.282993472375782`, 
+          7.576822127959737}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubsuperscriptBox[
+              OverscriptBox["e", "~"], "i", "A"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {17.38748581947994, 8.085942983375933}, 
+          ImageScaled[{0, 0}]], LineBox[CompressedData["
+1:eJw9lH9MlVUYx89Fu8YYf7QwEC6X93IOXn7Gj1Nmmfi4NhAY44JNLkHjh3IA
+WUFEszBBRzHbItEh8totZxGhuWRADDbbGL+TE+KFFaClMkVNGUTOgtm9Hfrj
+Odu7d5+dve85z/N8v19LQVlGoQchJF09a28XWVuR8P+LMFh+7kLTZRkB5Olj
+K8mRDB6OHf/spK44L5eYdjNouFFjyheK7b75rWUMns9y5UbxNfZyFFQzaCkp
+yFt1hwOBwo3Vhxh4nPL1HpWKi98b8HmLQVrpIjTpit8f741KY7BvcX5kn1C8
+65irysogI7BOcK64oar59iqFILPzloEotv2QvDBO4e8Ng8YJGQZk6cfo9eco
+nC/PaP9CV6zV9k/XUwh5PXNsv1B8uPnU8GEK2sGHmS9xxTfn/UtrKXRaefE6
+ojj048qKkxQmZydNV2QokH82zJ/topA1K8+c1hXbk+zm3yh0CLtZCMW2e3nz
+ngxWa0f7Y7nie4bz5S8yWH8n4uK/bqvqX7w1+w0G6QslKz9JxaMnyjZWMpjw
+TTjXpCvuc0a+U8OgNevdnr1CcRsfNh5kcM3c6BPL1/bNU/lFDPY86fvK5d6s
+zqv/fTGBQUq/6zUpFe/yPNoZyKDDuTyj64rtfS1DSxQcUSEpRUIxubbQOUSh
+u+Lluhe44rbGnVfPUnh8pLvWQBTHXA+r/4RCGolJGJchQI4aD92toTDbc3v6
+tK647eeKZ+oolPCg1CKh2FZwP/FzCgNHnN2cK97a+NGDSxRuPWUMI0TxUtd3
+k/MUrBdaOqRkap4z1Pksg3C/6BxdV9wwYsiMZ+DY1rZZCMVL9otaPoPpiBte
+nCuOebxz7gBD3RHtlRNjqj+hU9ojKSnuFw5mqnopfv/r3YmvhaD4/5nd2amc
+UzxfW135xe0OxvvFV0clSRmM92+WNzua9WCsz5oYYC0UwVh/h/tKbywPxv54
+VSd96HJbsH8p9cMfjEkL9rfQOdvVrFuw/2lR3qpeC86ne7vhEucWnN/b3jve
+NBALzvf+H6UPxqWG8w9q/zTRoWuoj0d/9u4pERrqp9LUZNzCNdRXH5uyeRAN
+9dfkVVbl0INQn1/GpQ1wHoT6taWIvsvSjPrOSbYP5wsz6t/RrkevuAPRH/2e
+VttxPRD905OZXhLOA9Ff35uzzwxKE/rPZ+nAcq4woT8HB7JffeIOQP/mDP0V
+p+sB6O+tlrjyLTwA/b83zFI9Kf0xH1xXJ+6UCX/Mj57IbTu8iD/mS2vqOvhG
+34T5MwdkZDvfhPkUXnx9bkr6YX6Znd869ws/zDejy62WL+rwPw898pg=
+          "]], 
+         InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox["Z",
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {10., 9.0548}, 
+          ImageScaled[{Rational[1, 2], 1}]], 
+         {PointSize[0.04], PointBox[{6., 10.}], 
+          {Thickness[0.015], LineBox[{{13.5, 9.5}, {14.5, 10.5}}], 
+           LineBox[{{13.5, 10.5}, {14.5, 9.5}}]}}, InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox["2",
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->11.729454545454546`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            11.729454545454546`]& ], {10., -0.5}, 
+          ImageScaled[{Rational[1, 2], 0}]]},
+        "\"aebe/cfdf/ef.m\"",
+        TooltipStyle->"TextStyling"],
+       Annotation[#, "aebe/cfdf/ef.m", "Tooltip"]& ],
+      AspectRatio->1,
+      PlotRange->{{-1, 21}, {-1, 21}}], {22, 22}, {0, 0}, {22, 22}], 
+    InsetBox[
+     GraphicsBox[
+      TagBox[
+       TooltipBox[
+        {Thickness[0.005], 
+         LineBox[{{-3.637978807091713*^-12, 15.}, {6.000000000001819, 10.}}], 
+         PolygonBox[{{3.4609327677584254`, 12.115889360201312`}, {
+          2.2829934723757828`, 12.576822127959739`}, {2.7951409921073664`, 
+          13.191399151637638`}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubscriptBox["u", "quarkGen"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {2.6125141805200567, 11.914057016624067},
+           ImageScaled[{1, 1}]], 
+         LineBox[{{0., 5.000000000001819}, {6.000000000001819, 
+          10.000000000001819`}}], 
+         PolygonBox[{{2.5390672322415746`, 7.1158893602013125`}, {
+          3.7170065276242172`, 7.576822127959737}, {3.2048590078926336`, 
+          8.191399151637638}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubscriptBox["u", "quarkGen"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {3.387485819479944, 6.914057016624067}, 
+          ImageScaled[{0, 1}]], 
+         {Dashing[{0.030000000000000002`, 0.030000000000000002`}], 
+          LineBox[{{20.00000000000182, 15.000000000001819`}, {14., 
+           9.999999999998181}}]}, 
+         PolygonBox[{{16.539067232241575`, 12.115889360201312`}, {
+          17.204859007892633`, 13.191399151637638`}, {17.717006527624218`, 
+          12.576822127959739`}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubsuperscriptBox[
+              OverscriptBox["e", "~"], "i", "B"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {16.61251418052006, 13.085942983375933}, 
+          ImageScaled[{1, 0}]], 
+         {Dashing[{0.030000000000000002`, 0.030000000000000002`}], 
+          LineBox[{{19.99999999999818, 5.000000000001819}, {14., 10.}}]}, 
+         PolygonBox[{{17.460932767758425`, 7.1158893602013125`}, {
+          16.795140992107367`, 8.191399151637638}, {16.282993472375782`, 
+          7.576822127959737}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubsuperscriptBox[
+              OverscriptBox["e", "~"], "i", "A"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {17.38748581947994, 8.085942983375933}, 
+          ImageScaled[{0, 0}]], LineBox[CompressedData["
+1:eJw9lH9MlVUYx89Fu8YYf7QwEC6X93IOXn7Gj1Nmmfi4NhAY44JNLkHjh3IA
+WUFEszBBRzHbItEh8totZxGhuWRADDbbGL+TE+KFFaClMkVNGUTOgtm9Hfrj
+Odu7d5+dve85z/N8v19LQVlGoQchJF09a28XWVuR8P+LMFh+7kLTZRkB5Olj
+K8mRDB6OHf/spK44L5eYdjNouFFjyheK7b75rWUMns9y5UbxNfZyFFQzaCkp
+yFt1hwOBwo3Vhxh4nPL1HpWKi98b8HmLQVrpIjTpit8f741KY7BvcX5kn1C8
+65irysogI7BOcK64oar59iqFILPzloEotv2QvDBO4e8Ng8YJGQZk6cfo9eco
+nC/PaP9CV6zV9k/XUwh5PXNsv1B8uPnU8GEK2sGHmS9xxTfn/UtrKXRaefE6
+ojj048qKkxQmZydNV2QokH82zJ/topA1K8+c1hXbk+zm3yh0CLtZCMW2e3nz
+ngxWa0f7Y7nie4bz5S8yWH8n4uK/bqvqX7w1+w0G6QslKz9JxaMnyjZWMpjw
+TTjXpCvuc0a+U8OgNevdnr1CcRsfNh5kcM3c6BPL1/bNU/lFDPY86fvK5d6s
+zqv/fTGBQUq/6zUpFe/yPNoZyKDDuTyj64rtfS1DSxQcUSEpRUIxubbQOUSh
+u+Lluhe44rbGnVfPUnh8pLvWQBTHXA+r/4RCGolJGJchQI4aD92toTDbc3v6
+tK647eeKZ+oolPCg1CKh2FZwP/FzCgNHnN2cK97a+NGDSxRuPWUMI0TxUtd3
+k/MUrBdaOqRkap4z1Pksg3C/6BxdV9wwYsiMZ+DY1rZZCMVL9otaPoPpiBte
+nCuOebxz7gBD3RHtlRNjqj+hU9ojKSnuFw5mqnopfv/r3YmvhaD4/5nd2amc
+UzxfW135xe0OxvvFV0clSRmM92+WNzua9WCsz5oYYC0UwVh/h/tKbywPxv54
+VSd96HJbsH8p9cMfjEkL9rfQOdvVrFuw/2lR3qpeC86ne7vhEucWnN/b3jve
+NBALzvf+H6UPxqWG8w9q/zTRoWuoj0d/9u4pERrqp9LUZNzCNdRXH5uyeRAN
+9dfkVVbl0INQn1/GpQ1wHoT6taWIvsvSjPrOSbYP5wsz6t/RrkevuAPRH/2e
+VttxPRD905OZXhLOA9Ff35uzzwxKE/rPZ+nAcq4woT8HB7JffeIOQP/mDP0V
+p+sB6O+tlrjyLTwA/b83zFI9Kf0xH1xXJ+6UCX/Mj57IbTu8iD/mS2vqOvhG
+34T5MwdkZDvfhPkUXnx9bkr6YX6Znd869ws/zDejy62WL+rwPw898pg=
+          "]], 
+         InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox["\[Gamma]",
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {10., 9.0548}, 
+          ImageScaled[{Rational[1, 2], 1}]], 
+         {PointSize[0.04], PointBox[{14., 10.}], 
+          {Thickness[0.015], LineBox[{{5.5, 9.5}, {6.5, 10.5}}], 
+           LineBox[{{5.5, 10.5}, {6.5, 9.5}}]}}, InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox["3",
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->11.729454545454546`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            11.729454545454546`]& ], {10., -0.5}, 
+          ImageScaled[{Rational[1, 2], 0}]]},
+        "\"aebe/cfdf/ef.m\"",
+        TooltipStyle->"TextStyling"],
+       Annotation[#, "aebe/cfdf/ef.m", "Tooltip"]& ],
+      AspectRatio->1,
+      PlotRange->{{-1, 21}, {-1, 21}}], {44, 22}, {0, 0}, {22, 22}], 
+    InsetBox[
+     GraphicsBox[
+      TagBox[
+       TooltipBox[
+        {Thickness[0.005], 
+         LineBox[{{-3.637978807091713*^-12, 15.}, {6.000000000001819, 10.}}], 
+         PolygonBox[{{3.4609327677584254`, 12.115889360201312`}, {
+          2.2829934723757828`, 12.576822127959739`}, {2.7951409921073664`, 
+          13.191399151637638`}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubscriptBox["u", "quarkGen"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {2.6125141805200567, 11.914057016624067},
+           ImageScaled[{1, 1}]], 
+         LineBox[{{0., 5.000000000001819}, {6.000000000001819, 
+          10.000000000001819`}}], 
+         PolygonBox[{{2.5390672322415746`, 7.1158893602013125`}, {
+          3.7170065276242172`, 7.576822127959737}, {3.2048590078926336`, 
+          8.191399151637638}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubscriptBox["u", "quarkGen"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {3.387485819479944, 6.914057016624067}, 
+          ImageScaled[{0, 1}]], 
+         {Dashing[{0.030000000000000002`, 0.030000000000000002`}], 
+          LineBox[{{20.00000000000182, 15.000000000001819`}, {14., 
+           9.999999999998181}}]}, 
+         PolygonBox[{{16.539067232241575`, 12.115889360201312`}, {
+          17.204859007892633`, 13.191399151637638`}, {17.717006527624218`, 
+          12.576822127959739`}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubsuperscriptBox[
+              OverscriptBox["e", "~"], "i", "B"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {16.61251418052006, 13.085942983375933}, 
+          ImageScaled[{1, 0}]], 
+         {Dashing[{0.030000000000000002`, 0.030000000000000002`}], 
+          LineBox[{{19.99999999999818, 5.000000000001819}, {14., 10.}}]}, 
+         PolygonBox[{{17.460932767758425`, 7.1158893602013125`}, {
+          16.795140992107367`, 8.191399151637638}, {16.282993472375782`, 
+          7.576822127959737}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubsuperscriptBox[
+              OverscriptBox["e", "~"], "i", "A"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {17.38748581947994, 8.085942983375933}, 
+          ImageScaled[{0, 0}]], LineBox[CompressedData["
+1:eJw9lH9MlVUYx89Fu8YYf7QwEC6X93IOXn7Gj1Nmmfi4NhAY44JNLkHjh3IA
+WUFEszBBRzHbItEh8totZxGhuWRADDbbGL+TE+KFFaClMkVNGUTOgtm9Hfrj
+Odu7d5+dve85z/N8v19LQVlGoQchJF09a28XWVuR8P+LMFh+7kLTZRkB5Olj
+K8mRDB6OHf/spK44L5eYdjNouFFjyheK7b75rWUMns9y5UbxNfZyFFQzaCkp
+yFt1hwOBwo3Vhxh4nPL1HpWKi98b8HmLQVrpIjTpit8f741KY7BvcX5kn1C8
+65irysogI7BOcK64oar59iqFILPzloEotv2QvDBO4e8Ng8YJGQZk6cfo9eco
+nC/PaP9CV6zV9k/XUwh5PXNsv1B8uPnU8GEK2sGHmS9xxTfn/UtrKXRaefE6
+ojj048qKkxQmZydNV2QokH82zJ/topA1K8+c1hXbk+zm3yh0CLtZCMW2e3nz
+ngxWa0f7Y7nie4bz5S8yWH8n4uK/bqvqX7w1+w0G6QslKz9JxaMnyjZWMpjw
+TTjXpCvuc0a+U8OgNevdnr1CcRsfNh5kcM3c6BPL1/bNU/lFDPY86fvK5d6s
+zqv/fTGBQUq/6zUpFe/yPNoZyKDDuTyj64rtfS1DSxQcUSEpRUIxubbQOUSh
+u+Lluhe44rbGnVfPUnh8pLvWQBTHXA+r/4RCGolJGJchQI4aD92toTDbc3v6
+tK647eeKZ+oolPCg1CKh2FZwP/FzCgNHnN2cK97a+NGDSxRuPWUMI0TxUtd3
+k/MUrBdaOqRkap4z1Pksg3C/6BxdV9wwYsiMZ+DY1rZZCMVL9otaPoPpiBte
+nCuOebxz7gBD3RHtlRNjqj+hU9ojKSnuFw5mqnopfv/r3YmvhaD4/5nd2amc
+UzxfW135xe0OxvvFV0clSRmM92+WNzua9WCsz5oYYC0UwVh/h/tKbywPxv54
+VSd96HJbsH8p9cMfjEkL9rfQOdvVrFuw/2lR3qpeC86ne7vhEucWnN/b3jve
+NBALzvf+H6UPxqWG8w9q/zTRoWuoj0d/9u4pERrqp9LUZNzCNdRXH5uyeRAN
+9dfkVVbl0INQn1/GpQ1wHoT6taWIvsvSjPrOSbYP5wsz6t/RrkevuAPRH/2e
+VttxPRD905OZXhLOA9Ff35uzzwxKE/rPZ+nAcq4woT8HB7JffeIOQP/mDP0V
+p+sB6O+tlrjyLTwA/b83zFI9Kf0xH1xXJ+6UCX/Mj57IbTu8iD/mS2vqOvhG
+34T5MwdkZDvfhPkUXnx9bkr6YX6Znd869ws/zDejy62WL+rwPw898pg=
+          "]], 
+         InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox["Z",
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {10., 9.0548}, 
+          ImageScaled[{Rational[1, 2], 1}]], 
+         {PointSize[0.04], PointBox[{14., 10.}], 
+          {Thickness[0.015], LineBox[{{5.5, 9.5}, {6.5, 10.5}}], 
+           LineBox[{{5.5, 10.5}, {6.5, 9.5}}]}}, InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox["4",
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->11.729454545454546`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            11.729454545454546`]& ], {10., -0.5}, 
+          ImageScaled[{Rational[1, 2], 0}]]},
+        "\"aebe/cfdf/ef.m\"",
+        TooltipStyle->"TextStyling"],
+       Annotation[#, "aebe/cfdf/ef.m", "Tooltip"]& ],
+      AspectRatio->1,
+      PlotRange->{{-1, 21}, {-1, 21}}], {66, 22}, {0, 0}, {22, 22}], 
+    InsetBox[
+     GraphicsBox[
+      TagBox[
+       TooltipBox[
+        {Thickness[0.005], 
+         LineBox[{{-3.637978807091713*^-12, 15.}, {6.000000000001819, 10.}}], 
+         PolygonBox[{{3.4609327677584254`, 12.115889360201312`}, {
+          2.2829934723757828`, 12.576822127959739`}, {2.7951409921073664`, 
+          13.191399151637638`}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubscriptBox["u", "quarkGen"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {2.6125141805200567, 11.914057016624067},
+           ImageScaled[{1, 1}]], 
+         LineBox[{{0., 5.000000000001819}, {6.000000000001819, 
+          10.000000000001819`}}], 
+         PolygonBox[{{2.5390672322415746`, 7.1158893602013125`}, {
+          3.7170065276242172`, 7.576822127959737}, {3.2048590078926336`, 
+          8.191399151637638}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubscriptBox["u", "quarkGen"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {3.387485819479944, 6.914057016624067}, 
+          ImageScaled[{0, 1}]], 
+         {Dashing[{0.030000000000000002`, 0.030000000000000002`}], 
+          LineBox[{{20.00000000000182, 15.000000000001819`}, {14., 
+           9.999999999998181}}]}, 
+         PolygonBox[{{16.539067232241575`, 12.115889360201312`}, {
+          17.204859007892633`, 13.191399151637638`}, {17.717006527624218`, 
+          12.576822127959739`}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubsuperscriptBox[
+              OverscriptBox["e", "~"], "i", "B"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {16.61251418052006, 13.085942983375933}, 
+          ImageScaled[{1, 0}]], 
+         {Dashing[{0.030000000000000002`, 0.030000000000000002`}], 
+          LineBox[{{19.99999999999818, 5.000000000001819}, {14., 10.}}]}, 
+         PolygonBox[{{17.460932767758425`, 7.1158893602013125`}, {
+          16.795140992107367`, 8.191399151637638}, {16.282993472375782`, 
+          7.576822127959737}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubsuperscriptBox[
+              OverscriptBox["e", "~"], "i", "A"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {17.38748581947994, 8.085942983375933}, 
+          ImageScaled[{0, 0}]], LineBox[CompressedData["
+1:eJxTTMoPSmViYGDQBGIQvYEHSDBIODCAgYrDmtCAExlpQL7BvUbW88oOe+RK
+f1w4A+S/+MLcsFTZYV71iggLY0kHBom3nw92AvmTt12fNxPI7/iznaVB2WHv
+xvwuFgYpB4aCUzxHgPIrWA4syUwD8jM2mLYA9RuZceWdOwPkS1Se4Qaab+Eo
+a2xsLO3AcKE6mQNoP8vHFIsZM4F8gR0vWQxVHKQmHFj39z+Qb6Hr1xOl4nA5
+58Ka5DQZoLyRsk+ZikPLp0W6p84A+RcmMHE3qDgca18gYmgs68AQsEjfFyjv
+/HOx6YyZQH4Cb3ofUP/e4IL4//+B/AZ2fg6g+QxF0WlpaXIODDssp/IA7X+3
+Tkj37Bkg/8YSLkGg+0RmnF9pbCzvwDDDs6EL6P7I92LPZ84E8i0uJp8G+u8I
+JyjcFBwYKgqleYH+l5hUwmNsrACX32UroZ2WpgDXL7inLHPmTAW4+UcCLp05
+c0YBbv/Kl+4BDAyKcPcp8eo9NTZWhLv/4dH1pelpinD/uc3SezlrpiLc/1GX
+p2ueO6MID5/tB+drMDIowcPPaeLZx8bGSvDw1cgsBPpfCR7++T9+nZgxUwke
+PwXsC3RPn1GCx99TgxO7/v5XgsfvzpMqUwyMleHx//X06svJacrw9KHVcrR5
++kxlePp5d+/67NNnlOHpK4cZku5g6Q8A9sDpww==
+          "]], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox["\[Gamma]",
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {8., 9.0548}, 
+          ImageScaled[{Rational[1, 2], 1}]], LineBox[CompressedData["
+1:eJxTTMoPSmViYGDQBGIQvfLnfyDQdmAAAxUHravXZ58+A+RfUKz7ZaDisLjg
+aPP0mUC+BPef+igVB8NDqy8npwH5L4R47MqA/G0qUwyMgfwKZo/f9SoOSuon
+dv39r+XAMMH0szVQfs3f+bqnzwD5M/xPVQP1P3/y68SMmUD+izbjL0DzU+IL
+09LSgHyDljnf/ys71LWffWxsDOR/cBf7fU7Z4fP2+RqMDED+iUsbi5cqO0w/
+OV3z3BlNoPzZO5s7lR32tem9nDUTyDfI//ulXtlBds/60vQ0IH9D7IVNQPl4
+Zr2nxsZA/oJPMwqB+pWuuQcAfe/A0PDjw3eg+Qzul86cOaPhwOBxLOsz0P7O
+FWWZM2cC+RrRX98B3ffNWEI7LQ3Iz9hWXwp0f0hHCY+xMZB/Qm+OCdB/Nt9A
+4afuwNDR9+QT0P8vc7s/nzmjDpd3O/T8ysyZ6nD9H5w7p6WlqcPNt1mva2xs
+rA63P1xsx/r//9Xg7rv36aLUmTNqcPcrWAV0zZipBvffrtSLYqlpanD/L9PJ
+uGZorAYPHy+7hOv//qvCw29/npHMmTOq8PC9Ma1v5syZqvDwn8TOap6epgqP
+n4k/4i+ZGKvC40/6vLkrE4MqPH49zG5nnz+jAo9/HpMQnTkzVeDp41q1VU1G
+mgo8/QgpaqSYGKvA09eUP6DwU4anPwC/KxLc
+          "]], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox["\[Gamma]",
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {12., 10.9452}, 
+          ImageScaled[{Rational[1, 2], 0}]], 
+         {PointSize[0.04], PointBox[{6., 10.}], PointBox[{14., 10.}], 
+          {Thickness[0.015], LineBox[{{9.5, 9.5}, {10.5, 10.5}}], 
+           LineBox[{{9.5, 10.5}, {10.5, 9.5}}]}}, InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox["5",
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->11.729454545454546`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            11.729454545454546`]& ], {10., -0.5}, 
+          ImageScaled[{Rational[1, 2], 0}]]},
+        "\"aebe/cfdf/gegf.m\"",
+        TooltipStyle->"TextStyling"],
+       Annotation[#, "aebe/cfdf/gegf.m", "Tooltip"]& ],
+      AspectRatio->1,
+      PlotRange->{{-1, 21}, {-1, 21}}], {0, 0}, {0, 0}, {22, 22}], InsetBox[
+     GraphicsBox[
+      TagBox[
+       TooltipBox[
+        {Thickness[0.005], 
+         LineBox[{{-3.637978807091713*^-12, 15.}, {6.000000000001819, 10.}}], 
+         PolygonBox[{{3.4609327677584254`, 12.115889360201312`}, {
+          2.2829934723757828`, 12.576822127959739`}, {2.7951409921073664`, 
+          13.191399151637638`}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubscriptBox["u", "quarkGen"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {2.6125141805200567, 11.914057016624067},
+           ImageScaled[{1, 1}]], 
+         LineBox[{{0., 5.000000000001819}, {6.000000000001819, 
+          10.000000000001819`}}], 
+         PolygonBox[{{2.5390672322415746`, 7.1158893602013125`}, {
+          3.7170065276242172`, 7.576822127959737}, {3.2048590078926336`, 
+          8.191399151637638}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubscriptBox["u", "quarkGen"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {3.387485819479944, 6.914057016624067}, 
+          ImageScaled[{0, 1}]], 
+         {Dashing[{0.030000000000000002`, 0.030000000000000002`}], 
+          LineBox[{{20.00000000000182, 15.000000000001819`}, {14., 
+           9.999999999998181}}]}, 
+         PolygonBox[{{16.539067232241575`, 12.115889360201312`}, {
+          17.204859007892633`, 13.191399151637638`}, {17.717006527624218`, 
+          12.576822127959739`}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubsuperscriptBox[
+              OverscriptBox["e", "~"], "i", "B"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {16.61251418052006, 13.085942983375933}, 
+          ImageScaled[{1, 0}]], 
+         {Dashing[{0.030000000000000002`, 0.030000000000000002`}], 
+          LineBox[{{19.99999999999818, 5.000000000001819}, {14., 10.}}]}, 
+         PolygonBox[{{17.460932767758425`, 7.1158893602013125`}, {
+          16.795140992107367`, 8.191399151637638}, {16.282993472375782`, 
+          7.576822127959737}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubsuperscriptBox[
+              OverscriptBox["e", "~"], "i", "A"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {17.38748581947994, 8.085942983375933}, 
+          ImageScaled[{0, 0}]], LineBox[CompressedData["
+1:eJxTTMoPSmViYGDQBGIQvYEHSDBIODCAgYrDmtCAExlpQL7BvUbW88oOe+RK
+f1w4A+S/+MLcsFTZYV71iggLY0kHBom3nw92AvmTt12fNxPI7/iznaVB2WHv
+xvwuFgYpB4aCUzxHgPIrWA4syUwD8jM2mLYA9RuZceWdOwPkS1Se4Qaab+Eo
+a2xsLO3AcKE6mQNoP8vHFIsZM4F8gR0vWQxVHKQmHFj39z+Qb6Hr1xOl4nA5
+58Ka5DQZoLyRsk+ZikPLp0W6p84A+RcmMHE3qDgca18gYmgs68AQsEjfFyjv
+/HOx6YyZQH4Cb3ofUP/e4IL4//+B/AZ2fg6g+QxF0WlpaXIODDssp/IA7X+3
+Tkj37Bkg/8YSLkGg+0RmnF9pbCzvwDDDs6EL6P7I92LPZ84E8i0uJp8G+u8I
+JyjcFBwYKgqleYH+l5hUwmNsrACX32UroZ2WpgDXL7inLHPmTAW4+UcCLp05
+c0YBbv/Kl+4BDAyKcPcp8eo9NTZWhLv/4dH1pelpinD/uc3SezlrpiLc/1GX
+p2ueO6MID5/tB+drMDIowcPPaeLZx8bGSvDw1cgsBPpfCR7++T9+nZgxUwke
+PwXsC3RPn1GCx99TgxO7/v5XgsfvzpMqUwyMleHx//X06svJacrw9KHVcrR5
++kxlePp5d+/67NNnlOHpK4cZku5g6Q8A9sDpww==
+          "]], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox["\[Gamma]",
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {8., 9.0548}, 
+          ImageScaled[{Rational[1, 2], 1}]], LineBox[CompressedData["
+1:eJxTTMoPSmViYGDQBGIQvfLnfyDQdmAAAxUHravXZ58+A+RfUKz7ZaDisLjg
+aPP0mUC+BPef+igVB8NDqy8npwH5L4R47MqA/G0qUwyMgfwKZo/f9SoOSuon
+dv39r+XAMMH0szVQfs3f+bqnzwD5M/xPVQP1P3/y68SMmUD+izbjL0DzU+IL
+09LSgHyDljnf/ys71LWffWxsDOR/cBf7fU7Z4fP2+RqMDED+iUsbi5cqO0w/
+OV3z3BlNoPzZO5s7lR32tem9nDUTyDfI//ulXtlBds/60vQ0IH9D7IVNQPl4
+Zr2nxsZA/oJPMwqB+pWuuQcAfe/A0PDjw3eg+Qzul86cOaPhwOBxLOsz0P7O
+FWWZM2cC+RrRX98B3ffNWEI7LQ3Iz9hWXwp0f0hHCY+xMZB/Qm+OCdB/Nt9A
+4afuwNDR9+QT0P8vc7s/nzmjDpd3O/T8ysyZ6nD9H5w7p6WlqcPNt1mva2xs
+rA63P1xsx/r//9Xg7rv36aLUmTNqcPcrWAV0zZipBvffrtSLYqlpanD/L9PJ
+uGZorAYPHy+7hOv//qvCw29/npHMmTOq8PC9Ma1v5syZqvDwn8TOap6epgqP
+n4k/4i+ZGKvC40/6vLkrE4MqPH49zG5nnz+jAo9/HpMQnTkzVeDp41q1VU1G
+mgo8/QgpaqSYGKvA09eUP6DwU4anPwC/KxLc
+          "]], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox["Z",
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {12., 10.9452}, 
+          ImageScaled[{Rational[1, 2], 0}]], 
+         {PointSize[0.04], PointBox[{6., 10.}], PointBox[{14., 10.}], 
+          {Thickness[0.015], LineBox[{{9.5, 9.5}, {10.5, 10.5}}], 
+           LineBox[{{9.5, 10.5}, {10.5, 9.5}}]}}, InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox["6",
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->11.729454545454546`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            11.729454545454546`]& ], {10., -0.5}, 
+          ImageScaled[{Rational[1, 2], 0}]]},
+        "\"aebe/cfdf/gegf.m\"",
+        TooltipStyle->"TextStyling"],
+       Annotation[#, "aebe/cfdf/gegf.m", "Tooltip"]& ],
+      AspectRatio->1,
+      PlotRange->{{-1, 21}, {-1, 21}}], {22, 0}, {0, 0}, {22, 22}], InsetBox[
+     GraphicsBox[
+      TagBox[
+       TooltipBox[
+        {Thickness[0.005], 
+         LineBox[{{-3.637978807091713*^-12, 15.}, {6.000000000001819, 10.}}], 
+         PolygonBox[{{3.4609327677584254`, 12.115889360201312`}, {
+          2.2829934723757828`, 12.576822127959739`}, {2.7951409921073664`, 
+          13.191399151637638`}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubscriptBox["u", "quarkGen"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {2.6125141805200567, 11.914057016624067},
+           ImageScaled[{1, 1}]], 
+         LineBox[{{0., 5.000000000001819}, {6.000000000001819, 
+          10.000000000001819`}}], 
+         PolygonBox[{{2.5390672322415746`, 7.1158893602013125`}, {
+          3.7170065276242172`, 7.576822127959737}, {3.2048590078926336`, 
+          8.191399151637638}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubscriptBox["u", "quarkGen"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {3.387485819479944, 6.914057016624067}, 
+          ImageScaled[{0, 1}]], 
+         {Dashing[{0.030000000000000002`, 0.030000000000000002`}], 
+          LineBox[{{20.00000000000182, 15.000000000001819`}, {14., 
+           9.999999999998181}}]}, 
+         PolygonBox[{{16.539067232241575`, 12.115889360201312`}, {
+          17.204859007892633`, 13.191399151637638`}, {17.717006527624218`, 
+          12.576822127959739`}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubsuperscriptBox[
+              OverscriptBox["e", "~"], "i", "B"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {16.61251418052006, 13.085942983375933}, 
+          ImageScaled[{1, 0}]], 
+         {Dashing[{0.030000000000000002`, 0.030000000000000002`}], 
+          LineBox[{{19.99999999999818, 5.000000000001819}, {14., 10.}}]}, 
+         PolygonBox[{{17.460932767758425`, 7.1158893602013125`}, {
+          16.795140992107367`, 8.191399151637638}, {16.282993472375782`, 
+          7.576822127959737}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubsuperscriptBox[
+              OverscriptBox["e", "~"], "i", "A"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {17.38748581947994, 8.085942983375933}, 
+          ImageScaled[{0, 0}]], LineBox[CompressedData["
+1:eJxTTMoPSmViYGDQBGIQvYEHSDBIODCAgYrDmtCAExlpQL7BvUbW88oOe+RK
+f1w4A+S/+MLcsFTZYV71iggLY0kHBom3nw92AvmTt12fNxPI7/iznaVB2WHv
+xvwuFgYpB4aCUzxHgPIrWA4syUwD8jM2mLYA9RuZceWdOwPkS1Se4Qaab+Eo
+a2xsLO3AcKE6mQNoP8vHFIsZM4F8gR0vWQxVHKQmHFj39z+Qb6Hr1xOl4nA5
+58Ka5DQZoLyRsk+ZikPLp0W6p84A+RcmMHE3qDgca18gYmgs68AQsEjfFyjv
+/HOx6YyZQH4Cb3ofUP/e4IL4//+B/AZ2fg6g+QxF0WlpaXIODDssp/IA7X+3
+Tkj37Bkg/8YSLkGg+0RmnF9pbCzvwDDDs6EL6P7I92LPZ84E8i0uJp8G+u8I
+JyjcFBwYKgqleYH+l5hUwmNsrACX32UroZ2WpgDXL7inLHPmTAW4+UcCLp05
+c0YBbv/Kl+4BDAyKcPcp8eo9NTZWhLv/4dH1pelpinD/uc3SezlrpiLc/1GX
+p2ueO6MID5/tB+drMDIowcPPaeLZx8bGSvDw1cgsBPpfCR7++T9+nZgxUwke
+PwXsC3RPn1GCx99TgxO7/v5XgsfvzpMqUwyMleHx//X06svJacrw9KHVcrR5
++kxlePp5d+/67NNnlOHpK4cZku5g6Q8A9sDpww==
+          "]], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox["Z",
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {8., 9.0548}, 
+          ImageScaled[{Rational[1, 2], 1}]], LineBox[CompressedData["
+1:eJxTTMoPSmViYGDQBGIQvfLnfyDQdmAAAxUHravXZ58+A+RfUKz7ZaDisLjg
+aPP0mUC+BPef+igVB8NDqy8npwH5L4R47MqA/G0qUwyMgfwKZo/f9SoOSuon
+dv39r+XAMMH0szVQfs3f+bqnzwD5M/xPVQP1P3/y68SMmUD+izbjL0DzU+IL
+09LSgHyDljnf/ys71LWffWxsDOR/cBf7fU7Z4fP2+RqMDED+iUsbi5cqO0w/
+OV3z3BlNoPzZO5s7lR32tem9nDUTyDfI//ulXtlBds/60vQ0IH9D7IVNQPl4
+Zr2nxsZA/oJPMwqB+pWuuQcAfe/A0PDjw3eg+Qzul86cOaPhwOBxLOsz0P7O
+FWWZM2cC+RrRX98B3ffNWEI7LQ3Iz9hWXwp0f0hHCY+xMZB/Qm+OCdB/Nt9A
+4afuwNDR9+QT0P8vc7s/nzmjDpd3O/T8ysyZ6nD9H5w7p6WlqcPNt1mva2xs
+rA63P1xsx/r//9Xg7rv36aLUmTNqcPcrWAV0zZipBvffrtSLYqlpanD/L9PJ
+uGZorAYPHy+7hOv//qvCw29/npHMmTOq8PC9Ma1v5syZqvDwn8TOap6epgqP
+n4k/4i+ZGKvC40/6vLkrE4MqPH49zG5nnz+jAo9/HpMQnTkzVeDp41q1VU1G
+mgo8/QgpaqSYGKvA09eUP6DwU4anPwC/KxLc
+          "]], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox["\[Gamma]",
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {12., 10.9452}, 
+          ImageScaled[{Rational[1, 2], 0}]], 
+         {PointSize[0.04], PointBox[{6., 10.}], PointBox[{14., 10.}], 
+          {Thickness[0.015], LineBox[{{9.5, 9.5}, {10.5, 10.5}}], 
+           LineBox[{{9.5, 10.5}, {10.5, 9.5}}]}}, InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox["7",
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->11.729454545454546`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            11.729454545454546`]& ], {10., -0.5}, 
+          ImageScaled[{Rational[1, 2], 0}]]},
+        "\"aebe/cfdf/gegf.m\"",
+        TooltipStyle->"TextStyling"],
+       Annotation[#, "aebe/cfdf/gegf.m", "Tooltip"]& ],
+      AspectRatio->1,
+      PlotRange->{{-1, 21}, {-1, 21}}], {44, 0}, {0, 0}, {22, 22}], InsetBox[
+     GraphicsBox[
+      TagBox[
+       TooltipBox[
+        {Thickness[0.005], 
+         LineBox[{{-3.637978807091713*^-12, 15.}, {6.000000000001819, 10.}}], 
+         PolygonBox[{{3.4609327677584254`, 12.115889360201312`}, {
+          2.2829934723757828`, 12.576822127959739`}, {2.7951409921073664`, 
+          13.191399151637638`}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubscriptBox["u", "quarkGen"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {2.6125141805200567, 11.914057016624067},
+           ImageScaled[{1, 1}]], 
+         LineBox[{{0., 5.000000000001819}, {6.000000000001819, 
+          10.000000000001819`}}], 
+         PolygonBox[{{2.5390672322415746`, 7.1158893602013125`}, {
+          3.7170065276242172`, 7.576822127959737}, {3.2048590078926336`, 
+          8.191399151637638}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubscriptBox["u", "quarkGen"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {3.387485819479944, 6.914057016624067}, 
+          ImageScaled[{0, 1}]], 
+         {Dashing[{0.030000000000000002`, 0.030000000000000002`}], 
+          LineBox[{{20.00000000000182, 15.000000000001819`}, {14., 
+           9.999999999998181}}]}, 
+         PolygonBox[{{16.539067232241575`, 12.115889360201312`}, {
+          17.204859007892633`, 13.191399151637638`}, {17.717006527624218`, 
+          12.576822127959739`}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubsuperscriptBox[
+              OverscriptBox["e", "~"], "i", "B"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {16.61251418052006, 13.085942983375933}, 
+          ImageScaled[{1, 0}]], 
+         {Dashing[{0.030000000000000002`, 0.030000000000000002`}], 
+          LineBox[{{19.99999999999818, 5.000000000001819}, {14., 10.}}]}, 
+         PolygonBox[{{17.460932767758425`, 7.1158893602013125`}, {
+          16.795140992107367`, 8.191399151637638}, {16.282993472375782`, 
+          7.576822127959737}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubsuperscriptBox[
+              OverscriptBox["e", "~"], "i", "A"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {17.38748581947994, 8.085942983375933}, 
+          ImageScaled[{0, 0}]], LineBox[CompressedData["
+1:eJxTTMoPSmViYGDQBGIQvYEHSDBIODCAgYrDmtCAExlpQL7BvUbW88oOe+RK
+f1w4A+S/+MLcsFTZYV71iggLY0kHBom3nw92AvmTt12fNxPI7/iznaVB2WHv
+xvwuFgYpB4aCUzxHgPIrWA4syUwD8jM2mLYA9RuZceWdOwPkS1Se4Qaab+Eo
+a2xsLO3AcKE6mQNoP8vHFIsZM4F8gR0vWQxVHKQmHFj39z+Qb6Hr1xOl4nA5
+58Ka5DQZoLyRsk+ZikPLp0W6p84A+RcmMHE3qDgca18gYmgs68AQsEjfFyjv
+/HOx6YyZQH4Cb3ofUP/e4IL4//+B/AZ2fg6g+QxF0WlpaXIODDssp/IA7X+3
+Tkj37Bkg/8YSLkGg+0RmnF9pbCzvwDDDs6EL6P7I92LPZ84E8i0uJp8G+u8I
+JyjcFBwYKgqleYH+l5hUwmNsrACX32UroZ2WpgDXL7inLHPmTAW4+UcCLp05
+c0YBbv/Kl+4BDAyKcPcp8eo9NTZWhLv/4dH1pelpinD/uc3SezlrpiLc/1GX
+p2ueO6MID5/tB+drMDIowcPPaeLZx8bGSvDw1cgsBPpfCR7++T9+nZgxUwke
+PwXsC3RPn1GCx99TgxO7/v5XgsfvzpMqUwyMleHx//X06svJacrw9KHVcrR5
++kxlePp5d+/67NNnlOHpK4cZku5g6Q8A9sDpww==
+          "]], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox["Z",
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {8., 9.0548}, 
+          ImageScaled[{Rational[1, 2], 1}]], LineBox[CompressedData["
+1:eJxTTMoPSmViYGDQBGIQvfLnfyDQdmAAAxUHravXZ58+A+RfUKz7ZaDisLjg
+aPP0mUC+BPef+igVB8NDqy8npwH5L4R47MqA/G0qUwyMgfwKZo/f9SoOSuon
+dv39r+XAMMH0szVQfs3f+bqnzwD5M/xPVQP1P3/y68SMmUD+izbjL0DzU+IL
+09LSgHyDljnf/ys71LWffWxsDOR/cBf7fU7Z4fP2+RqMDED+iUsbi5cqO0w/
+OV3z3BlNoPzZO5s7lR32tem9nDUTyDfI//ulXtlBds/60vQ0IH9D7IVNQPl4
+Zr2nxsZA/oJPMwqB+pWuuQcAfe/A0PDjw3eg+Qzul86cOaPhwOBxLOsz0P7O
+FWWZM2cC+RrRX98B3ffNWEI7LQ3Iz9hWXwp0f0hHCY+xMZB/Qm+OCdB/Nt9A
+4afuwNDR9+QT0P8vc7s/nzmjDpd3O/T8ysyZ6nD9H5w7p6WlqcPNt1mva2xs
+rA63P1xsx/r//9Xg7rv36aLUmTNqcPcrWAV0zZipBvffrtSLYqlpanD/L9PJ
+uGZorAYPHy+7hOv//qvCw29/npHMmTOq8PC9Ma1v5syZqvDwn8TOap6epgqP
+n4k/4i+ZGKvC40/6vLkrE4MqPH49zG5nnz+jAo9/HpMQnTkzVeDp41q1VU1G
+mgo8/QgpaqSYGKvA09eUP6DwU4anPwC/KxLc
+          "]], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox["Z",
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {12., 10.9452}, 
+          ImageScaled[{Rational[1, 2], 0}]], 
+         {PointSize[0.04], PointBox[{6., 10.}], PointBox[{14., 10.}], 
+          {Thickness[0.015], LineBox[{{9.5, 9.5}, {10.5, 10.5}}], 
+           LineBox[{{9.5, 10.5}, {10.5, 9.5}}]}}, InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox["8",
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->11.729454545454546`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            11.729454545454546`]& ], {10., -0.5}, 
+          ImageScaled[{Rational[1, 2], 0}]]},
+        "\"aebe/cfdf/gegf.m\"",
+        TooltipStyle->"TextStyling"],
+       Annotation[#, "aebe/cfdf/gegf.m", "Tooltip"]& ],
+      AspectRatio->1,
+      PlotRange->{{-1, 21}, {-1, 21}}], {66, 0}, {0, 0}, {22, 22}]},
+   AspectRatio->NCache[
+     Rational[1, 2], 0.5],
+   ImageSize->{512, 256},
+   PlotRange->{{0, 88}, {0, 44}}], TraditionalForm]], "Print",
+ CellChangeTimes->{3.9792956793776197`*^9, 3.979295725635898*^9, 
+  3.979295980857895*^9, 3.979296397926196*^9, 3.979296569848654*^9, 
+  3.979654146466201*^9},
+ CellLabel->
+  "During evaluation of \
+In[16]:=",ExpressionUUID->"4a336a79-a63b-43fb-94ff-ab2a08092699"],
+
+Cell[BoxData[
+ FormBox[
+  GraphicsBox[{InsetBox[
+     GraphicsBox[
+      TagBox[
+       TooltipBox[
+        {Thickness[0.005], 
+         LineBox[{{-3.637978807091713*^-12, 15.}, {6.000000000001819, 10.}}], 
+         PolygonBox[{{3.4609327677584254`, 12.115889360201312`}, {
+          2.2829934723757828`, 12.576822127959739`}, {2.7951409921073664`, 
+          13.191399151637638`}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubscriptBox["u", "quarkGen"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {2.6125141805200567, 11.914057016624067},
+           ImageScaled[{1, 1}]], 
+         LineBox[{{0., 5.000000000001819}, {6.000000000001819, 
+          10.000000000001819`}}], 
+         PolygonBox[{{2.5390672322415746`, 7.1158893602013125`}, {
+          3.7170065276242172`, 7.576822127959737}, {3.2048590078926336`, 
+          8.191399151637638}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubscriptBox["u", "quarkGen"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {3.387485819479944, 6.914057016624067}, 
+          ImageScaled[{0, 1}]], 
+         {Dashing[{0.030000000000000002`, 0.030000000000000002`}], 
+          LineBox[{{20.00000000000182, 15.000000000001819`}, {14., 
+           9.999999999998181}}]}, 
+         PolygonBox[{{16.539067232241575`, 12.115889360201312`}, {
+          17.204859007892633`, 13.191399151637638`}, {17.717006527624218`, 
+          12.576822127959739`}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubsuperscriptBox[
+              OverscriptBox["e", "~"], "i", "B"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {16.61251418052006, 13.085942983375933}, 
+          ImageScaled[{1, 0}]], 
+         {Dashing[{0.030000000000000002`, 0.030000000000000002`}], 
+          LineBox[{{20., 5.}, {17., 7.500000000001819}}]}, 
+         PolygonBox[{{18.960932767758425`, 5.8658893602013125`}, {
+          18.295140992107367`, 6.941399151637638}, {17.782993472375782`, 
+          6.326822127959737}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubsuperscriptBox[
+              OverscriptBox["e", "~"], "i", "A"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {18.88748581947994, 6.835942983375933}, 
+          ImageScaled[{0, 0}]], 
+         {Dashing[{0.030000000000000002`, 0.030000000000000002`}], 
+          LineBox[{{17., 7.5}, {14., 10.000000000001819`}}]}, 
+         PolygonBox[{{15.960932767758425`, 8.365889360201312}, {
+          15.295140992107367`, 9.441399151637638}, {14.782993472375782`, 
+          8.826822127959739}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubsuperscriptBox[
+              OverscriptBox["e", "~"], "i", "B"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {15.112514180520058, 8.164057016624067}, 
+          ImageScaled[{1, 1}]], LineBox[CompressedData["
+1:eJw9lH9MlVUYx89Fu8YYf7QwEC6X93IOXn7Gj1Nmmfi4NhAY44JNLkHjh3IA
+WUFEszBBRzHbItEh8totZxGhuWRADDbbGL+TE+KFFaClMkVNGUTOgtm9Hfrj
+Odu7d5+dve85z/N8v19LQVlGoQchJF09a28XWVuR8P+LMFh+7kLTZRkB5Olj
+K8mRDB6OHf/spK44L5eYdjNouFFjyheK7b75rWUMns9y5UbxNfZyFFQzaCkp
+yFt1hwOBwo3Vhxh4nPL1HpWKi98b8HmLQVrpIjTpit8f741KY7BvcX5kn1C8
+65irysogI7BOcK64oar59iqFILPzloEotv2QvDBO4e8Ng8YJGQZk6cfo9eco
+nC/PaP9CV6zV9k/XUwh5PXNsv1B8uPnU8GEK2sGHmS9xxTfn/UtrKXRaefE6
+ojj048qKkxQmZydNV2QokH82zJ/topA1K8+c1hXbk+zm3yh0CLtZCMW2e3nz
+ngxWa0f7Y7nie4bz5S8yWH8n4uK/bqvqX7w1+w0G6QslKz9JxaMnyjZWMpjw
+TTjXpCvuc0a+U8OgNevdnr1CcRsfNh5kcM3c6BPL1/bNU/lFDPY86fvK5d6s
+zqv/fTGBQUq/6zUpFe/yPNoZyKDDuTyj64rtfS1DSxQcUSEpRUIxubbQOUSh
+u+Lluhe44rbGnVfPUnh8pLvWQBTHXA+r/4RCGolJGJchQI4aD92toTDbc3v6
+tK647eeKZ+oolPCg1CKh2FZwP/FzCgNHnN2cK97a+NGDSxRuPWUMI0TxUtd3
+k/MUrBdaOqRkap4z1Pksg3C/6BxdV9wwYsiMZ+DY1rZZCMVL9otaPoPpiBte
+nCuOebxz7gBD3RHtlRNjqj+hU9ojKSnuFw5mqnopfv/r3YmvhaD4/5nd2amc
+UzxfW135xe0OxvvFV0clSRmM92+WNzua9WCsz5oYYC0UwVh/h/tKbywPxv54
+VSd96HJbsH8p9cMfjEkL9rfQOdvVrFuw/2lR3qpeC86ne7vhEucWnN/b3jve
+NBALzvf+H6UPxqWG8w9q/zTRoWuoj0d/9u4pERrqp9LUZNzCNdRXH5uyeRAN
+9dfkVVbl0INQn1/GpQ1wHoT6taWIvsvSjPrOSbYP5wsz6t/RrkevuAPRH/2e
+VttxPRD905OZXhLOA9Ff35uzzwxKE/rPZ+nAcq4woT8HB7JffeIOQP/mDP0V
+p+sB6O+tlrjyLTwA/b83zFI9Kf0xH1xXJ+6UCX/Mj57IbTu8iD/mS2vqOvhG
+34T5MwdkZDvfhPkUXnx9bkr6YX6Znd869ws/zDejy62WL+rwPw898pg=
+          "]], 
+         InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox["\[Gamma]",
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {10., 10.9452}, 
+          ImageScaled[{Rational[1, 2], 0}]], 
+         {PointSize[0.04], PointBox[{6., 10.}], PointBox[{14., 10.}], 
+          {Thickness[0.015], LineBox[{{16.5, 7.}, {17.5, 8.}}], 
+           LineBox[{{16.5, 8.}, {17.5, 7.}}]}}, InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox["9",
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->11.729454545454546`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            11.729454545454546`]& ], {10., -0.5}, 
+          ImageScaled[{Rational[1, 2], 0}]]},
+        "\"aebe/cfdg/gfef.m\"",
+        TooltipStyle->"TextStyling"],
+       Annotation[#, "aebe/cfdg/gfef.m", "Tooltip"]& ],
+      AspectRatio->1,
+      PlotRange->{{-1, 21}, {-1, 21}}], {0, 22}, {0, 0}, {22, 22}], InsetBox[
+     GraphicsBox[
+      TagBox[
+       TooltipBox[
+        {Thickness[0.005], 
+         LineBox[{{-3.637978807091713*^-12, 15.}, {6.000000000001819, 10.}}], 
+         PolygonBox[{{3.4609327677584254`, 12.115889360201312`}, {
+          2.2829934723757828`, 12.576822127959739`}, {2.7951409921073664`, 
+          13.191399151637638`}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubscriptBox["u", "quarkGen"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {2.6125141805200567, 11.914057016624067},
+           ImageScaled[{1, 1}]], 
+         LineBox[{{0., 5.000000000001819}, {6.000000000001819, 
+          10.000000000001819`}}], 
+         PolygonBox[{{2.5390672322415746`, 7.1158893602013125`}, {
+          3.7170065276242172`, 7.576822127959737}, {3.2048590078926336`, 
+          8.191399151637638}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubscriptBox["u", "quarkGen"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {3.387485819479944, 6.914057016624067}, 
+          ImageScaled[{0, 1}]], 
+         {Dashing[{0.030000000000000002`, 0.030000000000000002`}], 
+          LineBox[{{20.00000000000182, 15.000000000001819`}, {14., 
+           9.999999999998181}}]}, 
+         PolygonBox[{{16.539067232241575`, 12.115889360201312`}, {
+          17.204859007892633`, 13.191399151637638`}, {17.717006527624218`, 
+          12.576822127959739`}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubsuperscriptBox[
+              OverscriptBox["e", "~"], "i", "B"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {16.61251418052006, 13.085942983375933}, 
+          ImageScaled[{1, 0}]], 
+         {Dashing[{0.030000000000000002`, 0.030000000000000002`}], 
+          LineBox[{{20., 5.}, {17., 7.500000000001819}}]}, 
+         PolygonBox[{{18.960932767758425`, 5.8658893602013125`}, {
+          18.295140992107367`, 6.941399151637638}, {17.782993472375782`, 
+          6.326822127959737}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubsuperscriptBox[
+              OverscriptBox["e", "~"], "i", "A"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {18.88748581947994, 6.835942983375933}, 
+          ImageScaled[{0, 0}]], 
+         {Dashing[{0.030000000000000002`, 0.030000000000000002`}], 
+          LineBox[{{17., 7.5}, {14., 10.000000000001819`}}]}, 
+         PolygonBox[{{15.960932767758425`, 8.365889360201312}, {
+          15.295140992107367`, 9.441399151637638}, {14.782993472375782`, 
+          8.826822127959739}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubsuperscriptBox[
+              OverscriptBox["e", "~"], "i", "w"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {15.112514180520058, 8.164057016624067}, 
+          ImageScaled[{1, 1}]], LineBox[CompressedData["
+1:eJw9lH9MlVUYx89Fu8YYf7QwEC6X93IOXn7Gj1Nmmfi4NhAY44JNLkHjh3IA
+WUFEszBBRzHbItEh8totZxGhuWRADDbbGL+TE+KFFaClMkVNGUTOgtm9Hfrj
+Odu7d5+dve85z/N8v19LQVlGoQchJF09a28XWVuR8P+LMFh+7kLTZRkB5Olj
+K8mRDB6OHf/spK44L5eYdjNouFFjyheK7b75rWUMns9y5UbxNfZyFFQzaCkp
+yFt1hwOBwo3Vhxh4nPL1HpWKi98b8HmLQVrpIjTpit8f741KY7BvcX5kn1C8
+65irysogI7BOcK64oar59iqFILPzloEotv2QvDBO4e8Ng8YJGQZk6cfo9eco
+nC/PaP9CV6zV9k/XUwh5PXNsv1B8uPnU8GEK2sGHmS9xxTfn/UtrKXRaefE6
+ojj048qKkxQmZydNV2QokH82zJ/topA1K8+c1hXbk+zm3yh0CLtZCMW2e3nz
+ngxWa0f7Y7nie4bz5S8yWH8n4uK/bqvqX7w1+w0G6QslKz9JxaMnyjZWMpjw
+TTjXpCvuc0a+U8OgNevdnr1CcRsfNh5kcM3c6BPL1/bNU/lFDPY86fvK5d6s
+zqv/fTGBQUq/6zUpFe/yPNoZyKDDuTyj64rtfS1DSxQcUSEpRUIxubbQOUSh
+u+Lluhe44rbGnVfPUnh8pLvWQBTHXA+r/4RCGolJGJchQI4aD92toTDbc3v6
+tK647eeKZ+oolPCg1CKh2FZwP/FzCgNHnN2cK97a+NGDSxRuPWUMI0TxUtd3
+k/MUrBdaOqRkap4z1Pksg3C/6BxdV9wwYsiMZ+DY1rZZCMVL9otaPoPpiBte
+nCuOebxz7gBD3RHtlRNjqj+hU9ojKSnuFw5mqnopfv/r3YmvhaD4/5nd2amc
+UzxfW135xe0OxvvFV0clSRmM92+WNzua9WCsz5oYYC0UwVh/h/tKbywPxv54
+VSd96HJbsH8p9cMfjEkL9rfQOdvVrFuw/2lR3qpeC86ne7vhEucWnN/b3jve
+NBALzvf+H6UPxqWG8w9q/zTRoWuoj0d/9u4pERrqp9LUZNzCNdRXH5uyeRAN
+9dfkVVbl0INQn1/GpQ1wHoT6taWIvsvSjPrOSbYP5wsz6t/RrkevuAPRH/2e
+VttxPRD905OZXhLOA9Ff35uzzwxKE/rPZ+nAcq4woT8HB7JffeIOQP/mDP0V
+p+sB6O+tlrjyLTwA/b83zFI9Kf0xH1xXJ+6UCX/Mj57IbTu8iD/mS2vqOvhG
+34T5MwdkZDvfhPkUXnx9bkr6YX6Znd869ws/zDejy62WL+rwPw898pg=
+          "]], 
+         InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox["Z",
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {10., 10.9452}, 
+          ImageScaled[{Rational[1, 2], 0}]], 
+         {PointSize[0.04], PointBox[{6., 10.}], PointBox[{14., 10.}], 
+          {Thickness[0.015], LineBox[{{16.5, 7.}, {17.5, 8.}}], 
+           LineBox[{{16.5, 8.}, {17.5, 7.}}]}}, InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox["10",
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->11.729454545454546`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            11.729454545454546`]& ], {10., -0.5}, 
+          ImageScaled[{Rational[1, 2], 0}]]},
+        "\"aebe/cfdg/gfef.m\"",
+        TooltipStyle->"TextStyling"],
+       Annotation[#, "aebe/cfdg/gfef.m", "Tooltip"]& ],
+      AspectRatio->1,
+      PlotRange->{{-1, 21}, {-1, 21}}], {22, 22}, {0, 0}, {22, 22}], 
+    InsetBox[
+     GraphicsBox[
+      TagBox[
+       TooltipBox[
+        {Thickness[0.005], 
+         LineBox[{{-3.637978807091713*^-12, 15.}, {6.000000000001819, 10.}}], 
+         PolygonBox[{{3.4609327677584254`, 12.115889360201312`}, {
+          2.2829934723757828`, 12.576822127959739`}, {2.7951409921073664`, 
+          13.191399151637638`}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubscriptBox["u", "quarkGen"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {2.6125141805200567, 11.914057016624067},
+           ImageScaled[{1, 1}]], 
+         LineBox[{{0., 5.000000000001819}, {6.000000000001819, 
+          10.000000000001819`}}], 
+         PolygonBox[{{2.5390672322415746`, 7.1158893602013125`}, {
+          3.7170065276242172`, 7.576822127959737}, {3.2048590078926336`, 
+          8.191399151637638}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubscriptBox["u", "quarkGen"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {3.387485819479944, 6.914057016624067}, 
+          ImageScaled[{0, 1}]], 
+         {Dashing[{0.030000000000000002`, 0.030000000000000002`}], 
+          LineBox[{{19.99999999999818, 15.}, {17.00000000000182, 
+           12.500000000003638`}}]}, 
+         PolygonBox[{{18.039067232241575`, 13.365889360201312`}, {
+          18.704859007892633`, 14.441399151637638`}, {19.217006527624218`, 
+          13.826822127959739`}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubsuperscriptBox[
+              OverscriptBox["e", "~"], "i", "B"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {18.11251418052006, 14.335942983375933}, 
+          ImageScaled[{1, 0}]], 
+         {Dashing[{0.030000000000000002`, 0.030000000000000002`}], 
+          LineBox[{{19.99999999999818, 5.000000000001819}, {14., 10.}}]}, 
+         PolygonBox[{{17.460932767758425`, 7.1158893602013125`}, {
+          16.795140992107367`, 8.191399151637638}, {16.282993472375782`, 
+          7.576822127959737}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubsuperscriptBox[
+              OverscriptBox["e", "~"], "i", "A"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {17.38748581947994, 8.085942983375933}, 
+          ImageScaled[{0, 0}]], 
+         {Dashing[{0.030000000000000002`, 0.030000000000000002`}], 
+          LineBox[{{16.99999999999818, 12.5}, {14.000000000001819`, 
+           10.000000000003638`}}]}, 
+         PolygonBox[{{15.039067232241575`, 10.865889360201312`}, {
+          15.704859007892633`, 11.941399151637638`}, {16.217006527624218`, 
+          11.326822127959739`}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubsuperscriptBox[
+              OverscriptBox["e", "~"], "i", "A"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {15.112514180520058, 11.835942983375933},
+           ImageScaled[{1, 0}]], LineBox[CompressedData["
+1:eJw9lH9MlVUYx89Fu8YYf7QwEC6X93IOXn7Gj1Nmmfi4NhAY44JNLkHjh3IA
+WUFEszBBRzHbItEh8totZxGhuWRADDbbGL+TE+KFFaClMkVNGUTOgtm9Hfrj
+Odu7d5+dve85z/N8v19LQVlGoQchJF09a28XWVuR8P+LMFh+7kLTZRkB5Olj
+K8mRDB6OHf/spK44L5eYdjNouFFjyheK7b75rWUMns9y5UbxNfZyFFQzaCkp
+yFt1hwOBwo3Vhxh4nPL1HpWKi98b8HmLQVrpIjTpit8f741KY7BvcX5kn1C8
+65irysogI7BOcK64oar59iqFILPzloEotv2QvDBO4e8Ng8YJGQZk6cfo9eco
+nC/PaP9CV6zV9k/XUwh5PXNsv1B8uPnU8GEK2sGHmS9xxTfn/UtrKXRaefE6
+ojj048qKkxQmZydNV2QokH82zJ/topA1K8+c1hXbk+zm3yh0CLtZCMW2e3nz
+ngxWa0f7Y7nie4bz5S8yWH8n4uK/bqvqX7w1+w0G6QslKz9JxaMnyjZWMpjw
+TTjXpCvuc0a+U8OgNevdnr1CcRsfNh5kcM3c6BPL1/bNU/lFDPY86fvK5d6s
+zqv/fTGBQUq/6zUpFe/yPNoZyKDDuTyj64rtfS1DSxQcUSEpRUIxubbQOUSh
+u+Lluhe44rbGnVfPUnh8pLvWQBTHXA+r/4RCGolJGJchQI4aD92toTDbc3v6
+tK647eeKZ+oolPCg1CKh2FZwP/FzCgNHnN2cK97a+NGDSxRuPWUMI0TxUtd3
+k/MUrBdaOqRkap4z1Pksg3C/6BxdV9wwYsiMZ+DY1rZZCMVL9otaPoPpiBte
+nCuOebxz7gBD3RHtlRNjqj+hU9ojKSnuFw5mqnopfv/r3YmvhaD4/5nd2amc
+UzxfW135xe0OxvvFV0clSRmM92+WNzua9WCsz5oYYC0UwVh/h/tKbywPxv54
+VSd96HJbsH8p9cMfjEkL9rfQOdvVrFuw/2lR3qpeC86ne7vhEucWnN/b3jve
+NBALzvf+H6UPxqWG8w9q/zTRoWuoj0d/9u4pERrqp9LUZNzCNdRXH5uyeRAN
+9dfkVVbl0INQn1/GpQ1wHoT6taWIvsvSjPrOSbYP5wsz6t/RrkevuAPRH/2e
+VttxPRD905OZXhLOA9Ff35uzzwxKE/rPZ+nAcq4woT8HB7JffeIOQP/mDP0V
+p+sB6O+tlrjyLTwA/b83zFI9Kf0xH1xXJ+6UCX/Mj57IbTu8iD/mS2vqOvhG
+34T5MwdkZDvfhPkUXnx9bkr6YX6Znd869ws/zDejy62WL+rwPw898pg=
+          "]], 
+         InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox["\[Gamma]",
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {10., 9.0548}, 
+          ImageScaled[{Rational[1, 2], 1}]], 
+         {PointSize[0.04], PointBox[{6., 10.}], PointBox[{14., 10.}], 
+          {Thickness[0.015], LineBox[{{16.5, 12.}, {17.5, 13.}}], 
+           LineBox[{{16.5, 13.}, {17.5, 12.}}]}}, InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox["11",
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->11.729454545454546`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            11.729454545454546`]& ], {10., -0.5}, 
+          ImageScaled[{Rational[1, 2], 0}]]},
+        "\"aebe/cfdg/fgeg.m\"",
+        TooltipStyle->"TextStyling"],
+       Annotation[#, "aebe/cfdg/fgeg.m", "Tooltip"]& ],
+      AspectRatio->1,
+      PlotRange->{{-1, 21}, {-1, 21}}], {44, 22}, {0, 0}, {22, 22}], 
+    InsetBox[
+     GraphicsBox[
+      TagBox[
+       TooltipBox[
+        {Thickness[0.005], 
+         LineBox[{{-3.637978807091713*^-12, 15.}, {6.000000000001819, 10.}}], 
+         PolygonBox[{{3.4609327677584254`, 12.115889360201312`}, {
+          2.2829934723757828`, 12.576822127959739`}, {2.7951409921073664`, 
+          13.191399151637638`}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubscriptBox["u", "quarkGen"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {2.6125141805200567, 11.914057016624067},
+           ImageScaled[{1, 1}]], 
+         LineBox[{{0., 5.000000000001819}, {6.000000000001819, 
+          10.000000000001819`}}], 
+         PolygonBox[{{2.5390672322415746`, 7.1158893602013125`}, {
+          3.7170065276242172`, 7.576822127959737}, {3.2048590078926336`, 
+          8.191399151637638}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubscriptBox["u", "quarkGen"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {3.387485819479944, 6.914057016624067}, 
+          ImageScaled[{0, 1}]], 
+         {Dashing[{0.030000000000000002`, 0.030000000000000002`}], 
+          LineBox[{{19.99999999999818, 15.}, {17.00000000000182, 
+           12.500000000003638`}}]}, 
+         PolygonBox[{{18.039067232241575`, 13.365889360201312`}, {
+          18.704859007892633`, 14.441399151637638`}, {19.217006527624218`, 
+          13.826822127959739`}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubsuperscriptBox[
+              OverscriptBox["e", "~"], "i", "B"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {18.11251418052006, 14.335942983375933}, 
+          ImageScaled[{1, 0}]], 
+         {Dashing[{0.030000000000000002`, 0.030000000000000002`}], 
+          LineBox[{{19.99999999999818, 5.000000000001819}, {14., 10.}}]}, 
+         PolygonBox[{{17.460932767758425`, 7.1158893602013125`}, {
+          16.795140992107367`, 8.191399151637638}, {16.282993472375782`, 
+          7.576822127959737}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubsuperscriptBox[
+              OverscriptBox["e", "~"], "i", "A"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {17.38748581947994, 8.085942983375933}, 
+          ImageScaled[{0, 0}]], 
+         {Dashing[{0.030000000000000002`, 0.030000000000000002`}], 
+          LineBox[{{16.99999999999818, 12.5}, {14.000000000001819`, 
+           10.000000000003638`}}]}, 
+         PolygonBox[{{15.039067232241575`, 10.865889360201312`}, {
+          15.704859007892633`, 11.941399151637638`}, {16.217006527624218`, 
+          11.326822127959739`}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubsuperscriptBox[
+              OverscriptBox["e", "~"], "i", "w"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {15.112514180520058, 11.835942983375933},
+           ImageScaled[{1, 0}]], LineBox[CompressedData["
+1:eJw9lH9MlVUYx89Fu8YYf7QwEC6X93IOXn7Gj1Nmmfi4NhAY44JNLkHjh3IA
+WUFEszBBRzHbItEh8totZxGhuWRADDbbGL+TE+KFFaClMkVNGUTOgtm9Hfrj
+Odu7d5+dve85z/N8v19LQVlGoQchJF09a28XWVuR8P+LMFh+7kLTZRkB5Olj
+K8mRDB6OHf/spK44L5eYdjNouFFjyheK7b75rWUMns9y5UbxNfZyFFQzaCkp
+yFt1hwOBwo3Vhxh4nPL1HpWKi98b8HmLQVrpIjTpit8f741KY7BvcX5kn1C8
+65irysogI7BOcK64oar59iqFILPzloEotv2QvDBO4e8Ng8YJGQZk6cfo9eco
+nC/PaP9CV6zV9k/XUwh5PXNsv1B8uPnU8GEK2sGHmS9xxTfn/UtrKXRaefE6
+ojj048qKkxQmZydNV2QokH82zJ/topA1K8+c1hXbk+zm3yh0CLtZCMW2e3nz
+ngxWa0f7Y7nie4bz5S8yWH8n4uK/bqvqX7w1+w0G6QslKz9JxaMnyjZWMpjw
+TTjXpCvuc0a+U8OgNevdnr1CcRsfNh5kcM3c6BPL1/bNU/lFDPY86fvK5d6s
+zqv/fTGBQUq/6zUpFe/yPNoZyKDDuTyj64rtfS1DSxQcUSEpRUIxubbQOUSh
+u+Lluhe44rbGnVfPUnh8pLvWQBTHXA+r/4RCGolJGJchQI4aD92toTDbc3v6
+tK647eeKZ+oolPCg1CKh2FZwP/FzCgNHnN2cK97a+NGDSxRuPWUMI0TxUtd3
+k/MUrBdaOqRkap4z1Pksg3C/6BxdV9wwYsiMZ+DY1rZZCMVL9otaPoPpiBte
+nCuOebxz7gBD3RHtlRNjqj+hU9ojKSnuFw5mqnopfv/r3YmvhaD4/5nd2amc
+UzxfW135xe0OxvvFV0clSRmM92+WNzua9WCsz5oYYC0UwVh/h/tKbywPxv54
+VSd96HJbsH8p9cMfjEkL9rfQOdvVrFuw/2lR3qpeC86ne7vhEucWnN/b3jve
+NBALzvf+H6UPxqWG8w9q/zTRoWuoj0d/9u4pERrqp9LUZNzCNdRXH5uyeRAN
+9dfkVVbl0INQn1/GpQ1wHoT6taWIvsvSjPrOSbYP5wsz6t/RrkevuAPRH/2e
+VttxPRD905OZXhLOA9Ff35uzzwxKE/rPZ+nAcq4woT8HB7JffeIOQP/mDP0V
+p+sB6O+tlrjyLTwA/b83zFI9Kf0xH1xXJ+6UCX/Mj57IbTu8iD/mS2vqOvhG
+34T5MwdkZDvfhPkUXnx9bkr6YX6Znd869ws/zDejy62WL+rwPw898pg=
+          "]], 
+         InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox["Z",
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {10., 9.0548}, 
+          ImageScaled[{Rational[1, 2], 1}]], 
+         {PointSize[0.04], PointBox[{6., 10.}], PointBox[{14., 10.}], 
+          {Thickness[0.015], LineBox[{{16.5, 12.}, {17.5, 13.}}], 
+           LineBox[{{16.5, 13.}, {17.5, 12.}}]}}, InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox["12",
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->11.729454545454546`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            11.729454545454546`]& ], {10., -0.5}, 
+          ImageScaled[{Rational[1, 2], 0}]]},
+        "\"aebe/cfdg/fgeg.m\"",
+        TooltipStyle->"TextStyling"],
+       Annotation[#, "aebe/cfdg/fgeg.m", "Tooltip"]& ],
+      AspectRatio->1,
+      PlotRange->{{-1, 21}, {-1, 21}}], {66, 22}, {0, 0}, {22, 22}], 
+    InsetBox[
+     GraphicsBox[
+      TagBox[
+       TooltipBox[
+        {Thickness[0.005], 
+         LineBox[{{-3.637978807091713*^-12, 15.}, {6.000000000001819, 10.}}], 
+         PolygonBox[{{3.4609327677584254`, 12.115889360201312`}, {
+          2.2829934723757828`, 12.576822127959739`}, {2.7951409921073664`, 
+          13.191399151637638`}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubscriptBox["u", "quarkGen"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {2.6125141805200567, 11.914057016624067},
+           ImageScaled[{1, 1}]], 
+         LineBox[{{1.8189894035458565`*^-12, 5.}, {3.000000000001819, 
+          7.499999999998181}}], 
+         PolygonBox[{{1.0390672322415746`, 5.8658893602013125`}, {
+          2.2170065276242172`, 6.326822127959737}, {1.7048590078926336`, 
+          6.941399151637638}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubscriptBox["u", "quarkGen"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {1.8874858194799438, 5.664057016624067}, 
+          ImageScaled[{0, 1}]], 
+         {Dashing[{0.030000000000000002`, 0.030000000000000002`}], 
+          LineBox[{{20.00000000000182, 15.000000000001819`}, {14., 
+           9.999999999998181}}]}, 
+         PolygonBox[{{16.539067232241575`, 12.115889360201312`}, {
+          17.204859007892633`, 13.191399151637638`}, {17.717006527624218`, 
+          12.576822127959739`}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubsuperscriptBox[
+              OverscriptBox["e", "~"], "i", "B"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {16.61251418052006, 13.085942983375933}, 
+          ImageScaled[{1, 0}]], 
+         {Dashing[{0.030000000000000002`, 0.030000000000000002`}], 
+          LineBox[{{19.99999999999818, 5.000000000001819}, {14., 10.}}]}, 
+         PolygonBox[{{17.460932767758425`, 7.1158893602013125`}, {
+          16.795140992107367`, 8.191399151637638}, {16.282993472375782`, 
+          7.576822127959737}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubsuperscriptBox[
+              OverscriptBox["e", "~"], "i", "A"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {17.38748581947994, 8.085942983375933}, 
+          ImageScaled[{0, 0}]], 
+         LineBox[{{3.000000000001819, 7.5}, {6.000000000001819, 
+          9.999999999998181}}], 
+         PolygonBox[{{4.039067232241575, 8.365889360201312}, {
+          5.217006527624218, 8.826822127959739}, {4.704859007892633, 
+          9.441399151637638}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubscriptBox["u", "quarkGen"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {4.887485819479944, 8.164057016624067}, 
+          ImageScaled[{0, 1}]], LineBox[CompressedData["
+1:eJw9lH9MlVUYx89Fu8YYf7QwEC6X93IOXn7Gj1Nmmfi4NhAY44JNLkHjh3IA
+WUFEszBBRzHbItEh8totZxGhuWRADDbbGL+TE+KFFaClMkVNGUTOgtm9Hfrj
+Odu7d5+dve85z/N8v19LQVlGoQchJF09a28XWVuR8P+LMFh+7kLTZRkB5Olj
+K8mRDB6OHf/spK44L5eYdjNouFFjyheK7b75rWUMns9y5UbxNfZyFFQzaCkp
+yFt1hwOBwo3Vhxh4nPL1HpWKi98b8HmLQVrpIjTpit8f741KY7BvcX5kn1C8
+65irysogI7BOcK64oar59iqFILPzloEotv2QvDBO4e8Ng8YJGQZk6cfo9eco
+nC/PaP9CV6zV9k/XUwh5PXNsv1B8uPnU8GEK2sGHmS9xxTfn/UtrKXRaefE6
+ojj048qKkxQmZydNV2QokH82zJ/topA1K8+c1hXbk+zm3yh0CLtZCMW2e3nz
+ngxWa0f7Y7nie4bz5S8yWH8n4uK/bqvqX7w1+w0G6QslKz9JxaMnyjZWMpjw
+TTjXpCvuc0a+U8OgNevdnr1CcRsfNh5kcM3c6BPL1/bNU/lFDPY86fvK5d6s
+zqv/fTGBQUq/6zUpFe/yPNoZyKDDuTyj64rtfS1DSxQcUSEpRUIxubbQOUSh
+u+Lluhe44rbGnVfPUnh8pLvWQBTHXA+r/4RCGolJGJchQI4aD92toTDbc3v6
+tK647eeKZ+oolPCg1CKh2FZwP/FzCgNHnN2cK97a+NGDSxRuPWUMI0TxUtd3
+k/MUrBdaOqRkap4z1Pksg3C/6BxdV9wwYsiMZ+DY1rZZCMVL9otaPoPpiBte
+nCuOebxz7gBD3RHtlRNjqj+hU9ojKSnuFw5mqnopfv/r3YmvhaD4/5nd2amc
+UzxfW135xe0OxvvFV0clSRmM92+WNzua9WCsz5oYYC0UwVh/h/tKbywPxv54
+VSd96HJbsH8p9cMfjEkL9rfQOdvVrFuw/2lR3qpeC86ne7vhEucWnN/b3jve
+NBALzvf+H6UPxqWG8w9q/zTRoWuoj0d/9u4pERrqp9LUZNzCNdRXH5uyeRAN
+9dfkVVbl0INQn1/GpQ1wHoT6taWIvsvSjPrOSbYP5wsz6t/RrkevuAPRH/2e
+VttxPRD905OZXhLOA9Ff35uzzwxKE/rPZ+nAcq4woT8HB7JffeIOQP/mDP0V
+p+sB6O+tlrjyLTwA/b83zFI9Kf0xH1xXJ+6UCX/Mj57IbTu8iD/mS2vqOvhG
+34T5MwdkZDvfhPkUXnx9bkr6YX6Znd869ws/zDejy62WL+rwPw898pg=
+          "]], 
+         InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox["\[Gamma]",
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {10., 10.9452}, 
+          ImageScaled[{Rational[1, 2], 0}]], 
+         {PointSize[0.04], PointBox[{6., 10.}], PointBox[{14., 10.}], 
+          {Thickness[0.015], LineBox[{{2.5, 7.}, {3.5, 8.}}], 
+           LineBox[{{2.5, 8.}, {3.5, 7.}}]}}, InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox["13",
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->11.729454545454546`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            11.729454545454546`]& ], {10., -0.5}, 
+          ImageScaled[{Rational[1, 2], 0}]]},
+        "\"aebf/cgdg/feeg.m\"",
+        TooltipStyle->"TextStyling"],
+       Annotation[#, "aebf/cgdg/feeg.m", "Tooltip"]& ],
+      AspectRatio->1,
+      PlotRange->{{-1, 21}, {-1, 21}}], {0, 0}, {0, 0}, {22, 22}], InsetBox[
+     GraphicsBox[
+      TagBox[
+       TooltipBox[
+        {Thickness[0.005], 
+         LineBox[{{-3.637978807091713*^-12, 15.}, {6.000000000001819, 10.}}], 
+         PolygonBox[{{3.4609327677584254`, 12.115889360201312`}, {
+          2.2829934723757828`, 12.576822127959739`}, {2.7951409921073664`, 
+          13.191399151637638`}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubscriptBox["u", "quarkGen"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {2.6125141805200567, 11.914057016624067},
+           ImageScaled[{1, 1}]], 
+         LineBox[{{1.8189894035458565`*^-12, 5.}, {3.000000000001819, 
+          7.499999999998181}}], 
+         PolygonBox[{{1.0390672322415746`, 5.8658893602013125`}, {
+          2.2170065276242172`, 6.326822127959737}, {1.7048590078926336`, 
+          6.941399151637638}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubscriptBox["u", "quarkGen"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {1.8874858194799438, 5.664057016624067}, 
+          ImageScaled[{0, 1}]], 
+         {Dashing[{0.030000000000000002`, 0.030000000000000002`}], 
+          LineBox[{{20.00000000000182, 15.000000000001819`}, {14., 
+           9.999999999998181}}]}, 
+         PolygonBox[{{16.539067232241575`, 12.115889360201312`}, {
+          17.204859007892633`, 13.191399151637638`}, {17.717006527624218`, 
+          12.576822127959739`}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubsuperscriptBox[
+              OverscriptBox["e", "~"], "i", "B"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {16.61251418052006, 13.085942983375933}, 
+          ImageScaled[{1, 0}]], 
+         {Dashing[{0.030000000000000002`, 0.030000000000000002`}], 
+          LineBox[{{19.99999999999818, 5.000000000001819}, {14., 10.}}]}, 
+         PolygonBox[{{17.460932767758425`, 7.1158893602013125`}, {
+          16.795140992107367`, 8.191399151637638}, {16.282993472375782`, 
+          7.576822127959737}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubsuperscriptBox[
+              OverscriptBox["e", "~"], "i", "A"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {17.38748581947994, 8.085942983375933}, 
+          ImageScaled[{0, 0}]], 
+         LineBox[{{3.000000000001819, 7.5}, {6.000000000001819, 
+          9.999999999998181}}], 
+         PolygonBox[{{4.039067232241575, 8.365889360201312}, {
+          5.217006527624218, 8.826822127959739}, {4.704859007892633, 
+          9.441399151637638}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubscriptBox["u", "quarkGen"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {4.887485819479944, 8.164057016624067}, 
+          ImageScaled[{0, 1}]], LineBox[CompressedData["
+1:eJw9lH9MlVUYx89Fu8YYf7QwEC6X93IOXn7Gj1Nmmfi4NhAY44JNLkHjh3IA
+WUFEszBBRzHbItEh8totZxGhuWRADDbbGL+TE+KFFaClMkVNGUTOgtm9Hfrj
+Odu7d5+dve85z/N8v19LQVlGoQchJF09a28XWVuR8P+LMFh+7kLTZRkB5Olj
+K8mRDB6OHf/spK44L5eYdjNouFFjyheK7b75rWUMns9y5UbxNfZyFFQzaCkp
+yFt1hwOBwo3Vhxh4nPL1HpWKi98b8HmLQVrpIjTpit8f741KY7BvcX5kn1C8
+65irysogI7BOcK64oar59iqFILPzloEotv2QvDBO4e8Ng8YJGQZk6cfo9eco
+nC/PaP9CV6zV9k/XUwh5PXNsv1B8uPnU8GEK2sGHmS9xxTfn/UtrKXRaefE6
+ojj048qKkxQmZydNV2QokH82zJ/topA1K8+c1hXbk+zm3yh0CLtZCMW2e3nz
+ngxWa0f7Y7nie4bz5S8yWH8n4uK/bqvqX7w1+w0G6QslKz9JxaMnyjZWMpjw
+TTjXpCvuc0a+U8OgNevdnr1CcRsfNh5kcM3c6BPL1/bNU/lFDPY86fvK5d6s
+zqv/fTGBQUq/6zUpFe/yPNoZyKDDuTyj64rtfS1DSxQcUSEpRUIxubbQOUSh
+u+Lluhe44rbGnVfPUnh8pLvWQBTHXA+r/4RCGolJGJchQI4aD92toTDbc3v6
+tK647eeKZ+oolPCg1CKh2FZwP/FzCgNHnN2cK97a+NGDSxRuPWUMI0TxUtd3
+k/MUrBdaOqRkap4z1Pksg3C/6BxdV9wwYsiMZ+DY1rZZCMVL9otaPoPpiBte
+nCuOebxz7gBD3RHtlRNjqj+hU9ojKSnuFw5mqnopfv/r3YmvhaD4/5nd2amc
+UzxfW135xe0OxvvFV0clSRmM92+WNzua9WCsz5oYYC0UwVh/h/tKbywPxv54
+VSd96HJbsH8p9cMfjEkL9rfQOdvVrFuw/2lR3qpeC86ne7vhEucWnN/b3jve
+NBALzvf+H6UPxqWG8w9q/zTRoWuoj0d/9u4pERrqp9LUZNzCNdRXH5uyeRAN
+9dfkVVbl0INQn1/GpQ1wHoT6taWIvsvSjPrOSbYP5wsz6t/RrkevuAPRH/2e
+VttxPRD905OZXhLOA9Ff35uzzwxKE/rPZ+nAcq4woT8HB7JffeIOQP/mDP0V
+p+sB6O+tlrjyLTwA/b83zFI9Kf0xH1xXJ+6UCX/Mj57IbTu8iD/mS2vqOvhG
+34T5MwdkZDvfhPkUXnx9bkr6YX6Znd869ws/zDejy62WL+rwPw898pg=
+          "]], 
+         InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox["Z",
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {10., 10.9452}, 
+          ImageScaled[{Rational[1, 2], 0}]], 
+         {PointSize[0.04], PointBox[{6., 10.}], PointBox[{14., 10.}], 
+          {Thickness[0.015], LineBox[{{2.5, 7.}, {3.5, 8.}}], 
+           LineBox[{{2.5, 8.}, {3.5, 7.}}]}}, InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox["14",
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->11.729454545454546`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            11.729454545454546`]& ], {10., -0.5}, 
+          ImageScaled[{Rational[1, 2], 0}]]},
+        "\"aebf/cgdg/feeg.m\"",
+        TooltipStyle->"TextStyling"],
+       Annotation[#, "aebf/cgdg/feeg.m", "Tooltip"]& ],
+      AspectRatio->1,
+      PlotRange->{{-1, 21}, {-1, 21}}], {22, 0}, {0, 0}, {22, 22}], InsetBox[
+     GraphicsBox[
+      TagBox[
+       TooltipBox[
+        {Thickness[0.005], 
+         LineBox[{{0., 14.999999999998181`}, {2.999999999998181, 12.5}}], 
+         PolygonBox[{{1.9609327677584254`, 13.365889360201312`}, {
+          0.7829934723757828, 13.826822127959739`}, {1.2951409921073664`, 
+          14.441399151637638`}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubscriptBox["u", "quarkGen"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {1.1125141805200567, 13.164057016624067},
+           ImageScaled[{1, 1}]], 
+         LineBox[{{0., 5.000000000001819}, {6.000000000001819, 
+          10.000000000001819`}}], 
+         PolygonBox[{{2.5390672322415746`, 7.1158893602013125`}, {
+          3.7170065276242172`, 7.576822127959737}, {3.2048590078926336`, 
+          8.191399151637638}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubscriptBox["u", "quarkGen"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {3.387485819479944, 6.914057016624067}, 
+          ImageScaled[{0, 1}]], 
+         {Dashing[{0.030000000000000002`, 0.030000000000000002`}], 
+          LineBox[{{20.00000000000182, 15.000000000001819`}, {14., 
+           9.999999999998181}}]}, 
+         PolygonBox[{{16.539067232241575`, 12.115889360201312`}, {
+          17.204859007892633`, 13.191399151637638`}, {17.717006527624218`, 
+          12.576822127959739`}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubsuperscriptBox[
+              OverscriptBox["e", "~"], "i", "B"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {16.61251418052006, 13.085942983375933}, 
+          ImageScaled[{1, 0}]], 
+         {Dashing[{0.030000000000000002`, 0.030000000000000002`}], 
+          LineBox[{{19.99999999999818, 5.000000000001819}, {14., 10.}}]}, 
+         PolygonBox[{{17.460932767758425`, 7.1158893602013125`}, {
+          16.795140992107367`, 8.191399151637638}, {16.282993472375782`, 
+          7.576822127959737}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubsuperscriptBox[
+              OverscriptBox["e", "~"], "i", "A"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {17.38748581947994, 8.085942983375933}, 
+          ImageScaled[{0, 0}]], 
+         LineBox[{{3., 12.499999999998181`}, {5.999999999998181, 10.}}], 
+         PolygonBox[{{4.960932767758425, 10.865889360201312`}, {
+          3.7829934723757828`, 11.326822127959739`}, {4.295140992107367, 
+          11.941399151637638`}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubscriptBox["u", "quarkGen"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {4.887485819479943, 11.835942983375933}, 
+          ImageScaled[{0, 0}]], LineBox[CompressedData["
+1:eJw9lH9MlVUYx89Fu8YYf7QwEC6X93IOXn7Gj1Nmmfi4NhAY44JNLkHjh3IA
+WUFEszBBRzHbItEh8totZxGhuWRADDbbGL+TE+KFFaClMkVNGUTOgtm9Hfrj
+Odu7d5+dve85z/N8v19LQVlGoQchJF09a28XWVuR8P+LMFh+7kLTZRkB5Olj
+K8mRDB6OHf/spK44L5eYdjNouFFjyheK7b75rWUMns9y5UbxNfZyFFQzaCkp
+yFt1hwOBwo3Vhxh4nPL1HpWKi98b8HmLQVrpIjTpit8f741KY7BvcX5kn1C8
+65irysogI7BOcK64oar59iqFILPzloEotv2QvDBO4e8Ng8YJGQZk6cfo9eco
+nC/PaP9CV6zV9k/XUwh5PXNsv1B8uPnU8GEK2sGHmS9xxTfn/UtrKXRaefE6
+ojj048qKkxQmZydNV2QokH82zJ/topA1K8+c1hXbk+zm3yh0CLtZCMW2e3nz
+ngxWa0f7Y7nie4bz5S8yWH8n4uK/bqvqX7w1+w0G6QslKz9JxaMnyjZWMpjw
+TTjXpCvuc0a+U8OgNevdnr1CcRsfNh5kcM3c6BPL1/bNU/lFDPY86fvK5d6s
+zqv/fTGBQUq/6zUpFe/yPNoZyKDDuTyj64rtfS1DSxQcUSEpRUIxubbQOUSh
+u+Lluhe44rbGnVfPUnh8pLvWQBTHXA+r/4RCGolJGJchQI4aD92toTDbc3v6
+tK647eeKZ+oolPCg1CKh2FZwP/FzCgNHnN2cK97a+NGDSxRuPWUMI0TxUtd3
+k/MUrBdaOqRkap4z1Pksg3C/6BxdV9wwYsiMZ+DY1rZZCMVL9otaPoPpiBte
+nCuOebxz7gBD3RHtlRNjqj+hU9ojKSnuFw5mqnopfv/r3YmvhaD4/5nd2amc
+UzxfW135xe0OxvvFV0clSRmM92+WNzua9WCsz5oYYC0UwVh/h/tKbywPxv54
+VSd96HJbsH8p9cMfjEkL9rfQOdvVrFuw/2lR3qpeC86ne7vhEucWnN/b3jve
+NBALzvf+H6UPxqWG8w9q/zTRoWuoj0d/9u4pERrqp9LUZNzCNdRXH5uyeRAN
+9dfkVVbl0INQn1/GpQ1wHoT6taWIvsvSjPrOSbYP5wsz6t/RrkevuAPRH/2e
+VttxPRD905OZXhLOA9Ff35uzzwxKE/rPZ+nAcq4woT8HB7JffeIOQP/mDP0V
+p+sB6O+tlrjyLTwA/b83zFI9Kf0xH1xXJ+6UCX/Mj57IbTu8iD/mS2vqOvhG
+34T5MwdkZDvfhPkUXnx9bkr6YX6Znd869ws/zDejy62WL+rwPw898pg=
+          "]], 
+         InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox["\[Gamma]",
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {10., 9.0548}, 
+          ImageScaled[{Rational[1, 2], 1}]], 
+         {PointSize[0.04], PointBox[{6., 10.}], PointBox[{14., 10.}], 
+          {Thickness[0.015], LineBox[{{2.5, 12.}, {3.5, 13.}}], 
+           LineBox[{{2.5, 13.}, {3.5, 12.}}]}}, InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox["15",
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->11.729454545454546`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            11.729454545454546`]& ], {10., -0.5}, 
+          ImageScaled[{Rational[1, 2], 0}]]},
+        "\"aebf/cgdg/effg.m\"",
+        TooltipStyle->"TextStyling"],
+       Annotation[#, "aebf/cgdg/effg.m", "Tooltip"]& ],
+      AspectRatio->1,
+      PlotRange->{{-1, 21}, {-1, 21}}], {44, 0}, {0, 0}, {22, 22}], InsetBox[
+     GraphicsBox[
+      TagBox[
+       TooltipBox[
+        {Thickness[0.005], 
+         LineBox[{{0., 14.999999999998181`}, {2.999999999998181, 12.5}}], 
+         PolygonBox[{{1.9609327677584254`, 13.365889360201312`}, {
+          0.7829934723757828, 13.826822127959739`}, {1.2951409921073664`, 
+          14.441399151637638`}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubscriptBox["u", "quarkGen"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {1.1125141805200567, 13.164057016624067},
+           ImageScaled[{1, 1}]], 
+         LineBox[{{0., 5.000000000001819}, {6.000000000001819, 
+          10.000000000001819`}}], 
+         PolygonBox[{{2.5390672322415746`, 7.1158893602013125`}, {
+          3.7170065276242172`, 7.576822127959737}, {3.2048590078926336`, 
+          8.191399151637638}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubscriptBox["u", "quarkGen"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {3.387485819479944, 6.914057016624067}, 
+          ImageScaled[{0, 1}]], 
+         {Dashing[{0.030000000000000002`, 0.030000000000000002`}], 
+          LineBox[{{20.00000000000182, 15.000000000001819`}, {14., 
+           9.999999999998181}}]}, 
+         PolygonBox[{{16.539067232241575`, 12.115889360201312`}, {
+          17.204859007892633`, 13.191399151637638`}, {17.717006527624218`, 
+          12.576822127959739`}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubsuperscriptBox[
+              OverscriptBox["e", "~"], "i", "B"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {16.61251418052006, 13.085942983375933}, 
+          ImageScaled[{1, 0}]], 
+         {Dashing[{0.030000000000000002`, 0.030000000000000002`}], 
+          LineBox[{{19.99999999999818, 5.000000000001819}, {14., 10.}}]}, 
+         PolygonBox[{{17.460932767758425`, 7.1158893602013125`}, {
+          16.795140992107367`, 8.191399151637638}, {16.282993472375782`, 
+          7.576822127959737}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubsuperscriptBox[
+              OverscriptBox["e", "~"], "i", "A"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {17.38748581947994, 8.085942983375933}, 
+          ImageScaled[{0, 0}]], 
+         LineBox[{{3., 12.499999999998181`}, {5.999999999998181, 10.}}], 
+         PolygonBox[{{4.960932767758425, 10.865889360201312`}, {
+          3.7829934723757828`, 11.326822127959739`}, {4.295140992107367, 
+          11.941399151637638`}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubscriptBox["u", "quarkGen"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {4.887485819479943, 11.835942983375933}, 
+          ImageScaled[{0, 0}]], LineBox[CompressedData["
+1:eJw9lH9MlVUYx89Fu8YYf7QwEC6X93IOXn7Gj1Nmmfi4NhAY44JNLkHjh3IA
+WUFEszBBRzHbItEh8totZxGhuWRADDbbGL+TE+KFFaClMkVNGUTOgtm9Hfrj
+Odu7d5+dve85z/N8v19LQVlGoQchJF09a28XWVuR8P+LMFh+7kLTZRkB5Olj
+K8mRDB6OHf/spK44L5eYdjNouFFjyheK7b75rWUMns9y5UbxNfZyFFQzaCkp
+yFt1hwOBwo3Vhxh4nPL1HpWKi98b8HmLQVrpIjTpit8f741KY7BvcX5kn1C8
+65irysogI7BOcK64oar59iqFILPzloEotv2QvDBO4e8Ng8YJGQZk6cfo9eco
+nC/PaP9CV6zV9k/XUwh5PXNsv1B8uPnU8GEK2sGHmS9xxTfn/UtrKXRaefE6
+ojj048qKkxQmZydNV2QokH82zJ/topA1K8+c1hXbk+zm3yh0CLtZCMW2e3nz
+ngxWa0f7Y7nie4bz5S8yWH8n4uK/bqvqX7w1+w0G6QslKz9JxaMnyjZWMpjw
+TTjXpCvuc0a+U8OgNevdnr1CcRsfNh5kcM3c6BPL1/bNU/lFDPY86fvK5d6s
+zqv/fTGBQUq/6zUpFe/yPNoZyKDDuTyj64rtfS1DSxQcUSEpRUIxubbQOUSh
+u+Lluhe44rbGnVfPUnh8pLvWQBTHXA+r/4RCGolJGJchQI4aD92toTDbc3v6
+tK647eeKZ+oolPCg1CKh2FZwP/FzCgNHnN2cK97a+NGDSxRuPWUMI0TxUtd3
+k/MUrBdaOqRkap4z1Pksg3C/6BxdV9wwYsiMZ+DY1rZZCMVL9otaPoPpiBte
+nCuOebxz7gBD3RHtlRNjqj+hU9ojKSnuFw5mqnopfv/r3YmvhaD4/5nd2amc
+UzxfW135xe0OxvvFV0clSRmM92+WNzua9WCsz5oYYC0UwVh/h/tKbywPxv54
+VSd96HJbsH8p9cMfjEkL9rfQOdvVrFuw/2lR3qpeC86ne7vhEucWnN/b3jve
+NBALzvf+H6UPxqWG8w9q/zTRoWuoj0d/9u4pERrqp9LUZNzCNdRXH5uyeRAN
+9dfkVVbl0INQn1/GpQ1wHoT6taWIvsvSjPrOSbYP5wsz6t/RrkevuAPRH/2e
+VttxPRD905OZXhLOA9Ff35uzzwxKE/rPZ+nAcq4woT8HB7JffeIOQP/mDP0V
+p+sB6O+tlrjyLTwA/b83zFI9Kf0xH1xXJ+6UCX/Mj57IbTu8iD/mS2vqOvhG
+34T5MwdkZDvfhPkUXnx9bkr6YX6Znd869ws/zDejy62WL+rwPw898pg=
+          "]], 
+         InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox["Z",
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->14.661818181818182`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            14.661818181818182`]& ], {10., 9.0548}, 
+          ImageScaled[{Rational[1, 2], 1}]], 
+         {PointSize[0.04], PointBox[{6., 10.}], PointBox[{14., 10.}], 
+          {Thickness[0.015], LineBox[{{2.5, 12.}, {3.5, 13.}}], 
+           LineBox[{{2.5, 13.}, {3.5, 12.}}]}}, InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox["16",
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->11.729454545454546`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            11.729454545454546`]& ], {10., -0.5}, 
+          ImageScaled[{Rational[1, 2], 0}]]},
+        "\"aebf/cgdg/effg.m\"",
+        TooltipStyle->"TextStyling"],
+       Annotation[#, "aebf/cgdg/effg.m", "Tooltip"]& ],
+      AspectRatio->1,
+      PlotRange->{{-1, 21}, {-1, 21}}], {66, 0}, {0, 0}, {22, 22}]},
+   AspectRatio->NCache[
+     Rational[1, 2], 0.5],
+   ImageSize->{512, 256},
+   PlotRange->{{0, 88}, {0, 44}}], TraditionalForm]], "Print",
+ CellChangeTimes->{3.9792956793776197`*^9, 3.979295725635898*^9, 
+  3.979295980857895*^9, 3.979296397926196*^9, 3.979296569848654*^9, 
+  3.979654146482934*^9},
+ CellLabel->
+  "During evaluation of \
+In[16]:=",ExpressionUUID->"cda6f6cd-a544-4ac3-befe-99c3a1db501d"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"diagsCT", "[", "1", "]"}], "=", 
+   RowBox[{"DiagramExtract", "[", 
+    RowBox[{
+     RowBox[{"diagsCT", "[", "0", "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"1", ",", "2"}], "}"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Paint", "[", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"diagsCT", "[", "1", "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ColumnsXRows", "->", 
+     RowBox[{"{", 
+      RowBox[{"2", ",", "1"}], "}"}]}], ",", "\[IndentingNewLine]", 
+    RowBox[{"SheetHeader", "->", "None"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"Numbering", "->", "Simple"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ImageSize", "->", 
+     RowBox[{"{", 
+      RowBox[{"512", ",", "256"}], "}"}]}]}], "\[IndentingNewLine]", "]"}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.979295781230146*^9, 3.979295801838316*^9}, {
+  3.97929589995257*^9, 3.979295975318667*^9}},
+ CellLabel->"In[18]:=",ExpressionUUID->"ea19dae7-59c3-479d-912e-394b20af3a71"],
+
+Cell[BoxData[
+ FormBox[
+  GraphicsBox[{InsetBox[
+     GraphicsBox[
+      TagBox[
+       TooltipBox[
+        {Thickness[0.005], 
+         LineBox[{{-3.637978807091713*^-12, 15.}, {6.000000000001819, 10.}}], 
+         PolygonBox[{{3.4609327677584254`, 12.115889360201312`}, {
+          2.2829934723757828`, 12.576822127959739`}, {2.7951409921073664`, 
+          13.191399151637638`}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubscriptBox["u", "quarkGen"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->29.323636363636364`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            29.323636363636364`]& ], {2.6125141805200567, 11.914057016624067},
+           ImageScaled[{1, 1}]], 
+         LineBox[{{0., 5.000000000001819}, {6.000000000001819, 
+          10.000000000001819`}}], 
+         PolygonBox[{{2.5390672322415746`, 7.1158893602013125`}, {
+          3.7170065276242172`, 7.576822127959737}, {3.2048590078926336`, 
+          8.191399151637638}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubscriptBox["u", "quarkGen"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->29.323636363636364`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            29.323636363636364`]& ], {3.387485819479944, 6.914057016624067}, 
+          ImageScaled[{0, 1}]], 
+         {Dashing[{0.030000000000000002`, 0.030000000000000002`}], 
+          LineBox[{{20.00000000000182, 15.000000000001819`}, {14., 
+           9.999999999998181}}]}, 
+         PolygonBox[{{16.539067232241575`, 12.115889360201312`}, {
+          17.204859007892633`, 13.191399151637638`}, {17.717006527624218`, 
+          12.576822127959739`}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubsuperscriptBox[
+              OverscriptBox["e", "~"], "i", "B"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->29.323636363636364`],
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            29.323636363636364`]& ], {16.61251418052006, 13.085942983375933}, 
+          ImageScaled[{1, 0}]], 
+         {Dashing[{0.030000000000000002`, 0.030000000000000002`}], 
+          LineBox[{{19.99999999999818, 5.000000000001819}, {14., 10.}}]}, 
+         PolygonBox[{{17.460932767758425`, 7.1158893602013125`}, {
+          16.795140992107367`, 8.191399151637638}, {16.282993472375782`, 
+          7.576822127959737}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubsuperscriptBox[
+              OverscriptBox["e", "~"], "i", "A"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->29.323636363636364`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            29.323636363636364`]& ], {17.38748581947994, 8.085942983375933}, 
+          ImageScaled[{0, 0}]], LineBox[CompressedData["
+1:eJw9lH9MlVUYx89Fu8YYf7QwEC6X93IOXn7Gj1Nmmfi4NhAY44JNLkHjh3IA
+WUFEszBBRzHbItEh8totZxGhuWRADDbbGL+TE+KFFaClMkVNGUTOgtm9Hfrj
+Odu7d5+dve85z/N8v19LQVlGoQchJF09a28XWVuR8P+LMFh+7kLTZRkB5Olj
+K8mRDB6OHf/spK44L5eYdjNouFFjyheK7b75rWUMns9y5UbxNfZyFFQzaCkp
+yFt1hwOBwo3Vhxh4nPL1HpWKi98b8HmLQVrpIjTpit8f741KY7BvcX5kn1C8
+65irysogI7BOcK64oar59iqFILPzloEotv2QvDBO4e8Ng8YJGQZk6cfo9eco
+nC/PaP9CV6zV9k/XUwh5PXNsv1B8uPnU8GEK2sGHmS9xxTfn/UtrKXRaefE6
+ojj048qKkxQmZydNV2QokH82zJ/topA1K8+c1hXbk+zm3yh0CLtZCMW2e3nz
+ngxWa0f7Y7nie4bz5S8yWH8n4uK/bqvqX7w1+w0G6QslKz9JxaMnyjZWMpjw
+TTjXpCvuc0a+U8OgNevdnr1CcRsfNh5kcM3c6BPL1/bNU/lFDPY86fvK5d6s
+zqv/fTGBQUq/6zUpFe/yPNoZyKDDuTyj64rtfS1DSxQcUSEpRUIxubbQOUSh
+u+Lluhe44rbGnVfPUnh8pLvWQBTHXA+r/4RCGolJGJchQI4aD92toTDbc3v6
+tK647eeKZ+oolPCg1CKh2FZwP/FzCgNHnN2cK97a+NGDSxRuPWUMI0TxUtd3
+k/MUrBdaOqRkap4z1Pksg3C/6BxdV9wwYsiMZ+DY1rZZCMVL9otaPoPpiBte
+nCuOebxz7gBD3RHtlRNjqj+hU9ojKSnuFw5mqnopfv/r3YmvhaD4/5nd2amc
+UzxfW135xe0OxvvFV0clSRmM92+WNzua9WCsz5oYYC0UwVh/h/tKbywPxv54
+VSd96HJbsH8p9cMfjEkL9rfQOdvVrFuw/2lR3qpeC86ne7vhEucWnN/b3jve
+NBALzvf+H6UPxqWG8w9q/zTRoWuoj0d/9u4pERrqp9LUZNzCNdRXH5uyeRAN
+9dfkVVbl0INQn1/GpQ1wHoT6taWIvsvSjPrOSbYP5wsz6t/RrkevuAPRH/2e
+VttxPRD905OZXhLOA9Ff35uzzwxKE/rPZ+nAcq4woT8HB7JffeIOQP/mDP0V
+p+sB6O+tlrjyLTwA/b83zFI9Kf0xH1xXJ+6UCX/Mj57IbTu8iD/mS2vqOvhG
+34T5MwdkZDvfhPkUXnx9bkr6YX6Znd869ws/zDejy62WL+rwPw898pg=
+          "]], 
+         InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox["\[Gamma]",
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->29.323636363636364`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            29.323636363636364`]& ], {10., 9.0548}, 
+          ImageScaled[{Rational[1, 2], 1}]], 
+         {PointSize[0.04], PointBox[{6., 10.}], 
+          {Thickness[0.015], LineBox[{{13.5, 9.5}, {14.5, 10.5}}], 
+           LineBox[{{13.5, 10.5}, {14.5, 9.5}}]}}, InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox["1",
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->23.458909090909092`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            23.458909090909092`]& ], {10., -0.5}, 
+          ImageScaled[{Rational[1, 2], 0}]]},
+        "\"aebe/cfdf/ef.m\"",
+        TooltipStyle->"TextStyling"],
+       Annotation[#, "aebe/cfdf/ef.m", "Tooltip"]& ],
+      AspectRatio->1,
+      PlotRange->{{-1, 21}, {-1, 21}}], {0, 0}, {0, 0}, {22, 22}], InsetBox[
+     GraphicsBox[
+      TagBox[
+       TooltipBox[
+        {Thickness[0.005], 
+         LineBox[{{-3.637978807091713*^-12, 15.}, {6.000000000001819, 10.}}], 
+         PolygonBox[{{3.4609327677584254`, 12.115889360201312`}, {
+          2.2829934723757828`, 12.576822127959739`}, {2.7951409921073664`, 
+          13.191399151637638`}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubscriptBox["u", "quarkGen"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->29.323636363636364`],
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            29.323636363636364`]& ], {2.6125141805200567, 11.914057016624067},
+           ImageScaled[{1, 1}]], 
+         LineBox[{{0., 5.000000000001819}, {6.000000000001819, 
+          10.000000000001819`}}], 
+         PolygonBox[{{2.5390672322415746`, 7.1158893602013125`}, {
+          3.7170065276242172`, 7.576822127959737}, {3.2048590078926336`, 
+          8.191399151637638}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubscriptBox["u", "quarkGen"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->29.323636363636364`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            29.323636363636364`]& ], {3.387485819479944, 6.914057016624067}, 
+          ImageScaled[{0, 1}]], 
+         {Dashing[{0.030000000000000002`, 0.030000000000000002`}], 
+          LineBox[{{20.00000000000182, 15.000000000001819`}, {14., 
+           9.999999999998181}}]}, 
+         PolygonBox[{{16.539067232241575`, 12.115889360201312`}, {
+          17.204859007892633`, 13.191399151637638`}, {17.717006527624218`, 
+          12.576822127959739`}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubsuperscriptBox[
+              OverscriptBox["e", "~"], "i", "B"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->29.323636363636364`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            29.323636363636364`]& ], {16.61251418052006, 13.085942983375933}, 
+          ImageScaled[{1, 0}]], 
+         {Dashing[{0.030000000000000002`, 0.030000000000000002`}], 
+          LineBox[{{19.99999999999818, 5.000000000001819}, {14., 10.}}]}, 
+         PolygonBox[{{17.460932767758425`, 7.1158893602013125`}, {
+          16.795140992107367`, 8.191399151637638}, {16.282993472375782`, 
+          7.576822127959737}}], InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox[
+             SubsuperscriptBox[
+              OverscriptBox["e", "~"], "i", "A"],
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->29.323636363636364`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            29.323636363636364`]& ], {17.38748581947994, 8.085942983375933}, 
+          ImageScaled[{0, 0}]], LineBox[CompressedData["
+1:eJw9lH9MlVUYx89Fu8YYf7QwEC6X93IOXn7Gj1Nmmfi4NhAY44JNLkHjh3IA
+WUFEszBBRzHbItEh8totZxGhuWRADDbbGL+TE+KFFaClMkVNGUTOgtm9Hfrj
+Odu7d5+dve85z/N8v19LQVlGoQchJF09a28XWVuR8P+LMFh+7kLTZRkB5Olj
+K8mRDB6OHf/spK44L5eYdjNouFFjyheK7b75rWUMns9y5UbxNfZyFFQzaCkp
+yFt1hwOBwo3Vhxh4nPL1HpWKi98b8HmLQVrpIjTpit8f741KY7BvcX5kn1C8
+65irysogI7BOcK64oar59iqFILPzloEotv2QvDBO4e8Ng8YJGQZk6cfo9eco
+nC/PaP9CV6zV9k/XUwh5PXNsv1B8uPnU8GEK2sGHmS9xxTfn/UtrKXRaefE6
+ojj048qKkxQmZydNV2QokH82zJ/topA1K8+c1hXbk+zm3yh0CLtZCMW2e3nz
+ngxWa0f7Y7nie4bz5S8yWH8n4uK/bqvqX7w1+w0G6QslKz9JxaMnyjZWMpjw
+TTjXpCvuc0a+U8OgNevdnr1CcRsfNh5kcM3c6BPL1/bNU/lFDPY86fvK5d6s
+zqv/fTGBQUq/6zUpFe/yPNoZyKDDuTyj64rtfS1DSxQcUSEpRUIxubbQOUSh
+u+Lluhe44rbGnVfPUnh8pLvWQBTHXA+r/4RCGolJGJchQI4aD92toTDbc3v6
+tK647eeKZ+oolPCg1CKh2FZwP/FzCgNHnN2cK97a+NGDSxRuPWUMI0TxUtd3
+k/MUrBdaOqRkap4z1Pksg3C/6BxdV9wwYsiMZ+DY1rZZCMVL9otaPoPpiBte
+nCuOebxz7gBD3RHtlRNjqj+hU9ojKSnuFw5mqnopfv/r3YmvhaD4/5nd2amc
+UzxfW135xe0OxvvFV0clSRmM92+WNzua9WCsz5oYYC0UwVh/h/tKbywPxv54
+VSd96HJbsH8p9cMfjEkL9rfQOdvVrFuw/2lR3qpeC86ne7vhEucWnN/b3jve
+NBALzvf+H6UPxqWG8w9q/zTRoWuoj0d/9u4pERrqp9LUZNzCNdRXH5uyeRAN
+9dfkVVbl0INQn1/GpQ1wHoT6taWIvsvSjPrOSbYP5wsz6t/RrkevuAPRH/2e
+VttxPRD905OZXhLOA9Ff35uzzwxKE/rPZ+nAcq4woT8HB7JffeIOQP/mDP0V
+p+sB6O+tlrjyLTwA/b83zFI9Kf0xH1xXJ+6UCX/Mj57IbTu8iD/mS2vqOvhG
+34T5MwdkZDvfhPkUXnx9bkr6YX6Znd869ws/zDejy62WL+rwPw898pg=
+          "]], 
+         InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox["Z",
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->29.323636363636364`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            29.323636363636364`]& ], {10., 9.0548}, 
+          ImageScaled[{Rational[1, 2], 1}]], 
+         {PointSize[0.04], PointBox[{6., 10.}], 
+          {Thickness[0.015], LineBox[{{13.5, 9.5}, {14.5, 10.5}}], 
+           LineBox[{{13.5, 10.5}, {14.5, 9.5}}]}}, InsetBox[
+          TagBox[
+           StyleBox[
+            TagBox["2",
+             DisplayForm],
+            FontFamily->"Helvetica",
+            FontSize->23.458909090909092`],
+           
+           StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+            23.458909090909092`]& ], {10., -0.5}, 
+          ImageScaled[{Rational[1, 2], 0}]]},
+        "\"aebe/cfdf/ef.m\"",
+        TooltipStyle->"TextStyling"],
+       Annotation[#, "aebe/cfdf/ef.m", "Tooltip"]& ],
+      AspectRatio->1,
+      PlotRange->{{-1, 21}, {-1, 21}}], {22, 0}, {0, 0}, {22, 22}]},
+   AspectRatio->NCache[
+     Rational[1, 2], 0.5],
+   ImageSize->{512, 256},
+   PlotRange->{{0, 44}, {0, 22}}], TraditionalForm]], "Print",
+ CellChangeTimes->{{3.979295959061825*^9, 3.9792959756478357`*^9}, 
+   3.9792963979606247`*^9, 3.979296569886134*^9, 3.97965414650093*^9},
+ CellLabel->
+  "During evaluation of \
+In[18]:=",ExpressionUUID->"04c800ea-b667-4cf4-a110-783401e0da16"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"MCTlist", "[", "0", "]"}], "=", 
+  RowBox[{
+   RowBox[{"FCFAConvert", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"CreateFeynAmp", "[", 
+      RowBox[{"diagsCT", "[", "1", "]"}], "]"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"IncomingMomenta", "->", 
+      RowBox[{"{", 
+       RowBox[{"p1", ",", "p2"}], "}"}]}], ",", "\[IndentingNewLine]", 
+     RowBox[{"OutgoingMomenta", "->", 
+      RowBox[{"{", 
+       RowBox[{"k1", ",", "k2"}], "}"}]}], ",", "\[IndentingNewLine]", 
+     RowBox[{"ChangeDimension", "->", "D"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"UndoChiralSplittings", "->", "True"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"Contract", "->", "True"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"DropSumOver", "->", "True"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"SMP", "->", "True"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"List", "->", "True"}]}], "\[IndentingNewLine]", "]"}], "/.", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"MQU", "[", "quarkGen", "]"}], "->", "0"}], "}"}]}]}]], "Input",
+ CellChangeTimes->{{3.979296012779811*^9, 3.979296086788952*^9}},
+ CellLabel->"In[20]:=",ExpressionUUID->"da325130-f41e-4450-9abc-d63ba17fe3ca"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"{", 
+   RowBox[{
+    FormBox[
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{
+        SuperscriptBox["\<\"e\"\>", "2"], " ", 
+        SubscriptBox["\[Delta]", 
+         RowBox[{
+          FormBox[
+           FormBox["Col1",
+            TraditionalForm],
+           TraditionalForm], 
+          FormBox[
+           FormBox["Col2",
+            TraditionalForm],
+           TraditionalForm]}]], " ", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{
+           FormBox["\<\"\[CurlyPhi]\"\>",
+            TraditionalForm], 
+           FormBox["\<\"(\"\>",
+            TraditionalForm], 
+           FormBox[
+            RowBox[{"-", 
+             FormBox[
+              SubscriptBox["p", "2"],
+              TraditionalForm]}],
+            TraditionalForm], 
+           FormBox["\<\")\"\>",
+            TraditionalForm]}], ")"}], ".", 
+         RowBox[{"(", 
+          RowBox[{"\[Gamma]", "\[CenterDot]", "(", 
+           FormBox[
+            FormBox[
+             RowBox[{
+              FormBox[
+               SubscriptBox["k", "1"],
+               TraditionalForm], "-", 
+              FormBox[
+               SubscriptBox["k", "2"],
+               TraditionalForm]}],
+             TraditionalForm],
+            TraditionalForm], ")"}], ")"}], ".", 
+         RowBox[{"(", 
+          RowBox[{
+           FormBox["\<\"\[CurlyPhi]\"\>",
+            TraditionalForm], 
+           FormBox["\<\"(\"\>",
+            TraditionalForm], 
+           FormBox[
+            FormBox[
+             SubscriptBox["p", "1"],
+             TraditionalForm],
+            TraditionalForm], 
+           FormBox["\<\")\"\>",
+            TraditionalForm]}], ")"}]}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"dZZA1", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{"1", "-", 
+                RowBox[{"2", " ", 
+                 SuperscriptBox[
+                  RowBox[{"(", 
+                   RowBox[{
+                    RowBox[{"sin", "("}], 
+                    SubscriptBox["\[Theta]", "W"], ")"}], ")"}], "2"]}]}], 
+               ")"}], " ", 
+              RowBox[{
+               RowBox[{"USf", "(", 
+                RowBox[{"2", ",", "i"}], ")"}], "\[InvisibleApplication]", 
+               RowBox[{"(", 
+                RowBox[{"A", ",", "1"}], ")"}]}], " ", 
+              TemplateBox[{
+                RowBox[{"(", 
+                  RowBox[{
+                    RowBox[{"USf", "(", 
+                    RowBox[{"2", ",", "i"}], ")"}], "\[InvisibleApplication]", 
+                    RowBox[{"(", 
+                    RowBox[{"B", ",", "1"}], ")"}]}], ")"}]},
+               "Conjugate"]}], "-", 
+             RowBox[{"2", " ", 
+              SuperscriptBox[
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"sin", "("}], 
+                 SubscriptBox["\[Theta]", "W"], ")"}], ")"}], "2"], " ", 
+              RowBox[{
+               RowBox[{"USf", "(", 
+                RowBox[{"2", ",", "i"}], ")"}], "\[InvisibleApplication]", 
+               RowBox[{"(", 
+                RowBox[{"A", ",", "2"}], ")"}]}], " ", 
+              TemplateBox[{
+                RowBox[{"(", 
+                  RowBox[{
+                    RowBox[{"USf", "(", 
+                    RowBox[{"2", ",", "i"}], ")"}], "\[InvisibleApplication]", 
+                    RowBox[{"(", 
+                    RowBox[{"B", ",", "2"}], ")"}]}], ")"}]},
+               "Conjugate"]}]}], ")"}]}], "+", 
+          RowBox[{"2", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"cos", "("}], 
+             SubscriptBox["\[Theta]", "W"], ")"}], ")"}], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"sin", "("}], 
+             SubscriptBox["\[Theta]", "W"], ")"}], ")"}], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{"dZAA1", "+", 
+                RowBox[{"2", " ", "dZe1"}]}], ")"}], " ", 
+              RowBox[{"IndexDelta", "(", 
+               RowBox[{"A", ",", "B"}], ")"}]}], "+", 
+             RowBox[{
+              RowBox[{"IndexDelta", "(", 
+               RowBox[{"1", ",", "B"}], ")"}], " ", 
+              RowBox[{"dZbarSf1", "(", 
+               RowBox[{"1", ",", "A", ",", "2", ",", "i"}], ")"}]}], "+", 
+             RowBox[{
+              RowBox[{"IndexDelta", "(", 
+               RowBox[{"2", ",", "B"}], ")"}], " ", 
+              RowBox[{"dZbarSf1", "(", 
+               RowBox[{"2", ",", "A", ",", "2", ",", "i"}], ")"}]}], "+", 
+             RowBox[{
+              RowBox[{"IndexDelta", "(", 
+               RowBox[{"1", ",", "A"}], ")"}], " ", 
+              RowBox[{"dZSf1", "(", 
+               RowBox[{"1", ",", "B", ",", "2", ",", "i"}], ")"}]}], "+", 
+             RowBox[{
+              RowBox[{"IndexDelta", "(", 
+               RowBox[{"2", ",", "A"}], ")"}], " ", 
+              RowBox[{"dZSf1", "(", 
+               RowBox[{"2", ",", "B", ",", "2", ",", "i"}], ")"}]}]}], 
+            ")"}]}]}], ")"}]}], ")"}], "/", 
+      RowBox[{"(", 
+       RowBox[{"6", " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"cos", "("}], 
+          SubscriptBox["\[Theta]", "W"], ")"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"sin", "("}], 
+          SubscriptBox["\[Theta]", "W"], ")"}], ")"}], " ", 
+        InterpretationBox[
+         SuperscriptBox[
+          RowBox[{
+           FormBox["\<\"(\"\>",
+            TraditionalForm], 
+           FormBox[
+            FormBox[
+             RowBox[{
+              FormBox[
+               SubscriptBox["k", "1"],
+               TraditionalForm], "+", 
+              FormBox[
+               SubscriptBox["k", "2"],
+               TraditionalForm]}],
+             TraditionalForm],
+            TraditionalForm], 
+           FormBox["\<\")\"\>",
+            TraditionalForm]}], "2"],
+         SequenceForm[
+          FeynCalc`Pair[
+           FeynCalc`Momentum[PrettyNotation`k1 + PrettyNotation`k2, D], 
+           FeynCalc`Momentum[PrettyNotation`k1 + PrettyNotation`k2, D]]],
+         Editable->False]}], ")"}]}],
+     TraditionalForm], ",", 
+    FormBox[
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"\[ImaginaryI]", " ", "\<\"e\"\>", " ", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{
+           FormBox["\<\"\[CurlyPhi]\"\>",
+            TraditionalForm], 
+           FormBox["\<\"(\"\>",
+            TraditionalForm], 
+           FormBox[
+            RowBox[{"-", 
+             FormBox[
+              SubscriptBox["p", "2"],
+              TraditionalForm]}],
+            TraditionalForm], 
+           FormBox["\<\")\"\>",
+            TraditionalForm]}], ")"}], ".", 
+         RowBox[{"(", 
+          RowBox[{
+           FractionBox[
+            RowBox[{"2", " ", "\[ImaginaryI]", " ", "\<\"e\"\>", " ", 
+             SubscriptBox["\[Delta]", 
+              RowBox[{
+               FormBox[
+                FormBox["Col1",
+                 TraditionalForm],
+                TraditionalForm], 
+               FormBox[
+                FormBox["Col2",
+                 TraditionalForm],
+                TraditionalForm]}]], " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"sin", "("}], 
+               SubscriptBox["\[Theta]", "W"], ")"}], ")"}], " ", 
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{"\[Gamma]", "\[CenterDot]", "(", 
+                FormBox[
+                 FormBox[
+                  RowBox[{
+                   FormBox[
+                    SubscriptBox["k", "1"],
+                    TraditionalForm], "-", 
+                   FormBox[
+                    SubscriptBox["k", "2"],
+                    TraditionalForm]}],
+                  TraditionalForm],
+                 TraditionalForm], ")"}], ")"}], ".", 
+              SuperscriptBox[
+               OverscriptBox["\[Gamma]", "_"], 
+               FormBox["6",
+                TraditionalForm]]}]}], 
+            RowBox[{"3", " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"cos", "("}], 
+               SubscriptBox["\[Theta]", "W"], ")"}], ")"}]}]], "+", 
+           FractionBox[
+            RowBox[{"\[ImaginaryI]", " ", "\<\"e\"\>", " ", 
+             SubscriptBox["\[Delta]", 
+              RowBox[{
+               FormBox[
+                FormBox["Col1",
+                 TraditionalForm],
+                TraditionalForm], 
+               FormBox[
+                FormBox["Col2",
+                 TraditionalForm],
+                TraditionalForm]}]], " ", 
+             RowBox[{"(", 
+              RowBox[{"1", "-", 
+               RowBox[{"4", " ", 
+                SuperscriptBox[
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"cos", "("}], 
+                   SubscriptBox["\[Theta]", "W"], ")"}], ")"}], "2"]}]}], 
+              ")"}], " ", 
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{"\[Gamma]", "\[CenterDot]", "(", 
+                FormBox[
+                 FormBox[
+                  RowBox[{
+                   FormBox[
+                    SubscriptBox["k", "1"],
+                    TraditionalForm], "-", 
+                   FormBox[
+                    SubscriptBox["k", "2"],
+                    TraditionalForm]}],
+                  TraditionalForm],
+                 TraditionalForm], ")"}], ")"}], ".", 
+              SuperscriptBox[
+               OverscriptBox["\[Gamma]", "_"], 
+               FormBox["7",
+                TraditionalForm]]}]}], 
+            RowBox[{"6", " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"cos", "("}], 
+               SubscriptBox["\[Theta]", "W"], ")"}], ")"}], " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"sin", "("}], 
+               SubscriptBox["\[Theta]", "W"], ")"}], ")"}]}]]}], ")"}], ".", 
+         RowBox[{"(", 
+          RowBox[{
+           FormBox["\<\"\[CurlyPhi]\"\>",
+            TraditionalForm], 
+           FormBox["\<\"(\"\>",
+            TraditionalForm], 
+           FormBox[
+            FormBox[
+             SubscriptBox["p", "1"],
+             TraditionalForm],
+            TraditionalForm], 
+           FormBox["\<\")\"\>",
+            TraditionalForm]}], ")"}]}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"-", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"sin", "("}], 
+              SubscriptBox["\[Theta]", "W"], ")"}], ")"}]}], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"2", " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"sin", "("}], 
+                SubscriptBox["\[Theta]", "W"], ")"}], ")"}], " ", 
+              TemplateBox[{
+                RowBox[{"(", 
+                  RowBox[{
+                    RowBox[{"USf", "(", 
+                    RowBox[{"2", ",", "i"}], ")"}], "\[InvisibleApplication]", 
+                    RowBox[{"(", 
+                    RowBox[{"B", ",", "2"}], ")"}]}], ")"}]},
+               "Conjugate"], " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"USf", "(", 
+                   RowBox[{"2", ",", "i"}], ")"}], "\[InvisibleApplication]", 
+                  
+                  RowBox[{"(", 
+                   RowBox[{"A", ",", "2"}], ")"}]}], " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{
+                    SuperscriptBox[
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"cos", "("}], 
+                    SubscriptBox["\[Theta]", "W"], ")"}], ")"}], "2"], " ", 
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"2", " ", "dSW1"}], "+", 
+                    RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"2", " ", "dZe1"}], "+", "dZZZ1"}], ")"}], " ", 
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"sin", "("}], 
+                    SubscriptBox["\[Theta]", "W"], ")"}], ")"}]}]}], ")"}]}], 
+                   "+", 
+                   RowBox[{"2", " ", "dSW1", " ", 
+                    SuperscriptBox[
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"sin", "("}], 
+                    SubscriptBox["\[Theta]", "W"], ")"}], ")"}], "2"]}]}], 
+                  ")"}]}], "+", 
+                RowBox[{
+                 SuperscriptBox[
+                  RowBox[{"(", 
+                   RowBox[{
+                    RowBox[{"cos", "("}], 
+                    SubscriptBox["\[Theta]", "W"], ")"}], ")"}], "2"], " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"sin", "("}], 
+                   SubscriptBox["\[Theta]", "W"], ")"}], ")"}], " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{"USf", "(", 
+                    RowBox[{"2", ",", "i"}], ")"}], "\[InvisibleApplication]", 
+                    RowBox[{"(", 
+                    RowBox[{"1", ",", "2"}], ")"}]}], " ", 
+                    RowBox[{"dZbarSf1", "(", 
+                    RowBox[{"1", ",", "A", ",", "2", ",", "i"}], ")"}]}], "+", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{"USf", "(", 
+                    RowBox[{"2", ",", "i"}], ")"}], "\[InvisibleApplication]", 
+                    RowBox[{"(", 
+                    RowBox[{"2", ",", "2"}], ")"}]}], " ", 
+                    RowBox[{"dZbarSf1", "(", 
+                    RowBox[{"2", ",", "A", ",", "2", ",", "i"}], ")"}]}]}], 
+                  ")"}]}]}], ")"}]}], "+", 
+             RowBox[{
+              SuperscriptBox[
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"cos", "("}], 
+                 SubscriptBox["\[Theta]", "W"], ")"}], ")"}], "2"], " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{"(", 
+                  RowBox[{"1", "-", 
+                   RowBox[{"2", " ", 
+                    SuperscriptBox[
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"cos", "("}], 
+                    SubscriptBox["\[Theta]", "W"], ")"}], ")"}], "2"]}]}], 
+                  ")"}], " ", 
+                 RowBox[{
+                  RowBox[{"USf", "(", 
+                   RowBox[{"2", ",", "i"}], ")"}], "\[InvisibleApplication]", 
+                  
+                  RowBox[{"(", 
+                   RowBox[{"A", ",", "1"}], ")"}]}], " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"dZSf1", "(", 
+                    RowBox[{"1", ",", "B", ",", "2", ",", "i"}], ")"}], " ", 
+                    TemplateBox[{
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"USf", "(", 
+                    RowBox[{"2", ",", "i"}], ")"}], "\[InvisibleApplication]", 
+                    RowBox[{"(", 
+                    RowBox[{"1", ",", "1"}], ")"}]}], ")"}]},
+                    "Conjugate"]}], "+", 
+                   RowBox[{
+                    RowBox[{"dZSf1", "(", 
+                    RowBox[{"2", ",", "B", ",", "2", ",", "i"}], ")"}], " ", 
+                    TemplateBox[{
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"USf", "(", 
+                    RowBox[{"2", ",", "i"}], ")"}], "\[InvisibleApplication]", 
+                    RowBox[{"(", 
+                    RowBox[{"2", ",", "1"}], ")"}]}], ")"}]},
+                    "Conjugate"]}]}], ")"}]}], "+", 
+                RowBox[{"2", " ", 
+                 SuperscriptBox[
+                  RowBox[{"(", 
+                   RowBox[{
+                    RowBox[{"sin", "("}], 
+                    SubscriptBox["\[Theta]", "W"], ")"}], ")"}], "2"], " ", 
+                 RowBox[{
+                  RowBox[{"USf", "(", 
+                   RowBox[{"2", ",", "i"}], ")"}], "\[InvisibleApplication]", 
+                  
+                  RowBox[{"(", 
+                   RowBox[{"A", ",", "2"}], ")"}]}], " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"dZSf1", "(", 
+                    RowBox[{"1", ",", "B", ",", "2", ",", "i"}], ")"}], " ", 
+                    TemplateBox[{
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"USf", "(", 
+                    RowBox[{"2", ",", "i"}], ")"}], "\[InvisibleApplication]", 
+                    RowBox[{"(", 
+                    RowBox[{"1", ",", "2"}], ")"}]}], ")"}]},
+                    "Conjugate"]}], "+", 
+                   RowBox[{
+                    RowBox[{"dZSf1", "(", 
+                    RowBox[{"2", ",", "B", ",", "2", ",", "i"}], ")"}], " ", 
+                    TemplateBox[{
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"USf", "(", 
+                    RowBox[{"2", ",", "i"}], ")"}], "\[InvisibleApplication]", 
+                    RowBox[{"(", 
+                    RowBox[{"2", ",", "2"}], ")"}]}], ")"}]},
+                    "Conjugate"]}]}], ")"}]}]}], ")"}]}]}], ")"}]}], "-", 
+          RowBox[{
+           TemplateBox[{
+             RowBox[{"(", 
+               RowBox[{
+                 RowBox[{"USf", "(", 
+                   RowBox[{"2", ",", "i"}], ")"}], "\[InvisibleApplication]", 
+                 
+                 RowBox[{"(", 
+                   RowBox[{"B", ",", "1"}], ")"}]}], ")"}]},
+            "Conjugate"], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"USf", "(", 
+                RowBox[{"2", ",", "i"}], ")"}], "\[InvisibleApplication]", 
+               RowBox[{"(", 
+                RowBox[{"A", ",", "1"}], ")"}]}], " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{
+                 SuperscriptBox[
+                  RowBox[{"(", 
+                   RowBox[{
+                    RowBox[{"cos", "("}], 
+                    SubscriptBox["\[Theta]", "W"], ")"}], ")"}], "2"], " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"dSW1", " ", 
+                    RowBox[{"(", 
+                    RowBox[{"6", "-", 
+                    RowBox[{"4", " ", 
+                    SuperscriptBox[
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"cos", "("}], 
+                    SubscriptBox["\[Theta]", "W"], ")"}], ")"}], "2"]}]}], 
+                    ")"}]}], "+", 
+                   RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"2", " ", "dZe1"}], "+", "dZZZ1"}], ")"}], " ", 
+                    RowBox[{"(", 
+                    RowBox[{"1", "-", 
+                    RowBox[{"2", " ", 
+                    SuperscriptBox[
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"cos", "("}], 
+                    SubscriptBox["\[Theta]", "W"], ")"}], ")"}], "2"]}]}], 
+                    ")"}], " ", 
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"sin", "("}], 
+                    SubscriptBox["\[Theta]", "W"], ")"}], ")"}]}]}], ")"}]}], 
+                "-", 
+                RowBox[{"dSW1", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"2", " ", 
+                    SuperscriptBox[
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"sin", "("}], 
+                    SubscriptBox["\[Theta]", "W"], ")"}], ")"}], "2"]}], "-", 
+                   
+                   RowBox[{"4", " ", 
+                    SuperscriptBox[
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"sin", "("}], 
+                    SubscriptBox["\[Theta]", "W"], ")"}], ")"}], "4"]}]}], 
+                  ")"}]}]}], ")"}]}], "+", 
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{"1", "-", 
+                RowBox[{"2", " ", 
+                 SuperscriptBox[
+                  RowBox[{"(", 
+                   RowBox[{
+                    RowBox[{"cos", "("}], 
+                    SubscriptBox["\[Theta]", "W"], ")"}], ")"}], "2"]}]}], 
+               ")"}], " ", 
+              SuperscriptBox[
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"cos", "("}], 
+                 SubscriptBox["\[Theta]", "W"], ")"}], ")"}], "2"], " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"sin", "("}], 
+                SubscriptBox["\[Theta]", "W"], ")"}], ")"}], " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"USf", "(", 
+                   RowBox[{"2", ",", "i"}], ")"}], "\[InvisibleApplication]", 
+                  
+                  RowBox[{"(", 
+                   RowBox[{"1", ",", "1"}], ")"}]}], " ", 
+                 RowBox[{"dZbarSf1", "(", 
+                  RowBox[{"1", ",", "A", ",", "2", ",", "i"}], ")"}]}], "+", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"USf", "(", 
+                   RowBox[{"2", ",", "i"}], ")"}], "\[InvisibleApplication]", 
+                  
+                  RowBox[{"(", 
+                   RowBox[{"2", ",", "1"}], ")"}]}], " ", 
+                 RowBox[{"dZbarSf1", "(", 
+                  RowBox[{"2", ",", "A", ",", "2", ",", "i"}], ")"}]}]}], 
+               ")"}]}]}], ")"}]}], "+", 
+          RowBox[{"2", " ", "dZAZ1", " ", 
+           SuperscriptBox[
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"cos", "("}], 
+              SubscriptBox["\[Theta]", "W"], ")"}], ")"}], "3"], " ", 
+           SuperscriptBox[
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"sin", "("}], 
+              SubscriptBox["\[Theta]", "W"], ")"}], ")"}], "2"], " ", 
+           RowBox[{"IndexDelta", "(", 
+            RowBox[{"A", ",", "B"}], ")"}]}]}], ")"}]}], ")"}], "/", 
+      RowBox[{"(", 
+       RowBox[{"4", " ", 
+        SuperscriptBox[
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"cos", "("}], 
+           SubscriptBox["\[Theta]", "W"], ")"}], ")"}], "3"], " ", 
+        SuperscriptBox[
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"sin", "("}], 
+           SubscriptBox["\[Theta]", "W"], ")"}], ")"}], "2"], " ", 
+        RowBox[{"(", 
+         InterpretationBox[
+          RowBox[{
+           SuperscriptBox[
+            RowBox[{
+             FormBox["\<\"(\"\>",
+              TraditionalForm], 
+             FormBox[
+              FormBox[
+               RowBox[{
+                FormBox[
+                 SubscriptBox["k", "1"],
+                 TraditionalForm], "+", 
+                FormBox[
+                 SubscriptBox["k", "2"],
+                 TraditionalForm]}],
+               TraditionalForm],
+              TraditionalForm], 
+             FormBox["\<\")\"\>",
+              TraditionalForm]}], "2"], "\[InvisibleSpace]", "\<\"-\"\>", 
+           "\[InvisibleSpace]", 
+           SubsuperscriptBox["m", "Z", "2"]}],
+          SequenceForm[
+           FeynCalc`Pair[
+            FeynCalc`Momentum[PrettyNotation`k1 + PrettyNotation`k2, D], 
+            FeynCalc`Momentum[PrettyNotation`k1 + PrettyNotation`k2, D]], "-",
+            FeynCalc`SMP["m_Z"]^2],
+          Editable->False], ")"}]}], ")"}]}],
+     TraditionalForm]}], "}"}], TraditionalForm]], "Output",
+ CellChangeTimes->{3.979296088048737*^9, 3.979296398366274*^9, 
+  3.979296569971614*^9, 3.979654146584857*^9},
+ CellLabel->"Out[20]=",ExpressionUUID->"c93a6768-ebfa-48f1-b9d6-3e5af676dd8a"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"MCT\[Gamma]", "[", "0", "]"}], "=", 
+  RowBox[{
+   RowBox[{"MCTlist", "[", "0", "]"}], "[", 
+   RowBox[{"[", "1", "]"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.9792968697712307`*^9, 3.979296925317539*^9}, {
+  3.9796541717172937`*^9, 3.979654199399507*^9}},
+ CellLabel->"In[25]:=",ExpressionUUID->"c4927e01-e41b-4432-9ee1-ccab39de1178"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"(", 
+    RowBox[{
+     SuperscriptBox["\<\"e\"\>", "2"], " ", 
+     SubscriptBox["\[Delta]", 
+      RowBox[{
+       FormBox[
+        FormBox["Col1",
+         TraditionalForm],
+        TraditionalForm], 
+       FormBox[
+        FormBox["Col2",
+         TraditionalForm],
+        TraditionalForm]}]], " ", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{
+        FormBox["\<\"\[CurlyPhi]\"\>",
+         TraditionalForm], 
+        FormBox["\<\"(\"\>",
+         TraditionalForm], 
+        FormBox[
+         RowBox[{"-", 
+          FormBox[
+           SubscriptBox["p", "2"],
+           TraditionalForm]}],
+         TraditionalForm], 
+        FormBox["\<\")\"\>",
+         TraditionalForm]}], ")"}], ".", 
+      RowBox[{"(", 
+       RowBox[{"\[Gamma]", "\[CenterDot]", "(", 
+        FormBox[
+         FormBox[
+          RowBox[{
+           FormBox[
+            SubscriptBox["k", "1"],
+            TraditionalForm], "-", 
+           FormBox[
+            SubscriptBox["k", "2"],
+            TraditionalForm]}],
+          TraditionalForm],
+         TraditionalForm], ")"}], ")"}], ".", 
+      RowBox[{"(", 
+       RowBox[{
+        FormBox["\<\"\[CurlyPhi]\"\>",
+         TraditionalForm], 
+        FormBox["\<\"(\"\>",
+         TraditionalForm], 
+        FormBox[
+         FormBox[
+          SubscriptBox["p", "1"],
+          TraditionalForm],
+         TraditionalForm], 
+        FormBox["\<\")\"\>",
+         TraditionalForm]}], ")"}]}], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"dZZA1", " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"1", "-", 
+             RowBox[{"2", " ", 
+              SuperscriptBox[
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"sin", "("}], 
+                 SubscriptBox["\[Theta]", "W"], ")"}], ")"}], "2"]}]}], ")"}],
+            " ", 
+           RowBox[{
+            RowBox[{"USf", "(", 
+             RowBox[{"2", ",", "i"}], ")"}], "\[InvisibleApplication]", 
+            RowBox[{"(", 
+             RowBox[{"A", ",", "1"}], ")"}]}], " ", 
+           TemplateBox[{
+             RowBox[{"(", 
+               RowBox[{
+                 RowBox[{"USf", "(", 
+                   RowBox[{"2", ",", "i"}], ")"}], "\[InvisibleApplication]", 
+                 
+                 RowBox[{"(", 
+                   RowBox[{"B", ",", "1"}], ")"}]}], ")"}]},
+            "Conjugate"]}], "-", 
+          RowBox[{"2", " ", 
+           SuperscriptBox[
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"sin", "("}], 
+              SubscriptBox["\[Theta]", "W"], ")"}], ")"}], "2"], " ", 
+           RowBox[{
+            RowBox[{"USf", "(", 
+             RowBox[{"2", ",", "i"}], ")"}], "\[InvisibleApplication]", 
+            RowBox[{"(", 
+             RowBox[{"A", ",", "2"}], ")"}]}], " ", 
+           TemplateBox[{
+             RowBox[{"(", 
+               RowBox[{
+                 RowBox[{"USf", "(", 
+                   RowBox[{"2", ",", "i"}], ")"}], "\[InvisibleApplication]", 
+                 
+                 RowBox[{"(", 
+                   RowBox[{"B", ",", "2"}], ")"}]}], ")"}]},
+            "Conjugate"]}]}], ")"}]}], "+", 
+       RowBox[{"2", " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"cos", "("}], 
+          SubscriptBox["\[Theta]", "W"], ")"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"sin", "("}], 
+          SubscriptBox["\[Theta]", "W"], ")"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"dZAA1", "+", 
+             RowBox[{"2", " ", "dZe1"}]}], ")"}], " ", 
+           RowBox[{"IndexDelta", "(", 
+            RowBox[{"A", ",", "B"}], ")"}]}], "+", 
+          RowBox[{
+           RowBox[{"IndexDelta", "(", 
+            RowBox[{"1", ",", "B"}], ")"}], " ", 
+           RowBox[{"dZbarSf1", "(", 
+            RowBox[{"1", ",", "A", ",", "2", ",", "i"}], ")"}]}], "+", 
+          RowBox[{
+           RowBox[{"IndexDelta", "(", 
+            RowBox[{"2", ",", "B"}], ")"}], " ", 
+           RowBox[{"dZbarSf1", "(", 
+            RowBox[{"2", ",", "A", ",", "2", ",", "i"}], ")"}]}], "+", 
+          RowBox[{
+           RowBox[{"IndexDelta", "(", 
+            RowBox[{"1", ",", "A"}], ")"}], " ", 
+           RowBox[{"dZSf1", "(", 
+            RowBox[{"1", ",", "B", ",", "2", ",", "i"}], ")"}]}], "+", 
+          RowBox[{
+           RowBox[{"IndexDelta", "(", 
+            RowBox[{"2", ",", "A"}], ")"}], " ", 
+           RowBox[{"dZSf1", "(", 
+            RowBox[{"2", ",", "B", ",", "2", ",", "i"}], ")"}]}]}], ")"}]}]}],
+       ")"}]}], ")"}], "/", 
+   RowBox[{"(", 
+    RowBox[{"6", " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"cos", "("}], 
+       SubscriptBox["\[Theta]", "W"], ")"}], ")"}], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"sin", "("}], 
+       SubscriptBox["\[Theta]", "W"], ")"}], ")"}], " ", 
+     InterpretationBox[
+      SuperscriptBox[
+       RowBox[{
+        FormBox["\<\"(\"\>",
+         TraditionalForm], 
+        FormBox[
+         FormBox[
+          RowBox[{
+           FormBox[
+            SubscriptBox["k", "1"],
+            TraditionalForm], "+", 
+           FormBox[
+            SubscriptBox["k", "2"],
+            TraditionalForm]}],
+          TraditionalForm],
+         TraditionalForm], 
+        FormBox["\<\")\"\>",
+         TraditionalForm]}], "2"],
+      SequenceForm[
+       FeynCalc`Pair[
+        FeynCalc`Momentum[PrettyNotation`k1 + PrettyNotation`k2, D], 
+        FeynCalc`Momentum[PrettyNotation`k1 + PrettyNotation`k2, D]]],
+      Editable->False]}], ")"}]}], TraditionalForm]], "Output",
+ CellChangeTimes->{{3.979296889964316*^9, 3.979296925689727*^9}, {
+  3.979654146595052*^9, 3.979654199821642*^9}},
+ CellLabel->"Out[25]=",ExpressionUUID->"3162e574-5232-42e2-b967-f3d56f5c92c2"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"MCT\[Gamma]", "[", "1", "]"}], "=", 
+  RowBox[{
+   RowBox[{"MCT\[Gamma]", "[", "0", "]"}], "//", "ZSimplify"}]}]], "Input",
+ CellChangeTimes->{{3.97965420209813*^9, 3.979654210903524*^9}},
+ CellLabel->"In[26]:=",ExpressionUUID->"185808f1-f1cc-43e1-acee-8966507df3e6"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"(", 
+    RowBox[{
+     SuperscriptBox["\<\"e\"\>", "2"], " ", 
+     SubscriptBox["\[Delta]", 
+      RowBox[{
+       FormBox[
+        FormBox["Col1",
+         TraditionalForm],
+        TraditionalForm], 
+       FormBox[
+        FormBox["Col2",
+         TraditionalForm],
+        TraditionalForm]}]], " ", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{
+        FormBox["\<\"\[CurlyPhi]\"\>",
+         TraditionalForm], 
+        FormBox["\<\"(\"\>",
+         TraditionalForm], 
+        FormBox[
+         RowBox[{"-", 
+          FormBox[
+           SubscriptBox["p", "2"],
+           TraditionalForm]}],
+         TraditionalForm], 
+        FormBox["\<\")\"\>",
+         TraditionalForm]}], ")"}], ".", 
+      RowBox[{"(", 
+       RowBox[{"\[Gamma]", "\[CenterDot]", "(", 
+        FormBox[
+         FormBox[
+          RowBox[{
+           FormBox[
+            SubscriptBox["k", "1"],
+            TraditionalForm], "-", 
+           FormBox[
+            SubscriptBox["k", "2"],
+            TraditionalForm]}],
+          TraditionalForm],
+         TraditionalForm], ")"}], ")"}], ".", 
+      RowBox[{"(", 
+       RowBox[{
+        FormBox["\<\"\[CurlyPhi]\"\>",
+         TraditionalForm], 
+        FormBox["\<\"(\"\>",
+         TraditionalForm], 
+        FormBox[
+         FormBox[
+          SubscriptBox["p", "1"],
+          TraditionalForm],
+         TraditionalForm], 
+        FormBox["\<\")\"\>",
+         TraditionalForm]}], ")"}]}], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"dZZA1", " ", 
+        RowBox[{
+         RowBox[{"USf", "(", 
+          RowBox[{"2", ",", "i"}], ")"}], "\[InvisibleApplication]", 
+         RowBox[{"(", 
+          RowBox[{"A", ",", "1"}], ")"}]}], " ", 
+        TemplateBox[{
+          RowBox[{"(", 
+            RowBox[{
+              RowBox[{"USf", "(", 
+                RowBox[{"2", ",", "i"}], ")"}], "\[InvisibleApplication]", 
+              RowBox[{"(", 
+                RowBox[{"B", ",", "1"}], ")"}]}], ")"}]},
+         "Conjugate"]}], "+", 
+       RowBox[{"2", " ", "dZAA1", " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"cos", "("}], 
+          SubscriptBox["\[Theta]", "W"], ")"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"sin", "("}], 
+          SubscriptBox["\[Theta]", "W"], ")"}], ")"}], " ", 
+        RowBox[{"IndexDelta", "(", 
+         RowBox[{"A", ",", "B"}], ")"}]}], "+", 
+       RowBox[{"2", " ", 
+        RowBox[{"IndexDelta", "(", 
+         RowBox[{"1", ",", "B"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"cos", "("}], 
+          SubscriptBox["\[Theta]", "W"], ")"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"sin", "("}], 
+          SubscriptBox["\[Theta]", "W"], ")"}], ")"}], " ", 
+        RowBox[{"dZbarSf1", "(", 
+         RowBox[{"1", ",", "A", ",", "2", ",", "i"}], ")"}]}], "+", 
+       RowBox[{"2", " ", 
+        RowBox[{"IndexDelta", "(", 
+         RowBox[{"2", ",", "B"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"cos", "("}], 
+          SubscriptBox["\[Theta]", "W"], ")"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"sin", "("}], 
+          SubscriptBox["\[Theta]", "W"], ")"}], ")"}], " ", 
+        RowBox[{"dZbarSf1", "(", 
+         RowBox[{"2", ",", "A", ",", "2", ",", "i"}], ")"}]}], "+", 
+       RowBox[{"4", " ", "dZe1", " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"cos", "("}], 
+          SubscriptBox["\[Theta]", "W"], ")"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"sin", "("}], 
+          SubscriptBox["\[Theta]", "W"], ")"}], ")"}], " ", 
+        RowBox[{"IndexDelta", "(", 
+         RowBox[{"A", ",", "B"}], ")"}]}], "+", 
+       RowBox[{"2", " ", 
+        RowBox[{"IndexDelta", "(", 
+         RowBox[{"1", ",", "A"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"cos", "("}], 
+          SubscriptBox["\[Theta]", "W"], ")"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"sin", "("}], 
+          SubscriptBox["\[Theta]", "W"], ")"}], ")"}], " ", 
+        RowBox[{"dZSf1", "(", 
+         RowBox[{"1", ",", "B", ",", "2", ",", "i"}], ")"}]}], "+", 
+       RowBox[{"2", " ", 
+        RowBox[{"IndexDelta", "(", 
+         RowBox[{"2", ",", "A"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"cos", "("}], 
+          SubscriptBox["\[Theta]", "W"], ")"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"sin", "("}], 
+          SubscriptBox["\[Theta]", "W"], ")"}], ")"}], " ", 
+        RowBox[{"dZSf1", "(", 
+         RowBox[{"2", ",", "B", ",", "2", ",", "i"}], ")"}]}], "-", 
+       RowBox[{"2", " ", "dZZA1", " ", 
+        SuperscriptBox[
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"sin", "("}], 
+           SubscriptBox["\[Theta]", "W"], ")"}], ")"}], "2"], " ", 
+        TemplateBox[{
+          RowBox[{"A", ",", "B"}]},
+         "KroneckerDeltaSeq"]}]}], ")"}]}], ")"}], "/", 
+   RowBox[{"(", 
+    RowBox[{"6", " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"cos", "("}], 
+       SubscriptBox["\[Theta]", "W"], ")"}], ")"}], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"sin", "("}], 
+       SubscriptBox["\[Theta]", "W"], ")"}], ")"}], " ", 
+     InterpretationBox[
+      SuperscriptBox[
+       RowBox[{
+        FormBox["\<\"(\"\>",
+         TraditionalForm], 
+        FormBox[
+         FormBox[
+          RowBox[{
+           FormBox[
+            SubscriptBox["k", "1"],
+            TraditionalForm], "+", 
+           FormBox[
+            SubscriptBox["k", "2"],
+            TraditionalForm]}],
+          TraditionalForm],
+         TraditionalForm], 
+        FormBox["\<\")\"\>",
+         TraditionalForm]}], "2"],
+      SequenceForm[
+       FeynCalc`Pair[
+        FeynCalc`Momentum[PrettyNotation`k1 + PrettyNotation`k2, D], 
+        FeynCalc`Momentum[PrettyNotation`k1 + PrettyNotation`k2, D]]],
+      Editable->False]}], ")"}]}], TraditionalForm]], "Output",
+ CellChangeTimes->{3.979654211498095*^9},
+ CellLabel->"Out[26]=",ExpressionUUID->"515dafdd-f2a3-4495-bfd9-48041b0be10b"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{738, 807},
+WindowMargins->{{Automatic, 0}, {Automatic, 1}},
+FrontEndVersion->"13.0 for Mac OS X ARM (64-bit) (December 2, 2021)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"0e564c88-29d8-4ba0-bc1b-a966988b2fe9"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 1416, 33, 278, "Input",ExpressionUUID->"9c22a82c-b9de-4035-b3f1-dca392812def",
+ InitializationCell->True],
+Cell[CellGroupData[{
+Cell[2021, 59, 3933, 100, 74, "Print",ExpressionUUID->"f4938e67-8ba6-4c09-af5d-139f61dfb387"],
+Cell[5957, 161, 556, 11, 50, "Print",ExpressionUUID->"7f83f760-9536-44c3-8973-74147138007b"],
+Cell[6516, 174, 602, 13, 50, "Print",ExpressionUUID->"7bf7398a-9e41-4053-a670-367629cc9a1f"],
+Cell[7121, 189, 2206, 60, 49, "Print",ExpressionUUID->"b7d56d48-f204-4a15-be17-fa23ac0fe76c"],
+Cell[9330, 251, 496, 10, 27, "Print",ExpressionUUID->"f69a7e31-5a59-469c-aaca-ff53ed75de7b"],
+Cell[9829, 263, 530, 11, 27, "Print",ExpressionUUID->"16bad695-6e69-482e-b9f5-9b1ecd6d4703"]
+}, Open  ]]
+}, Open  ]],
+Cell[10386, 278, 675, 17, 110, "Input",ExpressionUUID->"299aba99-57fe-4912-b065-94e8199a2142",
+ InitializationCell->True],
+Cell[11064, 297, 1104, 28, 110, "Input",ExpressionUUID->"34e40d05-78cd-4b55-b7ea-8c9f1c6ab148",
+ InitializationCell->True],
+Cell[CellGroupData[{
+Cell[12193, 329, 194, 3, 67, "Section",ExpressionUUID->"5583d82b-69e3-490a-847c-231c5ee78c9c"],
+Cell[CellGroupData[{
+Cell[12412, 336, 2365, 57, 304, "Input",ExpressionUUID->"79d31d50-0184-4a8d-8eee-92bbad82ee55"],
+Cell[CellGroupData[{
+Cell[14802, 397, 46213, 1037, 264, "Print",ExpressionUUID->"4a336a79-a63b-43fb-94ff-ab2a08092699"],
+Cell[61018, 1436, 50126, 1121, 264, "Print",ExpressionUUID->"cda6f6cd-a544-4ac3-befe-99c3a1db501d"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[111193, 2563, 1021, 24, 178, "Input",ExpressionUUID->"ea19dae7-59c3-479d-912e-394b20af3a71"],
+Cell[112217, 2589, 11347, 253, 264, "Print",ExpressionUUID->"04c800ea-b667-4cf4-a110-783401e0da16"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[123601, 2847, 1221, 25, 241, "Input",ExpressionUUID->"da325130-f41e-4450-9abc-d63ba17fe3ca"],
+Cell[124825, 2874, 24038, 641, 590, "Output",ExpressionUUID->"c93a6768-ebfa-48f1-b9d6-3e5af676dd8a"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[148900, 3520, 372, 8, 30, "Input",ExpressionUUID->"c4927e01-e41b-4432-9ee1-ccab39de1178"],
+Cell[149275, 3530, 5880, 179, 128, "Output",ExpressionUUID->"3162e574-5232-42e2-b967-f3d56f5c92c2"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[155192, 3714, 302, 6, 30, "Input",ExpressionUUID->"185808f1-f1cc-43e1-acee-8966507df3e6"],
+Cell[155497, 3722, 6181, 190, 150, "Output",ExpressionUUID->"515dafdd-f2a3-4495-bfd9-48041b0be10b"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+

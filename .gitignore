@@ -9,3 +9,8 @@
 # Temporary
 temp/
 tmp/
+
+# Build files
+build/
+*.o
+*.exe

@@ -1,5 +1,11 @@
 .DS_Store
 
+# Virtual environments
+.venv
+
+# VS Code
+.vscode
+
 # Temporary
 temp/
 tmp/

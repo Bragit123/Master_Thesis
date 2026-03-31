@@ -8,14 +8,16 @@
 # Compiler options
 CXX = g++
 CPP_VERSION = c++17
-COMPILE_FLAGS = -std=$(CPP_VERSION) -I $(INCLUDE_DIR)
-LINK_FLAGS = -std=$(CPP_VERSION)
+CXX_FLAGS = -std=$(CPP_VERSION) -I $(INCLUDE_DIR) -I $(LHAPDF_DIR)/include
+LD_FLAGS = -std=$(CPP_VERSION) -L $(LHAPDF_DIR)/lib -lLHAPDF
 
 # Directories
 SRC_DIR = src
 BUILD_DIR = build
 OBJ_DIR = build/obj
+OUTPUT_DIR = output
 INCLUDE_DIR = include
+LHAPDF_DIR = ../LHAPDF
 
 # Files
 SRCS = $(wildcard $(SRC_DIR)/*.cpp)
@@ -29,19 +31,29 @@ compile: $(OBJS)
 
 link: $(EXECUTABLE)
 
+MEM ?= 0
 run: $(EXECUTABLE)
 	@echo "### Running..."
-	./$(EXECUTABLE)
+ifndef MEM
+# 	$(error Must provide a member number. Usage: make run MEM=<member number>)
+	@echo "# No argument given, setting member to 0."
+	@echo "# To specify member value, use:"
+	@echo "#   make run MEM=<member>"
+endif
+	@mkdir -p $(OUTPUT_DIR)
+	./$(EXECUTABLE) PDF4LHC21_40 $(MEM)
 
 clean:
 	@echo "### Cleaning..."
-	rm $(OBJS) $(EXECUTABLE)
+	rm $(OBJS) $(EXECUTABLE) $(wildcard $(OUTPUT_DIR)/*)
 
+# Compiler (creates objects, dependent on source files)
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@echo "### Compiling..."
 	@mkdir -p $(OBJ_DIR)
 	$(CXX) $(CXX_FLAGS) -c $< -o $@
 
+# Linker (creates executable, dependent on objects)
 $(EXECUTABLE): $(OBJS)
 	@echo "### Linking..."
-	$(CXX) $(CXX_FLAGS) $^ -o $@
+	$(CXX) $(LD_FLAGS) $^ -o $@

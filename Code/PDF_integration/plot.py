@@ -6,8 +6,11 @@ import matplotlib.colors as mcolors
 sns.set_theme()
 # sns.set_context("paper")
 
-file_path = "output/PDF4LHC21_40_0_2.dat"
-df = pd.read_csv(file_path, sep=" ", names=["x","Q2","xf"])
+try:
+  file_path = "output/PDF4LHC21_40_0_2.dat"
+  df = pd.read_csv(file_path, sep=" ", names=["x","Q2","xf"])
+except:
+  raise FileNotFoundError(f"Unable to load {file_path}.")
 
 
 ## Plot using seaborn

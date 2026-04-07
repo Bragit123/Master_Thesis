@@ -5,19 +5,23 @@
 # $^ = All dependencies (right of :) #
 ######################################
 
-# Compiler options
+# Compiler stuff
 CXX = g++
 CPP_VERSION = c++17
-CXX_FLAGS = -std=$(CPP_VERSION) -I $(INCLUDE_DIR) -I $(LHAPDF_DIR)/include
-LD_FLAGS = -std=$(CPP_VERSION) -L $(LHAPDF_DIR)/lib -lLHAPDF
+CXX_FLAGS = -std=$(CPP_VERSION) -I$(INCLUDE_DIR) -I$(LHAPDF_DIR)/include -I$(GSL_DIR)/include
+LD_FLAGS = -std=$(CPP_VERSION) -L$(LHAPDF_DIR)/lib -L$(GSL_DIR)/lib -lLHAPDF -lgsl -lgslcblas
 
-# Directories
+# Project directories
 SRC_DIR = src
 BUILD_DIR = build
 OBJ_DIR = build/obj
 OUTPUT_DIR = output
 INCLUDE_DIR = include
-LHAPDF_DIR = ../../LHAPDF
+
+# External package directories
+EXTERNAL_DIR = ../../external
+LHAPDF_DIR = $(EXTERNAL_DIR)/LHAPDF
+GSL_DIR = /opt/homebrew/opt/gsl
 
 # Files
 SRCS = $(wildcard $(SRC_DIR)/*.cpp)

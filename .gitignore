@@ -14,3 +14,6 @@ tmp/
 build/
 *.o
 *.exe
+
+# External packages
+external/

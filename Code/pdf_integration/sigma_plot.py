@@ -5,12 +5,10 @@ sns.set_theme()
 
 gev_to_fb = 0.389379e12 # https://en.wikipedia.org/wiki/Barn_(unit)
 
-slepton_ids = [1000011, 2000011, 1000013, 2000013]
+slepton_ids = [1000011, 2000011]
 slepton_labels = [
   "$\\tilde e_L \\tilde e_L^*$",
-  "$\\tilde e_R \\tilde e_R^*$",
-  "$\\tilde \\mu_L \\tilde \\mu_L^*$",
-  "$\\tilde \\mu_R \\tilde \\mu_R^*$",
+  "$\\tilde e_R \\tilde e_R^*$"
 ]
 mass_arrs = []
 sigma_arrs = []
@@ -32,9 +30,8 @@ plt.title("LO slepton production | $\\sqrt{s}=13$TeV")
 plt.xlabel("$m_{\\tilde \\ell_i}$ [GeV]")
 plt.ylabel("$\\sigma$ [fb]")
 
-styles = [".-", ".-", ".--", ".--"]
-for m, sigma, slabel, style in zip(mass_arrs, sigma_arrs, slepton_labels, styles):
-  plt.plot(m, sigma, style, label=slabel)
+for m, sigma, slabel in zip(mass_arrs, sigma_arrs, slepton_labels):
+  plt.plot(m, sigma, ".-", label=slabel)
 
 plt.yscale("log")
 plt.tight_layout()

@@ -36,4 +36,4 @@ for m, sigma, slabel in zip(mass_arrs, sigma_arrs, slepton_labels):
 plt.yscale("log")
 plt.tight_layout()
 plt.legend()
-plt.savefig("sigma.pdf")
+plt.savefig("plots/sigma.pdf")

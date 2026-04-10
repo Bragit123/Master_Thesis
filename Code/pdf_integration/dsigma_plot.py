@@ -35,4 +35,4 @@ for Q, dsigma, slabel in zip(Q_arrs, dsigma_arrs, slepton_labels):
 plt.xscale("log")
 plt.tight_layout()
 plt.legend()
-plt.savefig("dsigma.pdf")
+plt.savefig("plots/dsigma.pdf")

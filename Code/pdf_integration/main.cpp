@@ -69,80 +69,101 @@ double born_cross_section(int quark_id, int slepton_id, double s, double Q, doub
   
   double sigmaB = Const::BORN_PREFAC * mom3 / (s * Q5) * F;
 
-  std::cout << mom3 << " | " << Q5 << " | " << F << " | " << sigmaB << "\n";
-
+  // std::cout << mom3 << " | " << Q5 << " | " << F << " | " << sigmaB << "\n";
+  
   return sigmaB;
 }
 
 int main(int argc, char* argv[]) {
   const string setname = "PDF4LHC21_40";
   const int mem = 0; // Only considering central PDF for now. Expanding laterz!
-
+  
   const LHAPDF::PDF* pdf = LHAPDF::mkPDF(setname, mem);
   std::vector<int> pids = pdf->flavors();
   
-  const double SELECTRON_MASS = 100;
-  const double MUF2 = SELECTRON_MASS * SELECTRON_MASS;
-  
-  const int sid = 1000011; // Left-selectron
   const double s_sqrt = 13'000.0; // 13 Tev
   const double s = s_sqrt*s_sqrt;
-  
-  const double MINQ = 2.0*SELECTRON_MASS;
-  const double MAXQ = s_sqrt;
-  const double DQ = 1.0;
-  const double NQ = std::ceil((MAXQ - MINQ)/DQ) + 1;
 
-  std::cout << "NQ = " << NQ << "\n";
+  // Slepton mass
+  const double MINM = 100.0;
+  const double MAXM = 2000.0;
+  const double DM = 100.0;
+  const double NM = std::floor((MAXM - MINM)/DM) + 1;
   
-  const string filename = "dsigma_lo.dat";
+  // const int sid = 1000011; // Left-selectron
+  // const int sid = 2000011; // Right-selectron
+  // const int sid = 1000013; // Left-smuon
+  const int sid = 2000013; // Right-smuon
+  string filename = "output/sigma_lo_" + std::to_string(sid) + ".dat";
   std::ofstream out_file(filename);
-  double total_sigma = 0.0;
-  for (int iQ=0; iQ < NQ; ++iQ) {
-    // std::cout << "\rProgress: " << std::setw(3) << std::setprecision(3) << std::floor(100*iQ/(NQ+1)) << "%" << std::flush;
-    const double Q = MINQ + iQ*DQ;
-    const double tau = Q*Q/s;
+  for (int im=0; im < NM; ++im) {
+    std::cout << "\rProgress: " << std::setw(3) << std::setprecision(3) << std::floor(100*im/(NM+1)) << "%" << std::flush;
+    const double slepton_mass = MINM + im*DM;
+    // const double slepton_mass = 100;
+    const double MUF2 = slepton_mass * slepton_mass;
     
-    const double MINLOGX = std::log10(tau);
-    const double MAXLOGX = 0;
-    const double DX = 0.001;
-    const int NX = (int) std::floor((MAXLOGX - MINLOGX)/DX) + 1;
+    const double MINQ = 2.0*slepton_mass;
+    const double MAXQ = s_sqrt;
+    // const double DQ = 1.0;
+    const double DQ = 10.0;
+    const double NQ = std::floor((MAXQ - MINQ)/DQ) + 1;
     
-    double dsigma_dQ2 = 0.0;
-    for (int qid=1; qid <= 6; ++qid) {
-      // Looping over quarks only
-      const double sigmaB = born_cross_section(qid, sid, s, Q, SELECTRON_MASS);
-      double sum = 0.0;
-      for (int ix=1; ix < NX; ++ix) {
-        double log10x = MINLOGX + ix*DX;
-        double x1 = std::pow(10, log10x);
-        double x2 = tau / x1;
-        
-        // Making sure x1,x2 max at 1, not 1+eps, so xfxQ2 doesn't reject them:
-        const double tol = 1e-10;
-        if (std::abs(x1 - 1.0) < tol) {
-          x1 = 1.0;
+    // std::cout << "NQ = " << NQ << "\n";
+    
+    // string filename = "output/dsigma_lo_" + std::to_string(sid) + ".dat";
+    // std::ofstream out_file(filename);
+    double total_sigma = 0.0;
+    for (int iQ=0; iQ < NQ; ++iQ) {
+      // std::cout << "\rProgress: " << std::setw(3) << std::setprecision(3) << std::floor(100*iQ/(NQ+1)) << "%" << std::flush;
+      
+      const double Q = MINQ + iQ*DQ;
+      const double tau = Q*Q/s;
+      
+      const double MINLOGX = std::log10(tau);
+      const double MAXLOGX = 0;
+      const double DX = 0.001;
+      const int NX = (int) std::floor((MAXLOGX - MINLOGX)/DX) + 1;
+      
+      double dsigma_dQ2 = 0.0;
+      for (int qid=1; qid <= 6; ++qid) {
+        // Looping over quarks only
+        const double sigmaB = born_cross_section(qid, sid, s, Q, slepton_mass);
+        double sum = 0.0;
+        for (int ix=1; ix < NX; ++ix) {
+          double log10x = MINLOGX + ix*DX;
+          double x1 = std::pow(10, log10x);
+          double x2 = tau / x1;
+          
+          // Making sure x1,x2 max at 1, not 1+eps, so xfxQ2 doesn't reject them:
+          const double tol = 1e-10;
+          if (std::abs(x1 - 1.0) < tol) {
+            x1 = 1.0;
+          }
+          if (std::abs(x2 - 1.0) < tol) {
+            x2 = 1.0;
+          }
+          
+          const double xfq = pdf->xfxQ2(qid, x1, MUF2);
+          const double xfqbar = pdf->xfxQ2(-qid, x2, MUF2);
+          
+          sum += xfq * xfqbar / tau; // x1*x2 = x1 * tau/x1 = tau
+          // std::cout << xfq << " | " << xfqbar << " | " << tau << " | " << sum << "\n";
         }
-        if (std::abs(x2 - 1.0) < tol) {
-          x2 = 1.0;
-        }
-        
-        const double xfq = pdf->xfxQ2(qid, x1, MUF2);
-        const double xfqbar = pdf->xfxQ2(-qid, x2, MUF2);
-
-        sum += xfq * xfqbar / tau; // x1*x2 = x1 * tau/x1 = tau
+        const double xfqtau = pdf->xfxQ2(qid, tau, MUF2);
+        const double xfq1 = pdf->xfxQ2(qid, 1, MUF2);
+        const double xfqbartau = pdf->xfxQ2(-qid, tau, MUF2);
+        const double xfqbar1 = pdf->xfxQ2(-qid, 1, MUF2);
+        dsigma_dQ2 += sigmaB * (0.5*(xfqtau * xfqbar1 + xfq1 * xfqbartau)/tau + sum);
+        // std::cout << xfqtau << " | " << xfq1 << " | " << xfqbartau << " | " << xfqbar1 << " | " << tau << " | " << sum << " | " << sigmaB << "\n";
       }
-      const double xfqtau = pdf->xfxQ2(qid, tau, MUF2);
-      const double xfq1 = pdf->xfxQ2(qid, 1, MUF2);
-      const double xfqbartau = pdf->xfxQ2(-qid, tau, MUF2);
-      const double xfqbar1 = pdf->xfxQ2(-qid, 1, MUF2);
-      dsigma_dQ2 += 0.5*(xfqtau * xfqbar1 + xfq1 * xfqbartau);
-      dsigma_dQ2 *= sigmaB;
+      dsigma_dQ2 *= DX * std::log(10);
+      // out_file << Q << " " << dsigma_dQ2 << "\n";
+      total_sigma += dsigma_dQ2 * DQ;
+      // std::cout << tau << "\n";
     }
-    dsigma_dQ2 *= DX * std::log(10);
-    out_file << Q << " " << dsigma_dQ2 << "\n";
-    total_sigma += dsigma_dQ2 * DQ;
+    out_file << slepton_mass << " " << total_sigma << "\n";
+    // out_file.close();
   }
   out_file.close();
-  std::cout << "total_sigma = " << total_sigma << " GeV\n";
+  // std::cout << "total_sigma = " << total_sigma << " (GeV)^(-2)\n";
 }

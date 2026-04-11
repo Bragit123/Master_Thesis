@@ -19,7 +19,7 @@ for sid in slepton_ids:
   except:
     raise FileNotFoundError(f"No file with name {filename}.")
   
-  ## Convert from GeV^(-2) to fb
+  ## Convert from GeV^(-2) to pb
   sigma *= gev_to_fb
   mass_arrs.append(m)
   sigma_arrs.append(sigma)

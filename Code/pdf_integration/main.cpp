@@ -4,100 +4,49 @@
 #include <string>
 #include <cmath>
 
-#include "utils.hpp"
+#include "Utils.hpp"
+#include "PDFIntegrator.hpp"
 
 int main(int argc, char* argv[]) {
   const std::string setname = "PDF4LHC21_40";
   const int mem = 0; // Only considering central PDF for now. Expanding laterz!
-  
+
   const LHAPDF::PDF* pdf = LHAPDF::mkPDF(setname, mem);
-  std::vector<int> pids = pdf->flavors();
-  
-  const double s_sqrt = 13'000.0; // 13 Tev
+  const std::vector<int> quark_ids = {1, 2, 3, 4, 5}; // note: no top quark
+
+  const double s_sqrt = 13'000.0; // 13 TeV
   const double s = s_sqrt*s_sqrt;
 
-  // Slepton mass
-  const double MINM = 100.0;
-  const double MAXM = 1000.0;
-  const double DM = 100.0;
-  const double NM = std::floor((MAXM - MINM)/DM) + 1;
+  //Slepton mass
+  const double m_min = 100.0;
+  const double m_max = 1000.0;
+  const double dm = 100.0;
+  const double nm = std::floor((m_max - m_min) / dm) + 1;
   
-  const int sid = 1000011; // Left-selectron
-  // const int sid = 2000011; // Right-selectron
-  // const int sid = 1000013; // Left-smuon
-  // const int sid = 2000013; // Right-smuon
-  std::string filename = "output/sigma_lo_" + std::to_string(sid) + ".dat";
-  std::ofstream out_file(filename);
-  for (int im=0; im < NM; ++im) {
-    // std::cout << "\rProgress: " << std::setw(3) << std::setprecision(3) << std::floor(100*im/(NM+1)) << "%" << std::flush;
-    const double slepton_mass = MINM + im*DM;
-    // const double slepton_mass = 100;
-    const double MUF2 = slepton_mass * slepton_mass;
+  const std::vector<int> slepton_ids = {1000011, 2000011};
+  
+  for (int slepton_id : {1000011, 2000011}) {
+    std::cout << "Slepton " << slepton_id << ":\n";
     
-    const double MINQ = 2.0*slepton_mass;
-    const double MAXQ = s_sqrt;
-    // const double DQ = 1.0;
-    const double DQ = 10.0;
-    const double NQ = std::floor((MAXQ - MINQ)/DQ) + 1;
+    std::string filename = "output/sigma_lo_" + std::to_string(slepton_id) + ".dat";
+    std::ofstream out_file(filename);
     
-    // std::cout << "NQ = " << NQ << "\n";
-    
-    // string filename = "output/dsigma_lo_" + std::to_string(sid) + ".dat";
-    // std::ofstream out_file(filename);
-    double total_sigma = 0.0;
-    for (int iQ=0; iQ < NQ; ++iQ) {
-      // std::cout << "\rProgress: " << std::setw(3) << std::setprecision(3) << std::floor(100*iQ/(NQ+1)) << "%" << std::flush;
+    for (int im=0; im < nm; ++im) {
+      Utils::print_progress(im+1, nm);
       
-      const double Q = MINQ + iQ*DQ;
-      const double tau = Q*Q/s;
+      const double slepton_mass = m_min + im*dm;
       
-      const double MINLOGX = std::log10(tau);
-      const double MAXLOGX = 0;
-      const double DX = 0.001;
-      const int NX = (int) std::floor((MAXLOGX - MINLOGX)/DX) + 1;
+      PDFIntegrator integrator = PDFIntegrator(pdf, quark_ids, slepton_id, slepton_id, s_sqrt);
+      integrator.set_masses(slepton_mass);
       
-      double dsigma_dQ2 = 0.0;
-      for (int qid=1; qid <= 6; ++qid) {
-        // Looping over quarks only
-        const double sigmaB = CrossSections::born_xsec(qid, sid, sid, s, Q, slepton_mass, slepton_mass);
-        double sum = 0.0;
-        for (int ix=1; ix < NX; ++ix) {
-          double log10x = MINLOGX + ix*DX;
-          double x1 = std::pow(10, log10x);
-          double x2 = tau / x1;
-          
-          // Making sure x1,x2 max at 1, not 1+eps, so xfxQ2 doesn't reject them:
-          const double tol = 1e-10;
-          if (std::abs(x1 - 1.0) < tol) {
-            x1 = 1.0;
-          }
-          if (std::abs(x2 - 1.0) < tol) {
-            x2 = 1.0;
-          }
-          
-          const double xfq = pdf->xfxQ2(qid, x1, MUF2);
-          const double xfqbar = pdf->xfxQ2(-qid, x2, MUF2);
-          
-          sum += xfq * xfqbar / tau; // x1*x2 = x1 * tau/x1 = tau
-          // std::cout << xfq << " | " << xfqbar << " | " << tau << " | " << sum << "\n";
-        }
-        const double xfqtau = pdf->xfxQ2(qid, tau, MUF2);
-        const double xfq1 = pdf->xfxQ2(qid, 1, MUF2);
-        const double xfqbartau = pdf->xfxQ2(-qid, tau, MUF2);
-        const double xfqbar1 = pdf->xfxQ2(-qid, 1, MUF2);
-        dsigma_dQ2 += sigmaB * (0.5*(xfqtau * xfqbar1 + xfq1 * xfqbartau)/tau + sum);
-        // std::cout << xfqtau << " | " << xfq1 << " | " << xfqbartau << " | " << xfqbar1 << " | " << tau << " | " << sum << " | " << sigmaB << "\n";
-      }
-      dsigma_dQ2 *= DX * std::log(10);
-      // out_file << Q << " " << dsigma_dQ2 << "\n";
-      total_sigma += dsigma_dQ2 * DQ;
-      // std::cout << tau << "\n";
+      const double total_xsec = integrator.total_xsec();
+      
+      out_file << slepton_mass << " " << total_xsec << "\n";
     }
-    out_file << slepton_mass << " " << total_sigma << "\n";
-    // out_file.close();
+    
+    out_file.close();
   }
-  out_file.close();
-  // std::cout << "total_sigma = " << total_sigma << " (GeV)^(-2)\n";
-
+  delete pdf;
+  
   return 0;
-}
+  }

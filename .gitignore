@@ -9,6 +9,7 @@
 # Temporary
 temp/
 tmp/
+test*
 
 # Build files
 build/

@@ -1,6 +1,7 @@
-#include "utils.hpp"
+#include "Utils.hpp"
 #include <string>
 #include <iostream>
+#include <fstream>
 
 namespace Utils {
   int first_digit(int x) {
@@ -9,6 +10,12 @@ namespace Utils {
     }
     return x;
   }
+
+  void print_progress(int current, int max) {
+    std::cout << "\r  " << std::setw(3) << std::floor(100*current/max)
+              << "%" << std::flush;
+    if (current == max) std::cout << "\n";
+  }
 }
 namespace CrossSections {
   double get_ZliAB(int sleptonA_id, int sleptonB_id, double mix_cos) {
@@ -16,9 +23,9 @@ namespace CrossSections {
     const int B = Utils::first_digit(sleptonB_id);
 
     if (A == B && A == 1) {
-      return 0.5 * mix_cos*mix_cos - 2.0 * Const::SW2;
+      return 0.5 * mix_cos*mix_cos - Const::SW2;
     } else if (A == B && A == 2) {
-      return 0.5 * (1.0 - mix_cos*mix_cos) - 2.0 * Const::SW2;
+      return 0.5 * (1.0 - mix_cos*mix_cos) - Const::SW2;
     } else {
       return 0.5 * mix_cos * std::sqrt(1.0 - mix_cos*mix_cos);
     }
@@ -56,7 +63,7 @@ namespace CrossSections {
     const double ZliAB = get_ZliAB(sleptonA_id, sleptonB_id, mix_cos);
     const double cwsw2inv = 1.0 / (Const::SW2 * Const::CW2);
     const double Q2MZ2 = Q2 - Const::MZ2;
-    const double propagator2inv = 1 / (Q2MZ2*Q2MZ2 + Const::MZ2 * Const::GAMMAZ2);
+    const double propagator2inv = 1.0 / (Q2MZ2*Q2MZ2 + Const::MZ2 * Const::GAMMAZ2);
     const double term1 = Qq*Qq * deltaAB;
     const double term2 = -2.0*Qq*deltaAB * ZliAB*cwsw2inv 
                           * (ZqL+ZqR) * Q2*Q2MZ2*propagator2inv;
@@ -71,13 +78,12 @@ namespace CrossSections {
       int sleptonA_id,
       int sleptonB_id,
       double s,
-      double Q,
+      double Q2,
       double mA,
       double mB,
       double mix_cos
   ) {
-    const double Q2 = Q*Q;
-    const double Q5 = Q2*Q2*Q;
+    const double Q5 = Q2*Q2 * std::sqrt(Q2);
     const double mA2 = mA*mA;
     const double mB2 = mB*mB;
     const double m2diff = mA2-mB2;

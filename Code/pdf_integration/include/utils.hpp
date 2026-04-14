@@ -1,5 +1,5 @@
-#ifndef UTILS_HPP
-#define UTILS_HPP
+#ifndef Utils_HPP
+#define Utils_HPP
 
 #include <cmath>
 
@@ -18,7 +18,7 @@ namespace Const {
   const double ALPHA = std::sqrt(2.0) * GF * MW2 * SW2 / M_PI;
   
   // Quarks
-  const double NC = 3.0;
+  const int NC = 3;
   const double Qu = 2.0/3.0;
   const double Qd = -1.0/3.0;
   const double ZuL = -0.25 * (1.0 - 2.0 * Qu * SW2);
@@ -26,14 +26,17 @@ namespace Const {
   const double ZdL = 0.25 * (1.0 + 2.0 * Qd * SW2);
   const double ZdR = 0.5 * Qd * SW2;
 
-  const double BORN_PREFAC = 8.0 * M_PI * ALPHA*ALPHA / (3.0 * NC);
+  const double BORN_PREFAC = 8.0 * M_PI * ALPHA*ALPHA / (3.0 * (double) NC);
 }
 
 namespace Utils {
   int first_digit(int x);
+  void print_progress(int current, int max);
 }
 
 namespace CrossSections {
+  double get_ZliAB(int sleptonA_id, int sleptonB_id, double mix_cos);
+
   double get_FqliAB(
     int quark_id,
     int sleptonA_id,
@@ -47,7 +50,7 @@ namespace CrossSections {
     int sleptonA_id,
     int sleptonB_id,
     double s,
-    double Q,
+    double Q2,
     double mA,
     double mB,
     double mix_cos = 1.0

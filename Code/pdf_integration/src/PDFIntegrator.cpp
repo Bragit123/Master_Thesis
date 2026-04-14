@@ -11,14 +11,14 @@ PDFIntegrator::PDFIntegrator(
     const std::vector<int> quark_ids_,
     const int sleptonA_id_,
     const int sleptonB_id_,
-    const double s_sqrt_,
+    const double s_,
     const double mix_cos_
 )
   : pdf(pdf_),
     quark_ids(quark_ids_),
     sleptonA_id(sleptonA_id_),
     sleptonB_id(sleptonB_id_),
-    s(s_sqrt_*s_sqrt_),
+    s(s_),
     mix_cos(mix_cos_)
 {}
 

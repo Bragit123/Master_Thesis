@@ -36,7 +36,7 @@ int main(int argc, char* argv[]) {
       
       const double slepton_mass = m_min + im*dm;
       
-      PDFIntegrator integrator = PDFIntegrator(pdf, quark_ids, slepton_id, slepton_id, s_sqrt);
+      PDFIntegrator integrator = PDFIntegrator(pdf, quark_ids, slepton_id, slepton_id, s);
       integrator.set_masses(slepton_mass);
       
       const double total_xsec = integrator.total_xsec();

@@ -17,6 +17,7 @@ namespace Utils {
     if (current == max) std::cout << "\n";
   }
 }
+
 namespace CrossSections {
   double get_ZliAB(int sleptonA_id, int sleptonB_id, double mix_cos) {
     const int A = Utils::first_digit(sleptonA_id);

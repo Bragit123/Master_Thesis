@@ -24,7 +24,7 @@ class PDFIntegrator {
       const std::vector<int> quark_ids_,
       const int sleptonA_id_,
       const int sleptonB_id_,
-      const double s_sqrt_,
+      const double s_,
       const double mix_cos_=1.0
     );
 

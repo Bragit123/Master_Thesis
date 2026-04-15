@@ -30,8 +30,8 @@ namespace Const {
 }
 
 namespace Utils {
-  int first_digit(int x);
-  void print_progress(int current, int max);
+  int first_digit(int x); // Finds first digit of an integer
+  void print_progress(int current, int max); // Used as a progress bar in loops
 }
 
 namespace CrossSections {

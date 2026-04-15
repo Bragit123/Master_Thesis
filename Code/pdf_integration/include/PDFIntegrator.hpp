@@ -28,9 +28,12 @@ class PDFIntegrator {
       const double mix_cos_=1.0
     );
 
-    // Sets slepton masses. If only one mass is provided, set both masses to that value
+    // Sets slepton masses. If only one mass is provided, set both masses to
+    // that value
     void set_masses(double mA_, double mB_=NAN);
 
+
+    // Integrate over PDFs for partonic cross section proportional to delta(1-z)
     double integrate_delta(
       double log10x_min,
       double log10x_max,
@@ -38,8 +41,9 @@ class PDFIntegrator {
       double w_delta
     );
 
+    // Finds full (hadronic) cross section
     double total_xsec(
-      int nQ2=10000,
+      int nQ2=5000,
       double dlog10x=0.001,
       double w_delta=1.0
       // Add other w-functions...

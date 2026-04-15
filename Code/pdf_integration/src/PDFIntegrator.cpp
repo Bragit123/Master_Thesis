@@ -88,17 +88,49 @@ double PDFIntegrator::total_xsec(
   const double dQ2 = std::floor((Q2_max - Q2_min) / (double) nQ2);
   
   double xsec = 0.0;
-  for (int iQ2=0; iQ2 < nQ2; ++iQ2) {
+  for (int iQ2=0; iQ2 <= nQ2; ++iQ2) {
     Q2 = Q2_min + iQ2*dQ2;
     tau = Q2/s;
     
     const double log10x_min = std::log10(tau);
     const double log10x_max = 0.0;
     
-    xsec += integrate_delta(log10x_min, log10x_max, dlog10x, w_delta);
-  }
+    double dxsec = integrate_delta(log10x_min, log10x_max, dlog10x, w_delta);
+    if (iQ2 == 0 || iQ2 == nQ2)
+      dxsec *= 0.5; // Half of first and last (trapezoid)
 
+    xsec += dxsec;
+  }
+  
   xsec *= dQ2;
 
   return xsec;
 }
+// double PDFIntegrator::total_xsec(
+//   int nQ2,
+//   double dlog10x,
+//   double w_delta
+// ) {
+//   const double mtot = mA + mB;
+//   double muF = 0.5*mtot;
+//   muF2 = muF*muF;
+  
+//   const double Q2_min = mtot*mtot;
+//   const double Q2_max = s;
+//   const double dQ2 = std::floor((Q2_max - Q2_min) / (double) nQ2);
+  
+//   double xsec = 0.0;
+//   for (int iQ2=0; iQ2 < nQ2; ++iQ2) {
+//     Q2 = Q2_min + iQ2*dQ2;
+//     tau = Q2/s;
+    
+//     const double log10x_min = std::log10(tau);
+//     const double log10x_max = 0.0;
+    
+//     xsec += integrate_delta(log10x_min, log10x_max, dlog10x, w_delta);
+//   }
+
+//   xsec *= dQ2;
+
+//   return xsec;
+// }

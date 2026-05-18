@@ -1,0 +1,40 @@
+#include "Utils.hpp"
+#include <cuba.h>
+#include <string>
+#include <iostream>
+#include <fstream>
+
+namespace Utils {
+  int first_digit(int x) {
+    while (x >= 10) {
+      x /= 10;
+    }
+    return x;
+  }
+
+  void print_progress(int current, int max) {
+    std::cout << "\r  " << std::setw(3) << std::floor(100*current/max)
+              << "%" << std::flush;
+    if (current == max) std::cout << "\n";
+  }
+
+  void integrate_vegas(
+      int ndim,
+      int ncomp,
+      integrand_t integrand,
+      void* userdata,
+      double epsrel,
+      double epsabs,
+      int maxeval,
+      double* integral,
+      double* error,
+      double* prob
+  ) {
+    int neval, fail;
+    Vegas(ndim, ncomp, integrand, userdata, 1,
+    epsrel, epsabs, 0, 0,
+    0, maxeval, 10'000, 1'000, 1'000,
+    0, nullptr, nullptr,
+    &neval, &fail, integral, error, prob);
+  }
+}

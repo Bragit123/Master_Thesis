@@ -4948,8 +4948,8 @@ dddead3acc4c"]
 }, Open  ]]
 }, Open  ]]
 },
-WindowSize->{735, 807},
-WindowMargins->{{0, Automatic}, {Automatic, 0}},
+WindowSize->{736, 807},
+WindowMargins->{{Automatic, 0}, {Automatic, 1}},
 FrontEndVersion->"13.0 for Mac OS X ARM (64-bit) (December 2, 2021)",
 StyleDefinitions->"Default.nb",
 ExpressionUUID->"1564a194-494f-42f8-8ae3-5291ba3ae7f9"
@@ -5075,10 +5075,10 @@ Cell[CellGroupData[{
 Cell[143673, 4278, 183, 3, 45, "Subsubsection",ExpressionUUID->"3ec430ae-6577-4d5d-b323-f29b8e8bd96d"],
 Cell[CellGroupData[{
 Cell[143881, 4285, 414, 10, 30, "Input",ExpressionUUID->"0e48c2c9-83da-4c4d-9277-8902cc830d7f"],
-Cell[144298, 4297, 1891, 58, 76, "Output",ExpressionUUID->"18145466-c2c9-4bb7-abaf-43d4be508146"]
+Cell[144298, 4297, 1891, 58, 53, "Output",ExpressionUUID->"18145466-c2c9-4bb7-abaf-43d4be508146"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[146226, 4360, 10971, 307, 724, "Input",ExpressionUUID->"d50ed8ba-fdb2-44c0-a236-502330b1a9ea"],
+Cell[146226, 4360, 10971, 307, 703, "Input",ExpressionUUID->"d50ed8ba-fdb2-44c0-a236-502330b1a9ea"],
 Cell[157200, 4669, 1508, 36, 25, "Print",ExpressionUUID->"35819c21-6dcb-459b-beed-06a00b3532ad"]
 }, Open  ]],
 Cell[CellGroupData[{

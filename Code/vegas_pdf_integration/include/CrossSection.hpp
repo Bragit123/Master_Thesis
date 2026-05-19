@@ -65,9 +65,9 @@ class CrossSection {
     );
     
     double full_xsec(
-      double epsrel=1e-3,
+      double epsrel=1e-4,
       double epsabs=1e-12,
-      double maxeval=50'000
+      double maxeval=1'000'000
     );
 };
 

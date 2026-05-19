@@ -94,43 +94,10 @@ double CrossSection::born_xsec(double Q2) {
   return xsec;
 }
 
-int CrossSection::LO_integrand(
-    const int* ndim,
-    const cubareal xx[],
-    const int* ncomp,
-    cubareal ff[],
-    void* userdata
-) {
-  CrossSection* self = static_cast<CrossSection*>(userdata); // Necessary to keep class variables while being compatible with Vegas()
-  double tau = self->tau;
-  int quark_id = self->quark_id;
-  double muF2 = self->muF2;
-  const LHAPDF::PDF* pdf = self->pdf;
-  
-  const double x1_start = tau;
-  const double x1_end = 1.0;
-  const double jacobian = x1_end - x1_start;
-  double x1 = x1_start + jacobian * xx[0];
-  double x2 = tau / x1;
 
-  // Making sure x1,x2 max at 1, not 1+eps, so xfxQ2 doesn't reject them:
-  const double tol = 1e-10;
-  if (std::abs(x1 - 1.0) < tol) x1 = 1.0;
-  if (std::abs(x2 - 1.0) < tol) x2 = 1.0;
-
-  const double xfq = pdf->xfxQ2(quark_id, x1, muF2);
-  const double xfqbar = pdf->xfxQ2(-quark_id, x2, muF2);
-
-  ff[0] = jacobian * xfq * xfqbar / (x1 * tau);
-
-  return 0;
-}
-
-
-
-
-
-
+////////////////
+// Integrands //
+////////////////
 int CrossSection::LO_integrand_full(
     const int* ndim,
     const cubareal xx[],
@@ -167,8 +134,8 @@ int CrossSection::LO_integrand_full(
 
   const double born = self->born_xsec(Q2);
 
-  ff[0] = 2.0 * born * jacobian * xfq * xfqbar / (x1 * tau);
   // Factor 2 to account for changing which particle is (anti-)quark
+  ff[0] = 2.0 * born * jacobian * xfq * xfqbar / (x1 * tau);
 
   return 0;
 }
@@ -188,24 +155,6 @@ void CrossSection::set_Q2(double Q2_) {
   tau = Q2/s;
 }
 
-double CrossSection::diff_xsec(
-    double Q2_,
-    double epsrel,
-    double epsabs,
-    double maxeval
-) {
-  set_Q2(Q2_);
-  
-  double dsigma = 0.0;
-  for (int quark_id_ : quark_ids) {
-    quark_id = quark_id_;
-    double integral[1], error[1], prob[1];
-    Utils::integrate_vegas(1, 1, LO_integrand, this, epsrel, epsabs, maxeval, integral, error, prob);
-    dsigma += integral[0];
-  }
-  dsigma *= born_xsec(Q2);
-  return dsigma;
-}
 
 double CrossSection::full_xsec(
     double epsrel,
@@ -220,7 +169,9 @@ double CrossSection::full_xsec(
   for (int quark_id_ : quark_ids) {
     quark_id = quark_id_;
     double integral[1], error[1], prob[1];
-    Utils::integrate_vegas(2, 1, LO_integrand_full, this, epsrel, epsabs, maxeval, integral, error, prob);
+    int neval, fail;
+    Utils::integrate_vegas(2, 1, LO_integrand_full, this, epsrel, epsabs,
+                          maxeval, integral, error, prob);
     xsec += integral[0];
   }
   

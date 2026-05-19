@@ -36,5 +36,15 @@ namespace Utils {
     0, maxeval, 10'000, 1'000, 1'000,
     0, nullptr, nullptr,
     &neval, &fail, integral, error, prob);
+    
+    if (fail != 0) {
+      printf("Vegas integration failed (fail=%d):\n", fail);
+      printf("\tndim=%d\n\tncomp=%d\n\tepsrel=%g\n\tepsabs=%g\n\tmaxeval=%d\n",
+        ndim, ncomp, epsrel, epsabs, maxeval);
+      for (int icomp=0; icomp < ncomp; ++icomp) {
+        printf("\tcomp=%d\tintegral=%g\terror=%g\tprob=%g\n",
+          icomp, integral[icomp], error[icomp], prob[icomp]);
+      }
+    }
   }
 }

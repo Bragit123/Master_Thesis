@@ -32,25 +32,6 @@ int main(int argc, char* argv[]) {
     std::string filename = "output/sigma_lo_" + std::to_string(slepton_id) + ".dat";
     std::ofstream out_file(filename);
     
-    // const double slepton_mass = 400;
-    // CrossSection integrator = CrossSection(pdf, quark_ids, slepton_id, slepton_id, s);
-    // integrator.set_masses(slepton_mass);
-    
-    // const double Q2_min = 2.0*slepton_mass;
-    // const double Q2_max = s;
-    // const double nQ2 = 1000;
-    // const double dQ2 = std::floor((Q2_max - Q2_min) / (double) nQ2);
-    
-    // for (int iQ2=0; iQ2 < nQ2; ++iQ2) {
-    //   Utils::print_progress(iQ2+1, nQ2);
-      
-    //   double Q2 = Q2_min + iQ2*dQ2;
-    //   const double diff_xsec = integrator.diff_xsec(Q2);
-      
-      
-    //   out_file << Q2 << " " << diff_xsec << "\n";
-    // }
-    
     for (int im=0; im < nm; ++im) {
       Utils::print_progress(im+1, nm);
       

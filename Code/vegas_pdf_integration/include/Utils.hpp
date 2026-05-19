@@ -47,27 +47,4 @@ namespace Utils {
   );
 }
 
-namespace CrossSections {
-  double get_ZliAB(int sleptonA_id, int sleptonB_id, double mix_cos);
-
-  double get_FqliAB(
-    int quark_id,
-    int sleptonA_id,
-    int sleptonB_id,
-    double Q2,
-    double mix_cos = 1.0
-  );
-
-  double born_xsec(
-    int quark_id,
-    int sleptonA_id,
-    int sleptonB_id,
-    double s,
-    double Q2,
-    double mA,
-    double mB,
-    double mix_cos = 1.0
-  );
-}
-
 #endif

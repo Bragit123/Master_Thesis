@@ -3,11 +3,14 @@
 #include <fstream>
 #include <string>
 #include <cmath>
+#include "clooptools.h"
 
 #include "Utils.hpp"
 #include "CrossSection.hpp"
 
 int main(int argc, char* argv[]) {
+  ltini(); // Initialize LoopTools
+
   const std::string setname = "PDF4LHC21_40";
   const int mem = 0; // Only considering central PDF for now. Expanding laterz!
 
@@ -49,6 +52,8 @@ int main(int argc, char* argv[]) {
   }
 
   delete pdf;
+
+  ltexi(); // Print errors and warnings from LoopTools
   
   return 0;
 }

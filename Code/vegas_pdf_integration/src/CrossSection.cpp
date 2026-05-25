@@ -26,7 +26,6 @@ CrossSection::CrossSection(
 ///////////////////////
 // Private functions //
 ///////////////////////
-
 double CrossSection::get_ZliAB() {
   const int A = Utils::first_digit(sleptonA_id);
   const int B = Utils::first_digit(sleptonB_id);
@@ -95,10 +94,12 @@ double CrossSection::born_xsec(double Q2) {
 }
 
 
+
+
 ////////////////
 // Integrands //
 ////////////////
-int CrossSection::LO_integrand_full(
+int CrossSection::integrand_x1_Q(
     const int* ndim,
     const cubareal xx[],
     const int* ncomp,
@@ -122,6 +123,8 @@ int CrossSection::LO_integrand_full(
   double x1 = x1_start + jacobian_x1 * xx[1];
   double x2 = tau / x1;
   
+  double weight = (self->*self->weight_func)(1.0);
+  
   const double jacobian = jacobian_Q2 * jacobian_x1;
   
   // Making sure x1,x2 max at 1, not 1+eps, so xfxQ2 doesn't reject them:
@@ -131,14 +134,41 @@ int CrossSection::LO_integrand_full(
   
   const double xfq = pdf->xfxQ2(quark_id, x1, muF2);
   const double xfqbar = pdf->xfxQ2(-quark_id, x2, muF2);
-
+  
   const double born = self->born_xsec(Q2);
-
+  
   // Factor 2 to account for changing which particle is (anti-)quark
-  ff[0] = 2.0 * born * jacobian * xfq * xfqbar / (x1 * tau);
+  ff[0] = 2.0 * born * jacobian * xfq * xfqbar / (x1 * tau) * weight;
 
   return 0;
 }
+
+// Weights
+double CrossSection::w_LO(double z) {
+  return 1.0;
+}
+double CrossSection::w_hadron_soft(double z) {
+  return 1.0;
+}
+double CrossSection::w_hadron_rad(double z) {
+  return 1.0;
+}
+double CrossSection::w_hadron_plus_1(double z) {
+  return 1.0;
+}
+double CrossSection::w_hadron_plus_log(double z) {
+  return 1.0;
+}
+double CrossSection::w_slepton_soft(double z) {
+  return 1.0;
+}
+double CrossSection::w_slepton_rad(double z) {
+  return 1.0;
+}
+double CrossSection::w_slepton_plus_1(double z) {
+  return 1.0;
+}
+
 
 //////////////////////
 // Public functions //
@@ -155,6 +185,17 @@ void CrossSection::set_Q2(double Q2_) {
   tau = Q2/s;
 }
 
+void CrossSection::set_weight(Weight weight) {
+  switch (weight) {
+    case Weight::LO:
+      weight_func = &CrossSection::w_LO;
+      break;
+    default:
+      std::cerr << "Unknown value of weight in set_weight()" << std::endl;
+      exit(EXIT_FAILURE);
+  }
+}
+
 
 double CrossSection::full_xsec(
     double epsrel,
@@ -164,13 +205,15 @@ double CrossSection::full_xsec(
   double m_tot = mA+mB;
   Q2_min = m_tot*m_tot;
   Q2_max = s;
+
+  set_weight(Weight::LO);
   
   double xsec = 0.0;
   for (int quark_id_ : quark_ids) {
     quark_id = quark_id_;
     double integral[1], error[1], prob[1];
     int neval, fail;
-    Utils::integrate_vegas(2, 1, LO_integrand_full, this, epsrel, epsabs,
+    Utils::integrate_vegas(2, 1, integrand_x1_Q, this, epsrel, epsabs,
                           maxeval, integral, error, prob);
     xsec += integral[0];
   }

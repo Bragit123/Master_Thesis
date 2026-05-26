@@ -6,16 +6,6 @@
 
 #include <vector>
 
-enum class Weight {
-  LO,
-  HADRON_SOFT,
-  HADRON_RAD,
-  HADRON_PLUS_1,
-  HADRON_PLUS_LOG,
-  SLEPTON_SOFT,
-  SLEPTON_RAD,
-  SLEPTON_PLUS_1
-};
 
 class CrossSection {
   private:
@@ -33,22 +23,38 @@ class CrossSection {
     double tau;
     double muF2;
     int quark_id;
-
-    // Pointer to weight function. Allows changing weight function for integrand
-    double (CrossSection::*weight_func)(double);
     
     double get_ZliAB();
     double get_FqliAB(double Q2);
-    double born_xsec(double Q2);
+    double born_xsec(double q2);
 
     // Integrand
-    static int integrand_x1_Q(
+    static int integrand_LO_full(
       const int* ndim,
       const cubareal xx[],
       const int* ncomp,
       cubareal ff[],
       void* userdata
     );
+    static int integrand_hadron_x1_Q(
+      const int* ndim,
+      const cubareal xx[],
+      const int* ncomp,
+      cubareal ff[],
+      void* userdata
+    );
+    static int integrand_hadron_x1_x2_Q(
+      const int* ndim,
+      const cubareal xx[],
+      const int* ncomp,
+      cubareal ff[],
+      void* userdata
+    );
+
+    // Sleptonside integrals (the functions named I)
+    double I_virt_real(double z);
+    double I_emission_1();
+    double I_emission_2();
 
     // Weights
     double w_LO(double z);
@@ -73,9 +79,9 @@ class CrossSection {
 
     void set_masses(double mA_, double mB_=NAN);
     void set_Q2(double Q2_);
-    void set_weight(Weight weight);
     
     double full_xsec(
+      int subset=0, // 0=LO, 1=Hadronside, 2=Sleptonside
       double epsrel=1e-4,
       double epsabs=1e-12,
       double maxeval=1'000'000

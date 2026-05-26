@@ -32,8 +32,10 @@ int main(int argc, char* argv[]) {
   for (int slepton_id : slepton_ids) {
     std::cout << "Slepton " << slepton_id << ":\n";
     
-    std::string filename = "output/sigma_lo_" + std::to_string(slepton_id) + ".dat";
-    std::ofstream out_file(filename);
+    std::string filename_lo = "output/sigma_lo_" + std::to_string(slepton_id) + ".dat";
+    std::string filename_nlo_hadron = "output/sigma_nlo_hadron_" + std::to_string(slepton_id) + ".dat";
+    std::ofstream out_file_lo(filename_lo);
+    std::ofstream out_file_nlo_hadron(filename_nlo_hadron);
     
     for (int im=0; im < nm; ++im) {
       Utils::print_progress(im+1, nm);
@@ -43,12 +45,15 @@ int main(int argc, char* argv[]) {
       CrossSection integrator = CrossSection(pdf, quark_ids, slepton_id, slepton_id, s);
       integrator.set_masses(slepton_mass);
       
-      const double total_xsec = integrator.full_xsec();
+      const double total_xsec_lo = integrator.full_xsec(0);
+      const double total_xsec_nlo_hadron = integrator.full_xsec(1);
       
-      out_file << slepton_mass << " " << total_xsec << "\n";
+      out_file_lo << slepton_mass << " " << total_xsec_lo << "\n";
+      out_file_nlo_hadron << slepton_mass << " " << total_xsec_nlo_hadron << "\n";
     }
     
-    out_file.close();
+    out_file_lo.close();
+    out_file_nlo_hadron.close();
   }
 
   delete pdf;

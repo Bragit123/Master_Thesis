@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <iomanip>
 
 namespace Utils {
   int first_digit(int x) {
@@ -16,6 +17,10 @@ namespace Utils {
     std::cout << "\r  " << std::setw(3) << std::floor(100*current/max)
               << "%" << std::flush;
     if (current == max) std::cout << "\n";
+  }
+
+  double Kallen(double a, double b, double c) {
+    return a*a + b*b + c*c - 2.0*a*b - 2.0*a*c - 2.0*b*c;
   }
 
   void integrate_vegas(

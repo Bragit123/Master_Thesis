@@ -3,6 +3,7 @@
 
 #include <cuba.h>
 #include <cmath>
+#include <complex>
 
 // Values are taken from PDG
 namespace Const {
@@ -34,6 +35,7 @@ namespace Utils {
   int first_digit(int x); // Finds first digit of an integer
   void print_progress(int current, int max); // Used as a progress bar in loops
   double Kallen(double a, double b, double c);
+  std::complex<double> safe_Li2(double arg);
   void integrate_vegas(
       int ndim,
       int ncomp,

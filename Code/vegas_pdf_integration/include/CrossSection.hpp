@@ -5,6 +5,7 @@
 #include <cuba.h>
 
 #include <vector>
+#include <complex>
 
 
 class CrossSection {
@@ -29,7 +30,7 @@ class CrossSection {
     double born_xsec(double q2);
 
     // Integrand
-    static int integrand_LO_full(
+    static int integrand_LO_x1_Q(
       const int* ndim,
       const cubareal xx[],
       const int* ncomp,
@@ -44,6 +45,20 @@ class CrossSection {
       void* userdata
     );
     static int integrand_hadron_x1_x2_Q(
+      const int* ndim,
+      const cubareal xx[],
+      const int* ncomp,
+      cubareal ff[],
+      void* userdata
+    );
+    static int integrand_slepton_x1_Q(
+      const int* ndim,
+      const cubareal xx[],
+      const int* ncomp,
+      cubareal ff[],
+      void* userdata
+    );
+    static int integrand_slepton_x1_x2_Q(
       const int* ndim,
       const cubareal xx[],
       const int* ncomp,

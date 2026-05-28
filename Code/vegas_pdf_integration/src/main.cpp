@@ -36,9 +36,11 @@ int main(int argc, char* argv[]) {
     std::string filename_lo = "output/sigma_lo_" + std::to_string(slepton_id) + ".dat";
     std::string filename_nlo_hadron = "output/sigma_nlo_hadron_" + std::to_string(slepton_id) + ".dat";
     std::string filename_nlo_slepton = "output/sigma_nlo_slepton_" + std::to_string(slepton_id) + ".dat";
+    std::string filename_nlo = "output/sigma_nlo_" + std::to_string(slepton_id) + ".dat";
     std::ofstream out_file_lo(filename_lo);
     std::ofstream out_file_nlo_hadron(filename_nlo_hadron);
     std::ofstream out_file_nlo_slepton(filename_nlo_slepton);
+    std::ofstream out_file_nlo(filename_nlo);
     
     for (int im=0; im < nm; ++im) {
       Utils::print_progress(im+1, nm);
@@ -50,19 +52,22 @@ int main(int argc, char* argv[]) {
       const double muF2 = slepton_mass*slepton_mass;
       setmudim(muF2);
       
-      // const double total_xsec_lo = integrator.full_xsec(0);
-      // out_file_lo << slepton_mass << " " << total_xsec_lo << "\n";
+      const double total_xsec_lo = integrator.full_xsec(0);
+      out_file_lo << slepton_mass << " " << total_xsec_lo << "\n";
       
-      // const double total_xsec_nlo_hadron = integrator.full_xsec(1);
-      // out_file_nlo_hadron << slepton_mass << " " << total_xsec_nlo_hadron << "\n";
+      const double total_xsec_nlo_hadron = integrator.full_xsec(1);
+      out_file_nlo_hadron << slepton_mass << " " << total_xsec_nlo_hadron << "\n";
       
       const double total_xsec_nlo_slepton = integrator.full_xsec(2);
       out_file_nlo_slepton << slepton_mass << " " << total_xsec_nlo_slepton << "\n";
+
+      out_file_nlo << slepton_mass << " " << total_xsec_nlo_hadron + total_xsec_nlo_slepton << "\n";
     }
     
     out_file_lo.close();
     out_file_nlo_hadron.close();
     out_file_nlo_slepton.close();
+    out_file_nlo.close();
   }
 
   delete pdf;

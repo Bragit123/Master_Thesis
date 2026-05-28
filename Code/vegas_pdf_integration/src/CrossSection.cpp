@@ -7,6 +7,7 @@
 #include <vector>
 #include "clooptools.h"
 
+
 // Constructor
 CrossSection::CrossSection(
     const LHAPDF::PDF* pdf_,
@@ -115,8 +116,8 @@ int CrossSection::integrand_LO_x1_Q(
   double jacobian_Q2 = Q2_max - Q2_min;
   double Q2 = Q2_min + jacobian_Q2 * xx[0];
   self->set_Q2(Q2);
-
   double tau = self->tau;
+
   const double x1_start = tau;
   const double x1_end = 1.0;
   const double jacobian_x1 = x1_end - x1_start;
@@ -362,7 +363,7 @@ int CrossSection::integrand_slepton_x1_x2_Q(
   const double f1_term = xfqbar_x2 * w_plus_1 - xfqbar_tau_x1 * w_plus_1_one;
   const double f1 = 1.0 / (1.0 - z);
   const double f_term = f1_term * f1;
-  
+
   // Factor 2 to account for changing which particle is (anti-)quark
   ff[0] = 2.0 * born * jacobian * xfq / (x1*x1 * x2*x2) * (rad_term + f_term);
 
@@ -374,25 +375,22 @@ int CrossSection::integrand_slepton_x1_x2_Q(
 double CrossSection::I_virt_real(double z) {
   const double m12 = mB*mB;
   const double m22 = mA*mA;
-  const double s_hat = Q2/z;
-  const double lambda_inv = 1.0 / Utils::Kallen(s_hat, m22, m12);
+  const double s_parton = Q2/z;
+  const double lambda_inv = 1.0 / Utils::Kallen(s_parton, m22, m12);
   const double m_sum = m12 + m22;
   const double m_diff = m12 - m22;
 
-  const std::complex<double> Bm1 = B0(m12, 0.0, m12);
-  const std::complex<double> Bm2 = B0(m22, 0.0, m22);
-  // const std::complex<double> Bsm12 = B0(s_hat, m12, m22);
-  // const std::complex<double> Csm12 = C0(m12, m22, s_hat, m12, 0.0, m22);
-  // const std::complex<double> term1 = -(s_hat - m_sum) * C0(m12, m22, s_hat, m12, 0.0, m22);
+  const std::complex<double> Bm1 = B0(m12, 0, m12);
+  const std::complex<double> Bm2 = B0(m22, 0, m22);
+  const std::complex<double> Bsm12 = B0(s_parton, m12, m22);
+  const std::complex<double> Csm12 = C0(m12, m22, s_parton, m12, 0.0, m22);
+
+  // std::cout << s_parton << " | " << m12 << " | " << m22 << " || " << Bm1 << " | " << Bm2 << " | " << Bsm12 << std::endl;
+  const std::complex<double> term1 = -(s_parton - m_sum) * C0(m12, m22, s_parton, m12, 0.0, m22);
   const std::complex<double> term2 = 0.5 * Bm1 + 0.5 * Bm2;
-  // const std::complex<double> term3 = - 2.0*s_hat*(s_hat - m_sum)*lambda_inv * B0(s_hat, m12, m22);
-  const std::complex<double> term4 = 2.0*m12*(s_hat - m_diff)*lambda_inv * Bm1;
-  const std::complex<double> term5 = 2.0*m22*(s_hat + m_diff)*lambda_inv * Bm2;
-  const std::complex<double> term1 = 0.0;
-  // const std::complex<double> term2 = 0.0;
-  const std::complex<double> term3 = 0.0;
-  // const std::complex<double> term4 = 0.0;
-  // const std::complex<double> term5 = 0.0;
+  const std::complex<double> term3 = - 2.0*s_parton*(s_parton - m_sum)*lambda_inv * B0(s_parton, m12, m22);
+  const std::complex<double> term4 = 2.0*m12*(s_parton - m_diff)*lambda_inv * Bm1;
+  const std::complex<double> term5 = 2.0*m22*(s_parton + m_diff)*lambda_inv * Bm2;
 
   const double res = Re(term1 + term2 + term3 + term4 + term5);
   return res;
@@ -418,8 +416,8 @@ double CrossSection::I_emission_2() {
   const double arg_dilog1 = (1.0-xp)/(1.0-xm);
   const double arg_dilog2 = (1.0+xm)/(1.0+xp);
   
-  const std::complex<double> dilog1 = Utils::safe_Li2(arg_dilog1);
-  const std::complex<double> dilog2 = Utils::safe_Li2(arg_dilog2);
+  const std::complex<double> dilog1 = Li2(arg_dilog1);
+  const std::complex<double> dilog2 = Li2(arg_dilog2);
   const std::complex<double> bracket_dilog = dilog1 + dilog2;
 
   
@@ -511,7 +509,8 @@ double CrossSection::w_slepton_soft(double z) {
   const double mt22 = mA*mA/Q2;
   const double I1 = I_emission_1();
   const double I2 = I_emission_2();
-  const double Iv_real = I_virt_real(z);
+  const double s_parton = Q2/z;
+  const double Iv_real = I_virt_real(s_parton);
   const double lambda = Utils::Kallen(1.0, mt12, mt22);
   const double lambda_sqrt_inv = 1.0/sqrt(lambda);
   

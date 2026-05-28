@@ -8,7 +8,6 @@
 #include <iomanip>
 #include <mutex>
 
-static std::mutex li2_mutex;
 
 namespace Utils {
   int first_digit(int x) {
@@ -26,13 +25,6 @@ namespace Utils {
 
   double Kallen(double a, double b, double c) {
     return a*a + b*b + c*c - 2.0*a*b - 2.0*a*c - 2.0*b*c;
-  }
-
-  std::complex<double> safe_Li2(double arg) {
-    // Cuba uses multiple threads for integration, which messes up LoopTools' Li2
-    // function. safe_Li2 "locks" the function, circumventing the problem
-    std::lock_guard<std::mutex> lock(li2_mutex);
-    return Li2(arg);
   }
 
   void integrate_vegas(

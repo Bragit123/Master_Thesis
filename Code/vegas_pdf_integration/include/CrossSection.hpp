@@ -20,8 +20,8 @@ class CrossSection {
     double mB;
     double Q2_min;
     double Q2_max;
-    double Q2;
-    double tau;
+    // double Q2;
+    // double tau;
     double muF2;
     int quark_id;
     
@@ -67,19 +67,19 @@ class CrossSection {
     );
 
     // Sleptonside integrals (the functions named I)
-    double I_virt_real(double z);
-    double I_emission_1();
-    double I_emission_2();
+    double I_virt_real(double z, double Q2);
+    double I_emission_1(double Q2);
+    double I_emission_2(double Q2);
 
     // Weights
-    double w_LO(double z);
-    double w_hadron_soft(double z);
-    double w_hadron_rad(double z);
-    double w_hadron_plus_1(double z);
-    double w_hadron_plus_log(double z);
-    double w_slepton_soft(double z);
-    double w_slepton_rad(double z);
-    double w_slepton_plus_1(double z);
+    double w_LO(double z, double Q2);
+    double w_hadron_soft(double z, double Q2);
+    double w_hadron_rad(double z, double Q2);
+    double w_hadron_plus_1(double z, double Q2);
+    double w_hadron_plus_log(double z, double Q2);
+    double w_slepton_soft(double z, double Q2);
+    double w_slepton_rad(double z, double Q2);
+    double w_slepton_plus_1(double z, double Q2);
 
   public:
     // Constructor
@@ -93,7 +93,7 @@ class CrossSection {
     );
 
     void set_masses(double mA_, double mB_=NAN);
-    void set_Q2(double Q2_);
+    // void set_Q2(double Q2_);
     
     double full_xsec(
       int subset=0, // 0=LO, 1=Hadronside, 2=Sleptonside

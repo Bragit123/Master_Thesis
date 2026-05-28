@@ -24,7 +24,7 @@ namespace Utils {
   }
 
   double Kallen(double a, double b, double c) {
-    return a*a + b*b + c*c - 2.0*a*b - 2.0*a*c - 2.0*b*c;
+    return a*a + b*b + c*c - 2.*a*b - 2.*a*c - 2.*b*c;
   }
 
   void integrate_vegas(

@@ -29,12 +29,18 @@ namespace Const {
   const double ZdR = 0.5 * Qd * SW2;
 
   const double BORN_PREFAC = 8.0 * M_PI * ALPHA*ALPHA / (3.0 * (double) NC);
+
+  // Conversion factors
+  const double GEV_TO_FB = 0.389379e12; // https://en.wikipedia.org/wiki/Barn_(unit)
 }
 
 namespace Utils {
   int first_digit(int x); // Finds first digit of an integer
   void print_progress(int current, int max); // Used as a progress bar in loops
   double Kallen(double a, double b, double c);
+  double get_Qq(int quark_id);
+  double get_ZqL(int quark_id);
+  double get_ZqR(int quark_id);
   void integrate_vegas(
       int ndim,
       int ncomp,

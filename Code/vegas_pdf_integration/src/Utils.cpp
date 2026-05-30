@@ -27,6 +27,43 @@ namespace Utils {
     return a*a + b*b + c*c - 2.*a*b - 2.*a*c - 2.*b*c;
   }
 
+  double get_Qq(int quark_id) {
+    double Qq;
+    if (quark_id % 2 == 0) {
+      // up-type quark
+      Qq = Const::Qu;
+    }
+    else {
+      // down-type quark
+      Qq = Const::Qd;
+    }
+    return Qq;
+  }
+  double get_ZqL(int quark_id) {
+    double ZqL;
+    if (quark_id % 2 == 0) {
+      // up-type quark
+      ZqL = Const::ZuL;
+    }
+    else {
+      // down-type quark
+      ZqL = Const::ZdL;
+    }
+    return ZqL;
+  }
+  double get_ZqR(int quark_id) {
+    double ZqR;
+    if (quark_id % 2 == 0) {
+      // up-type quark
+      ZqR = Const::ZuR;
+    }
+    else {
+      // down-type quark
+      ZqR = Const::ZdR;
+    }
+    return ZqR;
+  }
+
   void integrate_vegas(
       int ndim,
       int ncomp,

@@ -9,7 +9,7 @@
 
 
 class CrossSection {
-  private:
+  public:
     const LHAPDF::PDF* pdf;
     const std::vector<int> quark_ids;
     const int sleptonA_id;
@@ -20,8 +20,6 @@ class CrossSection {
     double mB;
     double Q2_min;
     double Q2_max;
-    // double Q2;
-    // double tau;
     double muF2;
     int quark_id;
     
@@ -29,59 +27,8 @@ class CrossSection {
     double get_FqliAB(double Q2);
     double born_xsec(double q2);
 
-    // Integrand
-    static int integrand_LO_x1_Q(
-      const int* ndim,
-      const cubareal xx[],
-      const int* ncomp,
-      cubareal ff[],
-      void* userdata
-    );
-    static int integrand_hadron_x1_Q(
-      const int* ndim,
-      const cubareal xx[],
-      const int* ncomp,
-      cubareal ff[],
-      void* userdata
-    );
-    static int integrand_hadron_x1_x2_Q(
-      const int* ndim,
-      const cubareal xx[],
-      const int* ncomp,
-      cubareal ff[],
-      void* userdata
-    );
-    static int integrand_slepton_x1_Q(
-      const int* ndim,
-      const cubareal xx[],
-      const int* ncomp,
-      cubareal ff[],
-      void* userdata
-    );
-    static int integrand_slepton_x1_x2_Q(
-      const int* ndim,
-      const cubareal xx[],
-      const int* ncomp,
-      cubareal ff[],
-      void* userdata
-    );
-
-    // Sleptonside integrals (the functions named I)
-    double I_virt_real(double z, double Q2);
-    double I_emission_1(double Q2);
-    double I_emission_2(double Q2);
-
-    // Weights
-    double w_LO(double z, double Q2);
-    double w_hadron_soft(double z, double Q2);
-    double w_hadron_rad(double z, double Q2);
-    double w_hadron_plus_1(double z, double Q2);
-    double w_hadron_plus_log(double z, double Q2);
-    double w_slepton_soft(double z, double Q2);
-    double w_slepton_rad(double z, double Q2);
-    double w_slepton_plus_1(double z, double Q2);
-
-  public:
+  // public:
+    double Q2;
     // Constructor
     CrossSection(
       const LHAPDF::PDF* pdf_,
@@ -97,9 +44,17 @@ class CrossSection {
     
     double full_xsec(
       int subset=0, // 0=LO, 1=Hadronside, 2=Sleptonside
-      double epsrel=1e-4,
-      double epsabs=1e-12,
-      double maxeval=1'000'000
+      double epsrel=3e-3,
+      double epsabs=1e-15,
+      double maxeval=10'000'000
+      // double maxeval=10'000
+    );
+    double diff_xsec(
+      int subset=0, // 0=LO, 1=Hadronside, 2=Sleptonside
+      double epsrel=3e-3,
+      double epsabs=1e-3,
+      // double maxeval=1'000'000
+      double maxeval=10'000
     );
 };
 

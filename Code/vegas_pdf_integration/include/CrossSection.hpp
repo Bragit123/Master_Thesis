@@ -49,13 +49,6 @@ class CrossSection {
       double maxeval=10'000'000
       // double maxeval=10'000
     );
-    double diff_xsec(
-      int subset=0, // 0=LO, 1=Hadronside, 2=Sleptonside
-      double epsrel=3e-3,
-      double epsabs=1e-3,
-      // double maxeval=1'000'000
-      double maxeval=10'000
-    );
 };
 
 #endif

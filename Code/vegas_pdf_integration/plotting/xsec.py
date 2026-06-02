@@ -50,7 +50,7 @@ ax.set_ylabel("$\\sigma$ [fb]")
 ax.set_yscale("log")
 for i in range(len(slepton_ids)):
   sid = slepton_ids[i]
-  m = m_arrs[i]
+  m_arr = m_arrs[i]
   xsec_lo = xsec_lo_arrs[i]
   xsec_nlo = xsec_nlo_arrs[i]
   color = ("blue" if i==0 else "green")
@@ -71,7 +71,7 @@ ax.set_xlabel("$m_{\\tilde\\ell}$ [GeV]")
 ax.set_ylabel("$\\sigma^{\\text{NLO}}/\\sigma^{\\text{LO}}$")
 for i in range(len(slepton_ids)):
   sid = slepton_ids[i]
-  m = m_arrs[i]
+  m_arr = m_arrs[i]
   xsec_lo = xsec_lo_arrs[i]
   xsec_nlo = xsec_nlo_arrs[i]
   ratio = xsec_nlo/xsec_lo
@@ -92,7 +92,7 @@ ax.set_xlabel("$m_{\\tilde\\ell}$ [GeV]")
 ax.set_ylabel("$\\sigma^{\\text{LO}+\\text{NLO}}/\\sigma^{\\text{LO}}$")
 for i in range(len(slepton_ids)):
   sid = slepton_ids[i]
-  m = m_arrs[i]
+  m_arr = m_arrs[i]
   xsec_lo = xsec_lo_arrs[i]
   xsec_nlo = xsec_nlo_arrs[i]
   ratio = (xsec_nlo+xsec_lo)/xsec_lo
@@ -114,7 +114,7 @@ ax.set_ylabel("$\\sigma$ [fb]")
 ax.set_yscale("log")
 for i in range(len(slepton_ids)):
   sid = slepton_ids[i]
-  m = m_arrs[i]
+  m_arr = m_arrs[i]
   xsec_hadron = xsec_hadron_arrs[i]
   xsec_slepton = xsec_slepton_arrs[i]
   xsec_nlo = xsec_nlo_arrs[i]

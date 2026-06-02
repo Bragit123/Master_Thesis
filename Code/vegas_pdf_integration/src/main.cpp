@@ -32,7 +32,7 @@ int main(int argc, char* argv[]) {
   for (int slepton_id : slepton_ids) {
     std::cout << "Slepton " << slepton_id << ":\n";
     
-    std::string filename = "output/TEST_xsec_mass_" + std::to_string(slepton_id) + ".dat";
+    std::string filename = "output/xsec_mass_" + std::to_string(slepton_id) + ".dat";
     std::ofstream outfile(filename);
     outfile << "# mass(GeV) lo(fb) nlo(fb) hadronside(fb) sleptonside(fb)" << std::endl;
     

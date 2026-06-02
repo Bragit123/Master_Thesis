@@ -1,5 +1,5 @@
-#ifndef Integrator_HPP
-#define Integrator_HPP
+#ifndef Integrands_HPP
+#define Integrands_HPP
 
 #include "LHAPDF/LHAPDF.h"
 #include <cuba.h>

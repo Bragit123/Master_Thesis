@@ -1,6 +1,6 @@
 #include "CrossSection.hpp"
 
-#include "Integrator.hpp"
+#include "Integrands.hpp"
 
 #include "LHAPDF/LHAPDF.h"
 #include "Utils.hpp"

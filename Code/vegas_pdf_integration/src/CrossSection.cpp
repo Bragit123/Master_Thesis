@@ -9,6 +9,13 @@
 #include <vector>
 #include "clooptools.h"
 
+struct IntegrandParams {
+  double Q2_min;
+  double Q2_max;
+  double s;
+  int quark_id;
+  LHAPDF::PDF* pdf;
+};
 
 // Constructor
 CrossSection::CrossSection(
@@ -99,8 +106,8 @@ void CrossSection::set_masses(double mA_, double mB_) {
 double CrossSection::full_xsec(
     int subset, // 0=LO, 1=Hadronside, 2=Sleptonside
     double epsrel,
-    double epsabs,
-    double maxeval
+    double maxeval,
+    double epsabs
 ) {
   double m_tot = mA+mB;
   Q2_min = m_tot*m_tot;
@@ -116,7 +123,7 @@ double CrossSection::full_xsec(
                             maxeval, integral, error, prob);
       xsec += 2.*integral[0];
     } else if (subset == 1) {
-      // Integral over x1:
+      // // Integral over x1:
       double integral1[1], error1[1], prob1[1];
       Utils::integrate_vegas(2, 1, Integrands::hadron_x1_Q, this, epsrel, epsabs,
                             maxeval, integral1, error1, prob1);
@@ -128,7 +135,7 @@ double CrossSection::full_xsec(
                             maxeval, integral2, error2, prob2);
       xsec += 2.*integral2[0];
     } else if (subset == 2) {
-      // Integral over x1:
+      // // Integral over x1:
       double integral1[1], error1[1], prob1[1];
       Utils::integrate_vegas(2, 1, Integrands::slepton_x1_Q, this, epsrel, epsabs,
                             maxeval, integral1, error1, prob1);

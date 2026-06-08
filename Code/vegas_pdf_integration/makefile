@@ -13,4 +13,4 @@ LIB_FLAGS = -L$(LHAPDF_LIB) -L$(CUBA_LIB) -L$(LOOPTOOLS_LIB)
 LINK_FLAGS = -lLHAPDF -lcuba -looptools -lgfortran
 
 compile:
-	g++-15 -O2 -std=c++17 src/* -o main.exe $(INCLUDE_FLAGS) $(LIB_FLAGS) $(LINK_FLAGS)
+	g++-15  -O2 -std=c++17 src/* -o main.exe $(INCLUDE_FLAGS) $(LIB_FLAGS) $(LINK_FLAGS)

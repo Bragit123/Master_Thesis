@@ -10,8 +10,6 @@ FILE_DIR = Path(__file__).resolve().parent
 OUTPUT_DIR = FILE_DIR.parent / "output"
 PLOT_DIR = FILE_DIR / "plots"
 
-# gev_to_fb = 0.389379e12 # https://en.wikipedia.org/wiki/Barn_(unit)
-
 def id2label(id: int) -> str:
   if id == 1000011:
     return "$\\tilde{e}_L^*\\tilde{e}_L$"
@@ -26,13 +24,13 @@ def error_plot(x, y, yerr, color=None, linestyle=None, marker=None, label=None, 
   plt.fill_between(x, y - yerr, y + yerr, color=line.get_color(), alpha=alpha, label=err_label, linestyle="dashed")
 
 col_names = [
-  "mass", "lo", "pdf_lo", "nlo", "pdf_nlo", "hadron", "pdf_hadron",
-  "slepton", "pdf_slepton", "ratio", "pdf_ratio"
+  "mass", "lo", "scale_err_lo", "nlo", "scale_err_nlo", "hadron", "scale_err_hadron",
+  "slepton", "scale_err_slepton", "ratio", "scale_err_ratio"
 ]
 slepton_ids = [1000011, 2000011]
 dfs = []
 for slepton_id in slepton_ids:
-  filename = "xsec_mass_err_" + str(slepton_id) + ".dat"
+  filename = "xsec_mass_scale_err_" + str(slepton_id) + ".dat"
   filepath = OUTPUT_DIR/filename
   df = pd.read_csv(filepath, comment="#", names=col_names, delimiter=r"\s+")
   dfs.append(df)
@@ -51,8 +49,8 @@ for i in range(len(slepton_ids)):
   m_arr = df["mass"]
   xsec_lo = df["lo"]
   xsec_nlo = df["nlo"]
-  pdf_std_lo = df["pdf_lo"]
-  pdf_std_nlo = df["pdf_nlo"]
+  scale_err_lo = df["scale_err_lo"]
+  scale_err_nlo = df["scale_err_nlo"]
   # color = ("blue" if i==0 else "green")
   marker = ("o" if i==0 else "x")
   marker = ("o" if i==0 else "x")
@@ -60,16 +58,16 @@ for i in range(len(slepton_ids)):
   label = id2label(sid)
 
   if i == 1:
-    err_label = "PDF Errors"
+    err_label = "Scale Errors"
   else:
     err_label = None
 
-  error_plot(m_arr, xsec_lo, pdf_std_lo, marker=marker, label=label+" (LO)")
-  error_plot(m_arr, xsec_nlo, pdf_std_nlo, marker=marker, label=label+" (NLO)", err_label=err_label)
+  error_plot(m_arr, xsec_lo, scale_err_lo, marker=marker, label=label+" (LO)")
+  error_plot(m_arr, xsec_nlo, scale_err_nlo, marker=marker, label=label+" (NLO)", err_label=err_label)
 ax.grid(alpha=0.3)
 fig.legend(frameon=False, loc="upper right", bbox_to_anchor=(0.95, 0.95), ncol=1)
 fig.tight_layout()
-fig.savefig(PLOT_DIR/"xsec_mass_err_lo_nlo.pdf")
+fig.savefig(PLOT_DIR/"xsec_mass_scale_err_lo_nlo.pdf")
 
 
 #########################
@@ -86,21 +84,21 @@ for i in range(len(slepton_ids)):
   # xsec_nlo = df["nlo"]
   # ratio = xsec_nlo/xsec_lo
   ratio = df["ratio"]
-  pdf_ratio = df["pdf_ratio"]
+  scale_err_ratio = df["scale_err_ratio"]
   # color = ("blue" if i==0 else "green")
   # marker = ("o" if i==0 else "x")
   marker = "."
   label = id2label(sid)
   # plt.plot(m_arr, ratio, color=color, linestyle="solid", marker=marker, label=label)
   if i == 1:
-    err_label = "PDF Errors"
+    err_label = "Scale Errors"
   else:
     err_label = None
 
-  error_plot(m_arr, ratio, pdf_ratio, marker=marker, label=label, err_label=err_label)
+  error_plot(m_arr, ratio, scale_err_ratio, marker=marker, label=label, err_label=err_label)
 fig.legend(frameon=False, loc="upper center", bbox_to_anchor=(0.55, 0.95), ncol=3)
 fig.tight_layout()
-fig.savefig(PLOT_DIR/"xsec_mass_err_ratio.pdf")
+fig.savefig(PLOT_DIR/"xsec_mass_scale_err_ratio.pdf")
 
 
 #######################
@@ -117,9 +115,9 @@ for i in range(len(slepton_ids)):
   xsec_hadron = df["hadron"]
   xsec_slepton = df["slepton"]
   xsec_nlo = df["nlo"]
-  pdf_std_hadron = df["pdf_hadron"]
-  pdf_std_slepton = df["pdf_slepton"]
-  pdf_std_nlo = df["pdf_nlo"]
+  scale_err_hadron = df["scale_err_hadron"]
+  scale_err_slepton = df["scale_err_slepton"]
+  scale_err_nlo = df["scale_err_nlo"]
   color = ("blue" if i==0 else "green")
   # marker = ("o" if i==0 else "x")
   marker = "."
@@ -127,12 +125,12 @@ for i in range(len(slepton_ids)):
   # plt.plot(m_arr, xsec_nlo, color=color, linestyle="solid", marker=marker, label=label+" (NLO)")
   # plt.plot(m_arr, xsec_slepton, color=color, linestyle="solid", marker=marker, label=label+" (Sleptonside)")
   # plt.plot(m_arr, xsec_hadron, color=color, linestyle="dashed", marker=marker, label=label+" (Hadronside)")
-  error_plot(m_arr, xsec_slepton, pdf_std_slepton, color=None, linestyle="solid", marker=marker, label=label+" (Sleptonside)")
+  # error_plot(m_arr, xsec_slepton, scale_err_slepton, color=None, linestyle="solid", marker=marker, label=label+" (Sleptonside)")
   if i == 1:
-    err_label = "PDF Errors"
+    err_label = "Scale Errors"
   else:
     err_label = None
-  error_plot(m_arr, xsec_hadron, pdf_std_hadron, color=None, linestyle="solid", marker=marker, label=label+" (Hadronside)", err_label=err_label)
+  error_plot(m_arr, xsec_hadron, scale_err_hadron, color=None, linestyle="solid", marker=marker, label=label+" (Hadronside)", err_label=err_label)
 fig.legend(frameon=False, loc="upper right", bbox_to_anchor=(0.95, 0.95), ncol=1)
 fig.tight_layout()
-fig.savefig(PLOT_DIR/"xsec_mass_err_hadron_slepton.pdf")
+fig.savefig(PLOT_DIR/"xsec_mass_scale_err_hadron_slepton.pdf")

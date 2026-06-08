@@ -159,9 +159,12 @@ namespace Integrands {
     const double f1_term = xfqbar_x2 * w_plus_1 - xfqbar_tau_x1 * w_plus_1_one;
     const double flog_term = xfqbar_x2 * w_plus_log - xfqbar_tau_x1 * w_plus_log_one;
 
-    const double f1 = 1.0 / (1.0 - z);
-    const double flog = log(1.0 - z) / (1.0 - z);
-    const double f_term = f1_term * f1 + flog_term * flog;
+    double f_term = 0.0;
+    if (std::abs(1.0 - z) > tol) {
+      const double f1 = 1.0 / (1.0 - z);
+      const double flog = log(1.0 - z) / (1.0 - z);
+      f_term = f1_term * f1 + flog_term * flog;
+    }
     
     // Factor 2 to account for changing which particle is (anti-)quark
     const double result = born * jacobian * xfq / (x1*x1 * x2*x2) * (rad_term + f_term);

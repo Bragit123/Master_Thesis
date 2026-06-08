@@ -1,0 +1,12 @@
+# SLEPTON_MASS = 700
+# mu/mass | lo(fb) | nlo(fb) | hadronside(fb)| sleptonside(fb) | ratio
+0.25 0 0 0 0 nan
+0.340198 0 0 0 0 nan
+0.462937 0 0 0 0 nan
+0.629961 0 0 0 0 nan
+0.857244 0 0 0 0 nan
+1.16653 0 0 0 0 nan
+1.5874 0 0 0 0 nan
+2.16012 0 0 0 0 nan
+2.93947 0 0 0 0 nan
+4 0 0 0 0 nan

@@ -9,6 +9,14 @@
 #include <vector>
 #include "clooptools.h"
 
+struct IntegrandParams {
+  double Q2_min;
+  double Q2_max;
+  double s;
+  int quark_id;
+  LHAPDF::PDF* pdf;
+};
+
 // Constructor
 CrossSection::CrossSection(
     const LHAPDF::PDF* pdf_,

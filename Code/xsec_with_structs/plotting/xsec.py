@@ -84,27 +84,6 @@ fig.tight_layout()
 fig.savefig(PLOT_DIR/"xsec_mass_ratio.pdf")
 
 
-#########################
-### (LO+NLO)/LO Ratio ###
-#########################
-fig, ax = plt.subplots()
-ax.set_xlabel("$m_{\\tilde\\ell}$ [GeV]")
-ax.set_ylabel("$\\sigma^{\\text{LO}+\\text{NLO}}/\\sigma^{\\text{LO}}$")
-for i in range(len(slepton_ids)):
-  sid = slepton_ids[i]
-  m_arr = m_arrs[i]
-  xsec_lo = xsec_lo_arrs[i]
-  xsec_nlo = xsec_nlo_arrs[i]
-  ratio = (xsec_nlo+xsec_lo)/xsec_lo
-  color = ("blue" if i==0 else "green")
-  marker = ("o" if i==0 else "x")
-  label = id2label(sid)
-  plt.plot(m_arr, ratio, color=color, linestyle="solid", marker=marker, label=label)
-fig.legend(frameon=False, loc="lower right", bbox_to_anchor=(0.95, 0.2), ncol=1)
-fig.tight_layout()
-fig.savefig(PLOT_DIR/"xsec_mass_ratio_full.pdf")
-
-
 #######################
 ### Hadron--Slepton ###
 #######################

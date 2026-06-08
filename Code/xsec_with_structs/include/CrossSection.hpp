@@ -7,47 +7,37 @@
 #include <vector>
 #include <complex>
 
+#include <optional>
 
-class CrossSection {
-  public:
-    const LHAPDF::PDF* pdf;
-    const std::vector<int> quark_ids;
-    const int sleptonA_id;
-    const int sleptonB_id;
-    const double s;
-    const double mix_cos;
-    double mA;
-    double mB;
-    double Q2_min;
-    double Q2_max;
-    double muF2;
-    int quark_id;
-    
-    double get_ZliAB();
-    double get_FqliAB(double Q2);
-    double born_xsec(double q2);
-
-  // public:
-    double Q2;
-    // Constructor
-    CrossSection(
-      const LHAPDF::PDF* pdf_,
-      const std::vector<int> quark_ids_,
-      const int sleptonA_id_,
-      const int sleptonB_id_,
-      const double s_,
-      const double mix_cos_=1.0
-    );
-
-    void set_masses(double mA_, double mB_=NAN);
-    // void set_Q2(double Q2_);
-    
-    double full_xsec(
-      int subset=0, // 0=LO, 1=Hadronside, 2=Sleptonside
-      double epsrel=3e-3,
-      double maxeval=1e7,
-      double epsabs=1e-20
-    );
+// Parameters for CrossSection functions that should not vary between Vegas integrations
+struct CSParams {
+  int sleptonA_id;
+  int sleptonB_id;
+  double mA;
+  double mB;
+  double s;
+  double Q2_min;
+  double Q2_max;
+  double muF2;
+  const LHAPDF::PDF* pdf;
+  double mix_cos = 1.0;
+  std::optional<int> quark_id = std::nullopt; // Needed in integrands, but should not be passed to full_xsec
 };
+
+
+namespace CrossSection {
+  double get_ZliAB(CSParams* params);
+  double get_FqliAB(double q2, CSParams* params);
+  double born_xsec(double q2, CSParams* params);
+  
+  double full_xsec(
+    CSParams params,
+    std::vector<int> quark_ids,
+    int subset=0, // 0=LO, 1=Hadronside, 2=Sleptonside
+    double epsrel=3e-3,
+    double maxeval=1e7,
+    double epsabs=1e-20
+  );
+}
 
 #endif

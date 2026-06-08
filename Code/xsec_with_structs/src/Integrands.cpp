@@ -10,13 +10,13 @@ namespace Integrands {
       const int* ndim, const cubareal xx[], const int* ncomp,
       cubareal ff[], void* userdata
   ) {
-    CrossSection* self = static_cast<CrossSection*>(userdata); // Necessary to keep class variables while being compatible with Vegas()
-    const double Q2_min = self->Q2_min;
-    const double Q2_max = self->Q2_max;
-    const double s = self->s;
-    const int quark_id = self->quark_id;
-    const double muF2 = self->muF2;
-    const LHAPDF::PDF* pdf = self->pdf;
+    CSParams* params = static_cast<CSParams*>(userdata); // Necessary to keep class variables while being compatible with Vegas()
+    const double Q2_min = params->Q2_min;
+    const double Q2_max = params->Q2_max;
+    const double s = params->s;
+    const int quark_id = params->quark_id.value();
+    const double muF2 = params->muF2;
+    const LHAPDF::PDF* pdf = params->pdf;
     
     const double jacobian_Q2 = Q2_max - Q2_min;
     const double Q2 = Q2_min + jacobian_Q2 * xx[0];
@@ -40,7 +40,7 @@ namespace Integrands {
     const double xfq = pdf->xfxQ2(quark_id, x1, muF2);
     const double xfqbar = pdf->xfxQ2(-quark_id, x2, muF2);
     
-    const double born = self->born_xsec(Q2);
+    const double born = CrossSection::born_xsec(Q2, params);
     
     // Factor 2 to account for changing which particle is (anti-)quark
     const double result = born * jacobian * xfq * xfqbar / (x1 * tau) * weight;
@@ -53,13 +53,13 @@ namespace Integrands {
       const int* ndim, const cubareal xx[], const int* ncomp,
       cubareal ff[], void* userdata
   ) {
-    CrossSection* self = static_cast<CrossSection*>(userdata); // Necessary to keep class variables while being compatible with Vegas()
-    const double Q2_min = self->Q2_min;
-    const double Q2_max = self->Q2_max;
-    const double s = self->s;
-    const int quark_id = self->quark_id;
-    const double muF2 = self->muF2;
-    const LHAPDF::PDF* pdf = self->pdf;
+    CSParams* params = static_cast<CSParams*>(userdata); // Necessary to keep class variables while being compatible with Vegas()
+    const double Q2_min = params->Q2_min;
+    const double Q2_max = params->Q2_max;
+    const double s = params->s;
+    const int quark_id = params->quark_id.value();
+    const double muF2 = params->muF2;
+    const LHAPDF::PDF* pdf = params->pdf;
 
     const double Qq = Utils::get_Qq(quark_id);
     
@@ -91,7 +91,7 @@ namespace Integrands {
     const double xfq = pdf->xfxQ2(quark_id, x1, muF2);
     const double xfqbar = pdf->xfxQ2(-quark_id, x2, muF2);
     
-    const double born = self->born_xsec(Q2);
+    const double born = CrossSection::born_xsec(Q2, params);
     
     // Factor 2 to account for changing which particle is (anti-)quark
     const double result = born * jacobian * xfq * xfqbar / (x1 * tau) * (w_soft + w_plus_1*F1 + w_plus_log*Flog);
@@ -104,13 +104,13 @@ namespace Integrands {
       const int* ndim, const cubareal xx[], const int* ncomp,
       cubareal ff[], void* userdata
   ) {
-    CrossSection* self = static_cast<CrossSection*>(userdata); // Necessary to keep class variables while being compatible with Vegas()
-    const double Q2_min = self->Q2_min;
-    const double Q2_max = self->Q2_max;
-    const double s = self->s;
-    const int quark_id = self->quark_id;
-    const double muF2 = self->muF2;
-    const LHAPDF::PDF* pdf = self->pdf;
+    CSParams* params = static_cast<CSParams*>(userdata); // Necessary to keep class variables while being compatible with Vegas()
+    const double Q2_min = params->Q2_min;
+    const double Q2_max = params->Q2_max;
+    const double s = params->s;
+    const int quark_id = params->quark_id.value();
+    const double muF2 = params->muF2;
+    const LHAPDF::PDF* pdf = params->pdf;
 
     const double Qq = Utils::get_Qq(quark_id);
     
@@ -150,7 +150,7 @@ namespace Integrands {
     const double xfqbar_x2 = pdf->xfxQ2(-quark_id, x2, muF2);
     const double xfqbar_tau_x1 = pdf->xfxQ2(-quark_id, x2_start, muF2);
     
-    const double born = self->born_xsec(Q2);
+    const double born = CrossSection::born_xsec(Q2, params);
     
     // Remember we are using xf, not f for PDFs. Taking this into account we have
     // a common factor 1/x2 in the following terms that we include in ff[0] after
@@ -177,13 +177,13 @@ namespace Integrands {
     const int* ndim, const cubareal xx[], const int* ncomp,
     cubareal ff[], void* userdata
   ) {
-    CrossSection* self = static_cast<CrossSection*>(userdata); // Necessary to keep class variables while being compatible with Vegas()
-    const double Q2_min = self->Q2_min;
-    const double Q2_max = self->Q2_max;
-    const double s = self->s;
-    const int quark_id = self->quark_id;
-    const double muF2 = self->muF2;
-    const LHAPDF::PDF* pdf = self->pdf;
+    CSParams* params = static_cast<CSParams*>(userdata); // Necessary to keep class variables while being compatible with Vegas()
+    const double Q2_min = params->Q2_min;
+    const double Q2_max = params->Q2_max;
+    const double s = params->s;
+    const int quark_id = params->quark_id.value();
+    const double muF2 = params->muF2;
+    const LHAPDF::PDF* pdf = params->pdf;
     
     const double jacobian_Q2 = Q2_max - Q2_min;
     const double Q2 = Q2_min + jacobian_Q2 * xx[0];
@@ -203,8 +203,8 @@ namespace Integrands {
     
     const double z = 1.0;
 
-    const double mB = self->mB;
-    const double mA = self->mA;
+    const double mB = params->mB;
+    const double mA = params->mA;
     const double m12 = mB*mB;
     const double m22 = mA*mA;
     const double m_sum = m12 + m22;
@@ -265,7 +265,7 @@ namespace Integrands {
     const double xfqbar = pdf->xfxQ2(-quark_id, x2, muF2);
     
     // const double s_parton = Q2/z;
-    const double born = self->born_xsec(s_parton);
+    const double born = CrossSection::born_xsec(s_parton, params);
     
     // Factor 2 to account for changing which particle is (anti-)quark
     const double result = born * jacobian * xfq * xfqbar / (x1 * tau) * (w_soft + w_plus_1*F1);
@@ -278,13 +278,13 @@ namespace Integrands {
     const int* ndim, const cubareal xx[], const int* ncomp,
     cubareal ff[], void* userdata
   ) {
-    CrossSection* self = static_cast<CrossSection*>(userdata); // Necessary to keep class variables while being compatible with Vegas()
-    const double Q2_min = self->Q2_min;
-    const double Q2_max = self->Q2_max;
-    const double s = self->s;
-    const int quark_id = self->quark_id;
-    const double muF2 = self->muF2;
-    const LHAPDF::PDF* pdf = self->pdf;
+    CSParams* params = static_cast<CSParams*>(userdata); // Necessary to keep class variables while being compatible with Vegas()
+    const double Q2_min = params->Q2_min;
+    const double Q2_max = params->Q2_max;
+    const double s = params->s;
+    const int quark_id = params->quark_id.value();
+    const double muF2 = params->muF2;
+    const LHAPDF::PDF* pdf = params->pdf;
     
     const double jacobian_Q2 = Q2_max - Q2_min;
     const double Q2 = Q2_min + jacobian_Q2 * xx[0];
@@ -309,8 +309,8 @@ namespace Integrands {
     
     const double z = tau/(x1*x2);
 
-    const double mB = self->mB;
-    const double mA = self->mA;
+    const double mB = params->mB;
+    const double mA = params->mA;
     const double mt12 = mB*mB/Q2;
     const double mt22 = mA*mA/Q2;
     const double mt_1_sum = 1. - mt12 - mt22;
@@ -332,7 +332,7 @@ namespace Integrands {
     const double xfqbar_tau_x1 = pdf->xfxQ2(-quark_id, x2_start, muF2);
     
     const double s_parton = Q2/z;
-    const double born = self->born_xsec(s_parton);
+    const double born = CrossSection::born_xsec(s_parton, params);
     
     // Remember we are using xf, not f for PDFs. Taking this into account we have
     // a common factor 1/x2 in the following terms that we include in ff[0] after

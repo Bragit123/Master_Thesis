@@ -20,7 +20,7 @@ def id2label(id: int) -> str:
     return ""
 
 col_names = [
-  "scale", "lo", "nlo", "hadron", "slepton", "ratio"
+  "scale", "lo", "nlo", "hadron", "slepton"
 ]
 slepton_ids = [1000011, 2000011]
 dfs = []
@@ -37,7 +37,7 @@ for slepton_id in slepton_ids:
 fig, ax = plt.subplots()
 ax.set_xlabel("$\\mu_F/m_{\\tilde\\ell}$")
 ax.set_ylabel("$\\sigma$ [fb]")
-ax.set_yscale("log")
+# ax.set_yscale("log")
 # ax.set_xscale("log")
 for i in range(len(slepton_ids)):
   sid = slepton_ids[i]
@@ -70,10 +70,10 @@ for i in range(len(slepton_ids)):
   sid = slepton_ids[i]
   df = dfs[i]
   mu_arr = df["scale"]
-  # xsec_lo = df["lo"]
-  # xsec_nlo = df["nlo"]
-  # ratio = xsec_nlo/xsec_lo
-  ratio = df["ratio"]
+  xsec_lo = df["lo"]
+  xsec_nlo = df["nlo"]
+  ratio = xsec_nlo/xsec_lo
+  # ratio = df["ratio"]
   # color = ("blue" if i==0 else "green")
   # marker = ("o" if i==0 else "x")
   marker = "."
@@ -91,7 +91,7 @@ fig.savefig(PLOT_DIR/"xsec_scale_ratio.pdf")
 fig, ax = plt.subplots()
 ax.set_xlabel("$\\mu_F/m_{\\tilde\\ell}$")
 ax.set_ylabel("$\\sigma$ [fb]")
-ax.set_yscale("log")
+# ax.set_yscale("log")
 # ax.set_xscale("log")
 for i in range(len(slepton_ids)):
   sid = slepton_ids[i]

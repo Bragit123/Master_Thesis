@@ -8,7 +8,7 @@ import seaborn as sns
 
 FILE_DIR = Path(__file__).resolve().parent
 OUTPUT_DIR = FILE_DIR.parent / "output"
-PLOT_DIR = FILE_DIR / "plots"
+PLOT_DIR = FILE_DIR / "plots" / "scale_plots"
 
 def id2label(id: int) -> str:
   if id == 1000011:
@@ -19,11 +19,10 @@ def id2label(id: int) -> str:
     print(f"WARNING: Unrecognized particle ID: {id}")
     return ""
 
-col_names = [
-  "scale", "lo", "nlo", "hadron", "slepton"
-]
+col_names = ["scale", "lo", "nlo", "hadron", "slepton"]
 slepton_ids = [1000011, 2000011]
 dfs = []
+
 for slepton_id in slepton_ids:
   filename = "xsec_scale_" + str(slepton_id) + ".dat"
   filepath = OUTPUT_DIR/filename

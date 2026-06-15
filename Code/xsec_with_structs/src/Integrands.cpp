@@ -40,7 +40,7 @@ namespace Integrands {
     const double xfq = pdf->xfxQ2(quark_id, x1, muF2);
     const double xfqbar = pdf->xfxQ2(-quark_id, x2, muF2);
     
-    const double born = CrossSection::born_xsec(Q2, params);
+    const double born = CrossSection::born_xsec(Q2, Q2, params);
     
     // Factor 2 to account for changing which particle is (anti-)quark
     const double result = born * jacobian * xfq * xfqbar / (x1 * tau) * weight;
@@ -91,7 +91,7 @@ namespace Integrands {
     const double xfq = pdf->xfxQ2(quark_id, x1, muF2);
     const double xfqbar = pdf->xfxQ2(-quark_id, x2, muF2);
     
-    const double born = CrossSection::born_xsec(Q2, params);
+    const double born = CrossSection::born_xsec(Q2, Q2, params);
     
     // Factor 2 to account for changing which particle is (anti-)quark
     const double result = born * jacobian * xfq * xfqbar / (x1 * tau) * (w_soft + w_plus_1*F1 + w_plus_log*Flog);
@@ -150,7 +150,7 @@ namespace Integrands {
     const double xfqbar_x2 = pdf->xfxQ2(-quark_id, x2, muF2);
     const double xfqbar_tau_x1 = pdf->xfxQ2(-quark_id, x2_start, muF2);
     
-    const double born = CrossSection::born_xsec(Q2, params);
+    const double born = CrossSection::born_xsec(Q2, Q2, params);
     
     // Remember we are using xf, not f for PDFs. Taking this into account we have
     // a common factor 1/x2 in the following terms that we include in ff[0] after
@@ -265,7 +265,7 @@ namespace Integrands {
     const double xfqbar = pdf->xfxQ2(-quark_id, x2, muF2);
     
     // const double s_parton = Q2/z;
-    const double born = CrossSection::born_xsec(s_parton, params);
+    const double born = CrossSection::born_xsec(s_parton, Q2, params);
     
     // Factor 2 to account for changing which particle is (anti-)quark
     const double result = born * jacobian * xfq * xfqbar / (x1 * tau) * (w_soft + w_plus_1*F1);
@@ -332,7 +332,7 @@ namespace Integrands {
     const double xfqbar_tau_x1 = pdf->xfxQ2(-quark_id, x2_start, muF2);
     
     const double s_parton = Q2/z;
-    const double born = CrossSection::born_xsec(s_parton, params);
+    const double born = CrossSection::born_xsec(s_parton, Q2, params);
     
     // Remember we are using xf, not f for PDFs. Taking this into account we have
     // a common factor 1/x2 in the following terms that we include in ff[0] after

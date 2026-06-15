@@ -8,7 +8,7 @@ import seaborn as sns
 
 FILE_DIR = Path(__file__).resolve().parent
 OUTPUT_DIR = FILE_DIR.parent / "output"
-PLOT_DIR = FILE_DIR / "plots"
+PLOT_DIR = FILE_DIR / "plots" / "scale_plots"
 
 def id2label(id: int) -> str:
   if id == 1000011:
@@ -19,12 +19,15 @@ def id2label(id: int) -> str:
     print(f"WARNING: Unrecognized particle ID: {id}")
     return ""
 
-def error_plot(x, y, yerr, color=None, linestyle=None, marker=None, label=None, alpha=0.5, err_label=None):
-  line, = plt.plot(x, y, color=color, linestyle=linestyle, marker=marker, label=label)
-  plt.fill_between(x, y - yerr, y + yerr, color=line.get_color(), alpha=alpha, label=err_label, linestyle="dashed")
+def error_plot(ax, x, y, yerr, color=None, linestyle=None, marker=None, label=None, alpha=0.5, err_label=None):
+  line, = ax.plot(x, y, color=color, linestyle=linestyle, marker=marker, label=label)
+  ax.fill_between(x, y - yerr, y + yerr, color=line.get_color(), alpha=alpha, label=err_label, linestyle="dashed")
 
+# col_names = [
+#   "mass", "lo", "scale_err_lo", "nlo", "scale_err_nlo"
+# ]
 col_names = [
-  "mass", "lo", "scale_err_lo", "nlo", "scale_err_nlo"
+  "mass", "lo", "lo_scale_minus", "lo_scale_plus", "nlo", "nlo_scale_minus", "nlo_scale_plus"
 ]
 slepton_ids = [1000011, 2000011]
 dfs = []
@@ -48,8 +51,10 @@ for i in range(len(slepton_ids)):
   m_arr = df["mass"]
   xsec_lo = df["lo"]
   xsec_nlo = df["nlo"]
-  scale_err_lo = df["scale_err_lo"]
-  scale_err_nlo = df["scale_err_nlo"]
+  scale_err_lo = df["lo_scale_plus"]
+  scale_err_nlo = df["nlo_scale_plus"]
+  # scale_err_lo = df["scale_err_lo"]
+  # scale_err_nlo = df["scale_err_nlo"]
   # color = ("blue" if i==0 else "green")
   marker = ("o" if i==0 else "x")
   marker = ("o" if i==0 else "x")
@@ -61,8 +66,8 @@ for i in range(len(slepton_ids)):
   else:
     err_label = None
 
-  error_plot(m_arr, xsec_lo, scale_err_lo, marker=marker, label=label+" (LO)")
-  error_plot(m_arr, xsec_nlo, scale_err_nlo, marker=marker, label=label+" (NLO)", err_label=err_label)
+  error_plot(ax, m_arr, xsec_lo, scale_err_lo, marker=marker, label=label+" (LO)")
+  error_plot(ax, m_arr, xsec_nlo, scale_err_nlo, marker=marker, label=label+" (NLO)", err_label=err_label)
 ax.grid(alpha=0.3)
 fig.legend(frameon=False, loc="upper right", bbox_to_anchor=(0.95, 0.95), ncol=1)
 fig.tight_layout()
@@ -75,17 +80,24 @@ fig.savefig(PLOT_DIR/"xsec_mass_scale_err_lo_nlo.pdf")
 fig, ax = plt.subplots()
 ax.set_xlabel("$m_{\\tilde\\ell}$ [GeV]")
 ax.set_ylabel("$\\sigma/\\sigma^{\\text{LO}}$")
+# ax.set_yscale("log")
 for i in range(len(slepton_ids)):
   sid = slepton_ids[i]
   df = dfs[i]
   m_arr = df["mass"]
   xsec_lo = df["lo"]
   xsec_nlo = df["nlo"]
-  scale_err_nlo = df["scale_err_nlo"]
+  scale_err_lo = df["lo_scale_plus"]
+  scale_err_nlo = df["nlo_scale_plus"]
+  # scale_err_lo = 0.5*df["scale_err_lo"]
+  # scale_err_nlo = 0.5*df["scale_err_nlo"]
   ratio = xsec_nlo/xsec_lo
   # color = ("blue" if i==0 else "green")
-  # marker = ("o" if i==0 else "x")
-  marker = "."
+  linestyle = ("solid" if i==0 else "dashed")
+  marker = ("." if i==0 else "x")
+
+  scale_err_ratio = ratio * np.sqrt((scale_err_lo/xsec_lo)**2 + (scale_err_nlo/xsec_nlo)**2)
+
   label = id2label(sid)
   # plt.plot(m_arr, ratio, color=color, linestyle="solid", marker=marker, label=label)
   if i == 1:
@@ -93,7 +105,11 @@ for i in range(len(slepton_ids)):
   else:
     err_label = None
 
-  error_plot(m_arr, ratio, scale_err_nlo, marker=marker, label=label, err_label=err_label)
-fig.legend(frameon=False, loc="upper center", bbox_to_anchor=(0.55, 0.95), ncol=3)
+  # ax.plot(m_arr, scale_err_lo/xsec_lo, marker=marker, linestyle=linestyle, label="LO")
+  # ax.plot(m_arr, scale_err_nlo/xsec_nlo, marker=marker, linestyle=linestyle, label="NLO")
+  # ax.plot(m_arr, scale_err_ratio, marker=marker, linestyle=linestyle, label="Ratio")
+  # ax.plot(m_arr, ratio, marker=marker, linestyle=linestyle, label="ratio")
+  error_plot(ax, m_arr, ratio, scale_err_ratio, linestyle=linestyle, marker=marker, label=label, err_label=err_label)
+fig.legend(frameon=False, loc="upper center", bbox_to_anchor=(0.55, 0.95), ncol=2)
 fig.tight_layout()
 fig.savefig(PLOT_DIR/"xsec_mass_scale_err_ratio.pdf")

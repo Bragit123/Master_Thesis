@@ -56,8 +56,10 @@ namespace CrossSection {
     
     return term1 + term2 + term3;
   }
-
-  double born_xsec(double q2, CSParams* params) {
+  
+  double born_xsec(double q2, double Q2, CSParams* params) {
+    // Q2 is for slepton momentum, which is always Q^2=(k1+k2)^2
+    // q2 is either Q^2 or partonic s, depending on quark-/slepton-side corrections
     const double mA = params->mA;
     const double mB = params->mB;
     const double s = params->s;
@@ -68,7 +70,7 @@ namespace CrossSection {
     const double m2diff = mA2-mB2;
 
     // squared 3-momentum in slepton RF
-    const double mom2 = 0.25*q2 - 0.5*(mA2+mB2) + 0.25*m2diff*m2diff / q2;
+    const double mom2 = Utils::Kallen(q2, mA2, mB2) / (4.0*q2);
     const double mom3 = std::sqrt(mom2) * mom2;
     
     const double FqliAB = get_FqliAB(q2, params);
@@ -86,14 +88,6 @@ namespace CrossSection {
       double maxeval,
       double epsabs
   ) {
-    // const double mA = params.mA;
-    // const double mB = params.mB;
-    // const double s = params.s;
-
-    // const double m_tot = mA+mB;
-    // const double Q2_min = m_tot*m_tot;
-    // const double Q2_max = s;
-    
     double xsec = 0.0;
     for (int quark_id_ : quark_ids) {
       CSParams params_q = params;
@@ -106,7 +100,7 @@ namespace CrossSection {
                               maxeval, integral, error, prob);
         xsec += 2.*integral[0];
       } else if (subset == 1) {
-        // // Integral over x1:
+        // Integral over x1:
         double integral1[1], error1[1], prob1[1];
         Utils::integrate_vegas(2, 1, Integrands::hadron_x1_Q, &params_q, epsrel, epsabs,
                               maxeval, integral1, error1, prob1);
@@ -118,7 +112,7 @@ namespace CrossSection {
                               maxeval, integral2, error2, prob2);
         xsec += 2.*integral2[0];
       } else if (subset == 2) {
-        // // Integral over x1:
+        // Integral over x1:
         double integral1[1], error1[1], prob1[1];
         Utils::integrate_vegas(2, 1, Integrands::slepton_x1_Q, &params_q, epsrel, epsabs,
                               maxeval, integral1, error1, prob1);

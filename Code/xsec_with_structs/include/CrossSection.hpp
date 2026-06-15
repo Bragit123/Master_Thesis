@@ -28,7 +28,7 @@ struct CSParams {
 namespace CrossSection {
   double get_ZliAB(CSParams* params);
   double get_FqliAB(double q2, CSParams* params);
-  double born_xsec(double q2, CSParams* params);
+  double born_xsec(double q2, double Q2, CSParams* params);
   
   double full_xsec(
     CSParams params,

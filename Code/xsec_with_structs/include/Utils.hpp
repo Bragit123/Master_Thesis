@@ -8,15 +8,15 @@
 // Values are taken from PDG
 namespace Const {
   // Electroweak theory (Gmu scheme)
+  const double MZ = 91.188;
   const double MW = 80.369;
   const double MW2 = MW*MW;
-  const double MZ = 91.188;
   const double MZ2 = MZ*MZ;
   const double GAMMAZ = 2.4955; // Z decay rate
   const double GAMMAZ2 = GAMMAZ*GAMMAZ;
   const double CW2 = MW2 / MZ2; // cos(thetaW)^2
   const double SW2 = 1.0 - CW2; // sin(thetaW)^2
-  const double GF = 1.16638e-5; // Fermi constant
+  const double GF = 1.1663785e-5; // Fermi constant
   const double ALPHA = std::sqrt(2.0) * GF * MW2 * SW2 / M_PI;
   
   // Quarks

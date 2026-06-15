@@ -30,6 +30,4 @@ namespace Integrands {
 }
 
 
-
-
 #endif

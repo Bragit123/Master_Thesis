@@ -182,6 +182,7 @@ namespace Integrands {
     const double Q2_max = params->Q2_max;
     const double s = params->s;
     const int quark_id = params->quark_id.value();
+    const double muR2 = params->muR2;
     const double muF2 = params->muF2;
     const LHAPDF::PDF* pdf = params->pdf;
     
@@ -214,10 +215,12 @@ namespace Integrands {
     const double mt_1_sum = 1. - mt12 - mt22;
     const double s_parton = Q2/z;
     const double lambda = Utils::Kallen(1., mt12, mt22);
+    const double lambda_inv = 1./lambda;
     const double lambda_s_inv = 1./Utils::Kallen(s_parton, m12, m22);
     const double lambda_sqrt = sqrt(lambda);
     const double lambda_sqrt_inv = 1./lambda_sqrt;
-    const double lambda_z_sqrt_inv = 1./sqrt(Utils::Kallen(1., z*mt12, z*mt22));
+    const double lambda_z = Utils::Kallen(1., z*mt12, z*mt22);
+    const double lambda_z_sqrt_inv = 1./sqrt(lambda_z);
 
     const double xm = mt22 - mt12 - lambda_sqrt;
     const double xp = mt22 - mt12 + lambda_sqrt;
@@ -256,9 +259,12 @@ namespace Integrands {
     const double w_prefac = Const::ALPHA * M_1_PI;
 
     const double w_soft = w_prefac * (Iv_real
-                            - (log(4.*lambda) + log(muF2/Q2))*lambda_sqrt_inv * I1
+                            - (log(4.*lambda) + log(muR2/Q2))*lambda_sqrt_inv * I1
                             + lambda_sqrt_inv * I2);
-    const double w_plus_1 = w_prefac * 2. * z * lambda_z_sqrt_inv * I1;
+    // const double w_plus_1 = w_prefac * 2. * z * lambda_z_sqrt_inv * I1;
+    // const double w_plus_1 = w_prefac * 2. * lambda_inv * (z*z*z * lambda_z * lambda_sqrt_inv * I1 + (1.-z)*(1.-z)/z);
+    // const double w_plus_1 = w_prefac * 2. * lambda_inv*lambda_sqrt_inv * z*z*z * lambda_z * I1;
+    const double w_plus_1 = w_prefac * 2. * lambda_inv*lambda_sqrt_inv * lambda_z * I1;
     const double F1 = log(1.0 - tau/x1);
     
     const double xfq = pdf->xfxQ2(quark_id, x1, muF2);
@@ -315,17 +321,34 @@ namespace Integrands {
     const double mt22 = mA*mA/Q2;
     const double mt_1_sum = 1. - mt12 - mt22;
     const double lambda = Utils::Kallen(1., mt12, mt22);
+    const double lambda_inv = 1./lambda;
     const double lambda_sqrt = sqrt(lambda);
-    const double lambda_z_inv = 1./Utils::Kallen(1., z*mt12, z*mt22);
+    const double lambda_sqrt_inv = 1./lambda_sqrt;
+    const double lambda_z = Utils::Kallen(1., z*mt12, z*mt22);
+    const double lambda_z_inv = 1./lambda_z;
     const double lambda_z_sqrt_inv = sqrt(lambda_z_inv);
     
     const double I1 = -mt_1_sum * log((mt_1_sum - lambda_sqrt)/(2. * sqrt(mt12*mt22)))
                       - lambda_sqrt;
 
     const double w_prefac = Const::ALPHA * M_1_PI;
-    const double w_rad = w_prefac * 2. * (1. - z) * lambda_sqrt * lambda_z_inv * lambda_z_sqrt_inv;
-    const double w_plus_1 = w_prefac * 2. * z * lambda_z_sqrt_inv * I1;
-    const double w_plus_1_one = w_prefac * 2. * z / lambda_sqrt * I1;
+    // const double w_rad = w_prefac * 2. * (1. - z) * lambda_sqrt * lambda_z_inv * lambda_z_sqrt_inv;
+    // const double w_rad = 0.0;
+    // const double w_rad = w_prefac * 2. * lambda_inv * (1.-z)/z;
+    double w_rad = 0.0;
+    if (lambda > tol) {
+      // Avoid overflow and segmentation fault when lambda->0
+      // (in this case, born xsec is dominates, and full expression should be zero!)
+      w_rad = w_prefac * 2. * lambda_inv * (1.-z)/z;
+    }
+    // const double w_rad = w_prefac * 2. * lambda_inv * (1.-z)/z;
+    // const double w_plus_1 = w_prefac * 2. * z * lambda_z_sqrt_inv * I1;
+    // const double w_plus_1 = w_prefac * 2. * lambda_inv * (z*z*z * lambda_z * lambda_sqrt_inv * I1 + (1.-z)*(1.-z)/z);
+    // const double w_plus_1 = w_prefac * 2. * lambda_inv*lambda_sqrt_inv * z*z*z * lambda_z * I1;
+    const double w_plus_1 = w_prefac * 2. * lambda_inv*lambda_sqrt_inv * lambda_z * I1;
+    // const double w_plus_1_one = w_prefac * 2. * z / lambda_sqrt * I1;
+    // const double w_plus_1_one = w_prefac * 2. * lambda_inv * lambda_sqrt * I1;
+    const double w_plus_1_one = w_prefac * 2. * lambda_sqrt_inv * I1;
     
     const double xfq = pdf->xfxQ2(quark_id, x1, muF2);
     const double xfqbar_x2 = pdf->xfxQ2(-quark_id, x2, muF2);

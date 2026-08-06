@@ -18,6 +18,7 @@ struct CSParams {
   double s;
   double Q2_min;
   double Q2_max;
+  double muR2;
   double muF2;
   const LHAPDF::PDF* pdf;
   double mix_cos = 1.0;

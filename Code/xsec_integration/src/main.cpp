@@ -12,76 +12,78 @@
 /////////////////////
 /// Cross Section ///
 /////////////////////
-// int main(int argc, char* argv[]) {
-//   ltini(); // Initialize LoopTools
-//   setlambda(0.0);
-//   const std::string setname = "PDF4LHC21_40";
-//   const int mem = 0; // Only considering central PDF for now. Expanding laterz!
+int main(int argc, char* argv[]) {
+  ltini(); // Initialize LoopTools
+  setlambda(0.0);
+  const std::string setname = "PDF4LHC21_40";
+  const int mem = 0; // Only considering central PDF for now. Expanding laterz!
 
-//   LHAPDF::setVerbosity(0);
-//   const LHAPDF::PDF* pdf = LHAPDF::mkPDF(setname, mem);
-//   const std::vector<int> quark_ids = {1, 2, 3, 4, 5}; // note: no top quark
+  LHAPDF::setVerbosity(0);
+  const LHAPDF::PDF* pdf = LHAPDF::mkPDF(setname, mem);
+  const std::vector<int> quark_ids = {1, 2, 3, 4, 5}; // note: no top quark
 
-//   const double s_sqrt = 13'000.0; // 13 TeV
-//   const double s = s_sqrt*s_sqrt;
+  const double s_sqrt = 13'000.0; // 13 TeV
+  const double s = s_sqrt*s_sqrt;
 
-//   //Slepton mass
-//   const double m_min = 100.;
-//   const double m_max = 1000.;
-//   const double dm = 100.;
-//   const double nm = std::floor((m_max - m_min) / dm) + 1;
+  //Slepton mass
+  const double m_min = 100.;
+  const double m_max = 1000.;
+  const double dm = 100.;
+  const double nm = std::floor((m_max - m_min) / dm) + 1;
   
-//   std::vector<int> slepton_ids = {1000011, 2000011};
-//   for (int slepton_id : slepton_ids) {
-//     std::cout << "Slepton " << slepton_id << ":\n";
+  std::vector<int> slepton_ids = {1000011, 2000011};
+  for (int slepton_id : slepton_ids) {
+    std::cout << "Slepton " << slepton_id << ":\n";
     
-//     std::string filename = "output/xsec_mass_" + std::to_string(slepton_id) + ".dat";
-//     std::ofstream outfile(filename);
-//     outfile << "# mass(GeV) lo(fb) nlo(fb) hadronside(fb) sleptonside(fb)" << std::endl;
+    std::string filename = "output/xsec_mass_" + std::to_string(slepton_id) + ".dat";
+    std::ofstream outfile(filename);
+    outfile << "# mass(GeV) lo(fb) nlo(fb) hadronside(fb) sleptonside(fb)" << std::endl;
     
-//     for (int im=0; im < nm; ++im) {
-//       Utils::print_progress(im+1, nm);
+    for (int im=0; im < nm; ++im) {
+      Utils::print_progress(im+1, nm);
       
-//       const double slepton_mass = m_min + im*dm;
-//       const double mass_tot = slepton_mass + slepton_mass;
-//       const double Q2_min = mass_tot * mass_tot;
-//       const double Q2_max = s;
-//       const double muF = 0.5 * mass_tot;
-//       const double muF2 = muF * muF;
-//       setmudim(muF2);
+      const double slepton_mass = m_min + im*dm;
+      const double mass_tot = slepton_mass + slepton_mass;
+      const double Q2_min = mass_tot * mass_tot;
+      const double Q2_max = s;
+      const double mu = 0.5 * mass_tot;
+      const double muR2 = mu * mu;
+      const double muF2 = muR2;
+      setmudim(muF2);
 
-//       const CSParams params {
-//         .sleptonA_id = slepton_id,
-//         .sleptonB_id = slepton_id,
-//         .mA = slepton_mass,
-//         .mB = slepton_mass,
-//         .s = s,
-//         .Q2_min = Q2_min,
-//         .Q2_max = Q2_max,
-//         .muF2 = muF2,
-//         .pdf = pdf,
-//         .mix_cos = 1.0
-//       };
+      const CSParams params {
+        .sleptonA_id = slepton_id,
+        .sleptonB_id = slepton_id,
+        .mA = slepton_mass,
+        .mB = slepton_mass,
+        .s = s,
+        .Q2_min = Q2_min,
+        .Q2_max = Q2_max,
+        .muR2 = muR2,
+        .muF2 = muF2,
+        .pdf = pdf,
+        .mix_cos = 1.0
+      };
       
-//       const double epsrel = 1e-3;
-//       const double maxeval = 1e9;
-//       const double xsec_lo = CrossSection::full_xsec(params, quark_ids, 0, epsrel, maxeval);
-//       const double xsec_hadron = CrossSection::full_xsec(params, quark_ids, 1, epsrel, maxeval);
-//       const double xsec_slepton = CrossSection::full_xsec(params, quark_ids, 2, epsrel, maxeval);
-//       const double xsec_nlo = xsec_hadron + xsec_slepton;
+      const double epsrel = 1e-2;
+      const double maxeval = 1e9;
+      const double xsec_lo = CrossSection::full_xsec(params, quark_ids, 0, epsrel, maxeval);
+      const double xsec_hadron = CrossSection::full_xsec(params, quark_ids, 1, epsrel, maxeval);
+      const double xsec_slepton = CrossSection::full_xsec(params, quark_ids, 2, epsrel, maxeval);
+      const double xsec_nlo = xsec_hadron + xsec_slepton;
       
-//       outfile << slepton_mass << " " << xsec_lo << " " << xsec_lo + xsec_nlo
-//               << " " << xsec_lo + xsec_hadron << " " << xsec_lo + xsec_slepton << "\n";
-//     }
-//     outfile.close();
-//   }
+      outfile << slepton_mass << " " << xsec_lo << " " << xsec_lo + xsec_nlo
+              << " " << xsec_lo + xsec_hadron << " " << xsec_lo + xsec_slepton << "\n";
+    }
+    outfile.close();
+  }
   
-//   delete pdf;
+  delete pdf;
 
-//   ltexi(); // Print errors and warnings from LoopTools
+  ltexi(); // Print errors and warnings from LoopTools
   
-//   return 0;
-// }
+  return 0;
+}
 
 //////////////////
 /// PDF ERRORS ///
@@ -191,121 +193,121 @@
 ///////////////////
 /// Scale Error ///
 ///////////////////
-int main(int argc, char* argv[]) {
-  ltini(); // Initialize LoopTools
-  setlambda(0.0);
+// int main(int argc, char* argv[]) {
+//   ltini(); // Initialize LoopTools
+//   setlambda(0.0);
 
-  LHAPDF::setVerbosity(0);
-  const std::string setname = "PDF4LHC21_40";
+//   LHAPDF::setVerbosity(0);
+//   const std::string setname = "PDF4LHC21_40";
   
-  const LHAPDF::PDF* pdf = LHAPDF::mkPDF(setname, 0);
+//   const LHAPDF::PDF* pdf = LHAPDF::mkPDF(setname, 0);
 
-  const std::vector<int> quark_ids = {1, 2, 3, 4, 5}; // note: no top quark
+//   const std::vector<int> quark_ids = {1, 2, 3, 4, 5}; // note: no top quark
 
-  const double s_sqrt = 13'000.0; // 13 TeV
-  const double s = s_sqrt*s_sqrt;
+//   const double s_sqrt = 13'000.0; // 13 TeV
+//   const double s = s_sqrt*s_sqrt;
 
-  //Slepton mass
-  const double m_min = 100.;
-  const double m_max = 1000.;
-  const double dm = 100.;
-  const double nm = std::floor((m_max - m_min) / dm) + 1;
+//   //Slepton mass
+//   const double m_min = 100.;
+//   const double m_max = 1000.;
+//   const double dm = 100.;
+//   const double nm = std::floor((m_max - m_min) / dm) + 1;
   
-  std::vector<int> slepton_ids = {1000011, 2000011};
-  for (int slepton_id : slepton_ids) {
-    std::cout << "Slepton " << slepton_id << ":\n";
+//   std::vector<int> slepton_ids = {1000011, 2000011};
+//   for (int slepton_id : slepton_ids) {
+//     std::cout << "Slepton " << slepton_id << ":\n";
     
-    std::string filename = "output/xsec_mass_scale_err_" + std::to_string(slepton_id) + ".dat";
-    std::ofstream outfile(filename);
-    outfile << "# mass(GeV) | lo(fb) | lo_scale- | lo_scale+ | nlo(fb) | nlo_scale- | nlo_scale+" << std::endl;
+//     std::string filename = "output/xsec_mass_scale_err_" + std::to_string(slepton_id) + ".dat";
+//     std::ofstream outfile(filename);
+//     outfile << "# mass(GeV) | lo(fb) | lo_scale- | lo_scale+ | nlo(fb) | nlo_scale- | nlo_scale+" << std::endl;
     
-    for (int im=0; im < nm; ++im) {
-      Utils::print_progress(im+1, nm);
+//     for (int im=0; im < nm; ++im) {
+//       Utils::print_progress(im+1, nm);
       
-      const double slepton_mass = m_min + im*dm;
-      const double mass_tot = slepton_mass + slepton_mass;
-      const double Q2_min = mass_tot * mass_tot;
-      const double Q2_max = s;
-      const double muF_0 = 0.5 * mass_tot;
-      const double muF_min = muF_0/2.;
-      const double muF_max = 2.*muF_0;
-      const std::vector<double> muF2s = {
-        muF_min * muF_min,
-        muF_0 * muF_0,
-        muF_max * muF_max
-      };
+//       const double slepton_mass = m_min + im*dm;
+//       const double mass_tot = slepton_mass + slepton_mass;
+//       const double Q2_min = mass_tot * mass_tot;
+//       const double Q2_max = s;
+//       const double muF_0 = 0.5 * mass_tot;
+//       const double muF_min = muF_0/2.;
+//       const double muF_max = 2.*muF_0;
+//       const std::vector<double> muF2s = {
+//         muF_min * muF_min,
+//         muF_0 * muF_0,
+//         muF_max * muF_max
+//       };
 
-      const CSParams params_0 {
-        .sleptonA_id = slepton_id,
-        .sleptonB_id = slepton_id,
-        .mA = slepton_mass,
-        .mB = slepton_mass,
-        .s = s,
-        .Q2_min = Q2_min,
-        .Q2_max = Q2_max,
-        .muF2 = muF_0*muF_0,
-        .pdf = pdf,
-        .mix_cos = 1.0
-      };
+//       const CSParams params_0 {
+//         .sleptonA_id = slepton_id,
+//         .sleptonB_id = slepton_id,
+//         .mA = slepton_mass,
+//         .mB = slepton_mass,
+//         .s = s,
+//         .Q2_min = Q2_min,
+//         .Q2_max = Q2_max,
+//         .muF2 = muF_0*muF_0,
+//         .pdf = pdf,
+//         .mix_cos = 1.0
+//       };
       
-      const double epsrel = 1e-3;
-      const double maxeval = 1e9;
-      std::array<double, 3> xsec_los;
-      std::array<double, 3> xsec_nlos;
-      for (int i=0; i<3; ++i) {
-        const double muF2 = muF2s.at(i);
-        setmudim(muF2);
+//       const double epsrel = 1e-3;
+//       const double maxeval = 1e9;
+//       std::array<double, 3> xsec_los;
+//       std::array<double, 3> xsec_nlos;
+//       for (int i=0; i<3; ++i) {
+//         const double muF2 = muF2s.at(i);
+//         setmudim(muF2);
 
-        CSParams params = params_0;
-        params.muF2 = muF2;
+//         CSParams params = params_0;
+//         params.muF2 = muF2;
 
-        xsec_los.at(i) = CrossSection::full_xsec(params, quark_ids, 0, epsrel, maxeval);
-        const double xsec_hadrons_i = CrossSection::full_xsec(params, quark_ids, 1, epsrel, maxeval);
-        const double xsec_sleptons_i = CrossSection::full_xsec(params, quark_ids, 2, epsrel, maxeval);
-        xsec_nlos.at(i) = xsec_los.at(i) + xsec_hadrons_i + xsec_sleptons_i;
-      }
-      const double xsec_lo = xsec_los.at(1);
-      const double xsec_nlo = xsec_nlos.at(1);
+//         xsec_los.at(i) = CrossSection::full_xsec(params, quark_ids, 0, epsrel, maxeval);
+//         const double xsec_hadrons_i = CrossSection::full_xsec(params, quark_ids, 1, epsrel, maxeval);
+//         const double xsec_sleptons_i = CrossSection::full_xsec(params, quark_ids, 2, epsrel, maxeval);
+//         xsec_nlos.at(i) = xsec_los.at(i) + xsec_hadrons_i + xsec_sleptons_i;
+//       }
+//       const double xsec_lo = xsec_los.at(1);
+//       const double xsec_nlo = xsec_nlos.at(1);
 
-      double mu_err_lo_max;
-      double mu_err_lo_min;
-      double mu_err_nlo_max;
-      double mu_err_nlo_min;
+//       double mu_err_lo_max;
+//       double mu_err_lo_min;
+//       double mu_err_nlo_max;
+//       double mu_err_nlo_min;
       
-      const double mu_err_lo_up = std::abs(xsec_los.at(2) - xsec_los.at(1));
-      const double mu_err_lo_down = std::abs(xsec_los.at(1) - xsec_los.at(0));
-      if (mu_err_lo_up > mu_err_lo_down) {
-        mu_err_lo_max = mu_err_lo_up;
-        mu_err_lo_min = mu_err_lo_down;
-      } else {
-        mu_err_lo_max = mu_err_lo_down;
-        mu_err_lo_min = mu_err_lo_up;
-      }
+//       const double mu_err_lo_up = std::abs(xsec_los.at(2) - xsec_los.at(1));
+//       const double mu_err_lo_down = std::abs(xsec_los.at(1) - xsec_los.at(0));
+//       if (mu_err_lo_up > mu_err_lo_down) {
+//         mu_err_lo_max = mu_err_lo_up;
+//         mu_err_lo_min = mu_err_lo_down;
+//       } else {
+//         mu_err_lo_max = mu_err_lo_down;
+//         mu_err_lo_min = mu_err_lo_up;
+//       }
       
-      const double mu_err_nlo_up = std::abs(xsec_nlos.at(2) - xsec_nlos.at(1));
-      const double mu_err_nlo_down = std::abs(xsec_nlos.at(1) - xsec_nlos.at(0));
-      if (mu_err_nlo_up > mu_err_nlo_down) {
-        mu_err_nlo_max = mu_err_nlo_up;
-        mu_err_nlo_min = mu_err_nlo_down;
-      } else {
-        mu_err_nlo_max = mu_err_nlo_down;
-        mu_err_nlo_min = mu_err_nlo_up;
-      }
+//       const double mu_err_nlo_up = std::abs(xsec_nlos.at(2) - xsec_nlos.at(1));
+//       const double mu_err_nlo_down = std::abs(xsec_nlos.at(1) - xsec_nlos.at(0));
+//       if (mu_err_nlo_up > mu_err_nlo_down) {
+//         mu_err_nlo_max = mu_err_nlo_up;
+//         mu_err_nlo_min = mu_err_nlo_down;
+//       } else {
+//         mu_err_nlo_max = mu_err_nlo_down;
+//         mu_err_nlo_min = mu_err_nlo_up;
+//       }
       
       
-      outfile << slepton_mass << " "
-              << xsec_lo << " " << mu_err_lo_min << " " << mu_err_lo_max << " "
-              << xsec_nlo << " " << mu_err_nlo_min << " " << mu_err_nlo_max << std::endl;
-    }
-    outfile.close();
-  }
+//       outfile << slepton_mass << " "
+//               << xsec_lo << " " << mu_err_lo_min << " " << mu_err_lo_max << " "
+//               << xsec_nlo << " " << mu_err_nlo_min << " " << mu_err_nlo_max << std::endl;
+//     }
+//     outfile.close();
+//   }
   
-  delete pdf;
+//   delete pdf;
 
-  ltexi(); // Print errors and warnings from LoopTools
+//   ltexi(); // Print errors and warnings from LoopTools
   
-  return 0;
-}
+//   return 0;
+// }
 
 /////////////////////
 /// xsec vs scale ///

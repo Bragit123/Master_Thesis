@@ -64,18 +64,22 @@ namespace CrossSection {
     const double mB = params->mB;
     const double s = params->s;
 
-    const double q5 = q2*q2 * std::sqrt(q2);
+    const double q4 = q2*q2;
     const double mA2 = mA*mA;
     const double mB2 = mB*mB;
     const double m2diff = mA2-mB2;
 
+    // // squared 3-momentum in slepton RF (OLD, USING q2 INSTEAD OF Q2)
+    // const double mom2 = Utils::Kallen(q2, mA2, mB2) / (4.0*q2);
+    // const double mom3 = std::sqrt(mom2) * mom2;
     // squared 3-momentum in slepton RF
-    const double mom2 = Utils::Kallen(q2, mA2, mB2) / (4.0*q2);
+    const double mom2 = Utils::Kallen(Q2, mA2, mB2) / (4.0*Q2);
     const double mom3 = std::sqrt(mom2) * mom2;
     
     const double FqliAB = get_FqliAB(q2, params);
-    
-    const double xsec = Const::BORN_PREFAC * mom3 / (s * q5) * FqliAB;
+    const double Q = std::sqrt(Q2);
+
+    const double xsec = Const::BORN_PREFAC * mom3 / (s * Q * q4) * FqliAB;
 
     return xsec;
   }

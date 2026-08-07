@@ -1,6 +1,7 @@
 from pathlib import Path
 import numpy as np
 import pandas as pd
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 import seaborn as sns
 # sns.set_theme()
@@ -9,6 +10,15 @@ import seaborn as sns
 FILE_DIR = Path(__file__).resolve().parent
 OUTPUT_DIR = FILE_DIR.parent / "output"
 PLOT_DIR = FILE_DIR / "plots"
+
+mpl.rcParams["text.usetex"] = True
+STYLE_FILE = FILE_DIR/"thesis.mplstyle"
+plt.style.use(STYLE_FILE)
+
+# Get font sizes to fit document nicely (https://duetosymmetry.com/code/latex-mpl-fig-tips/)
+pt = 1/72.27
+fig_width = 0.8 * 418.25368 * pt
+golden_ratio = (1 + np.sqrt(5)) / 2
 
 # gev_to_fb = 0.389379e12 # https://en.wikipedia.org/wiki/Barn_(unit)
 

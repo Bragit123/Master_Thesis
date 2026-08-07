@@ -1,6 +1,7 @@
 from pathlib import Path
 import numpy as np
 import pandas as pd
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 import seaborn as sns
 # sns.set_theme()
@@ -9,6 +10,15 @@ import seaborn as sns
 FILE_DIR = Path(__file__).resolve().parent
 OUTPUT_DIR = FILE_DIR.parent / "output"
 PLOT_DIR = FILE_DIR / "plots" / "scale_plots"
+
+mpl.rcParams["text.usetex"] = True
+STYLE_FILE = FILE_DIR/"thesis.mplstyle"
+plt.style.use(STYLE_FILE)
+
+# Get font sizes to fit document nicely (https://duetosymmetry.com/code/latex-mpl-fig-tips/)
+pt = 1/72.27
+fig_width = 0.8 * 418.25368 * pt
+golden_ratio = (1 + np.sqrt(5)) / 2
 
 def id2label(id: int) -> str:
   if id == 1000011:
@@ -41,7 +51,7 @@ for slepton_id in slepton_ids:
 ##################
 ### LO and NLO ###
 ##################
-fig, ax = plt.subplots()
+fig, ax = plt.subplots(figsize=(fig_width, fig_width/1.3))
 ax.set_xlabel("$m_{\\tilde\\ell}$ [GeV]")
 ax.set_ylabel("$\\sigma$ [fb]")
 ax.set_yscale("log")
@@ -77,7 +87,7 @@ fig.savefig(PLOT_DIR/"xsec_mass_scale_err_lo_nlo.pdf")
 ####################
 ### NLO/LO Ratio ###
 ####################
-fig, ax = plt.subplots()
+fig, ax = plt.subplots(figsize=(fig_width, fig_width/1.3))
 ax.set_xlabel("$m_{\\tilde\\ell}$ [GeV]")
 ax.set_ylabel("$\\sigma/\\sigma^{\\text{LO}}$")
 # ax.set_yscale("log")

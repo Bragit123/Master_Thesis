@@ -1,11 +1,21 @@
 from pathlib import Path
 import numpy as np
 import pandas as pd
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 
 FILE_DIR = Path(__file__).resolve().parent
 OUTPUT_DIR = FILE_DIR.parent / "output"
 PLOT_DIR = FILE_DIR / "plots"
+
+mpl.rcParams["text.usetex"] = True
+STYLE_FILE = FILE_DIR/"thesis.mplstyle"
+plt.style.use(STYLE_FILE)
+
+# Get font sizes to fit document nicely (https://duetosymmetry.com/code/latex-mpl-fig-tips/)
+pt = 1/72.27
+fig_width = 0.8 * 418.25368 * pt
+golden_ratio = (1 + np.sqrt(5)) / 2
 
 def id2label(id: int) -> str:
   if id == 1000011:
@@ -132,9 +142,12 @@ fig.savefig(PLOT_DIR/"ratio_nlo_lo.pdf")
 #############################
 ## Ratios Corrections only ##
 #############################
-fig, ax = plt.subplots()
+# fig, ax = plt.subplots(figsize=(fig_width, fig_width/golden_ratio))
+fig, ax = plt.subplots(figsize=(fig_width, fig_width/1.3))
+# ax.set_xlabel("$m_{\\tilde\\ell}$ [GeV]")
+# ax.set_ylabel("$(\\sigma^{\\mathrm{NLO}}_{\\mathrm{QED}}-\\sigma^{\\mathrm{LO}})/(\\sigma^{\\mathrm{NLO}}_{\\mathrm{QCD}}-\\sigma^{\\mathrm{LO}})$")
 ax.set_xlabel("$m_{\\tilde\\ell}$ [GeV]")
-ax.set_ylabel("$(\\sigma^{\\mathrm{NLO}}_{\\mathrm{QED}}-\\sigma^{\\mathrm{LO}})/(\\sigma^{\\mathrm{NLO}}_{\\mathrm{QCD}}-\\sigma^{\\mathrm{LO}})$")
+ax.set_ylabel("$\\sigma^{\\mathrm{NLO}}_{\\mathrm{QED}}/\\sigma^{\\mathrm{NLO}}_{\\mathrm{QCD}}$")
 
 for i in range(len(slepton_ids)):
   sid = slepton_ids[i]
@@ -160,11 +173,11 @@ for i in range(len(slepton_ids)):
   ax.plot(df_qed["mass"], ratio_hadron, marker=marker, label=label+" (Hadronside)", linestyle=linestyle)
   ax.plot(df_qed["mass"], ratio_slepton, marker=marker, label=label+" (Sleptonside)", linestyle=linestyle)
   ax.axhline(0.025, color="black", linestyle="dotted")
-  ax.text(100, 0.028, "$\\alpha Q_q^2 / (\\alpha_s C_F) \\sim 0.025$")
+  ax.text(100, 0.03, "$\\alpha Q_q^2 / (\\alpha_s C_F) \\sim 0.025$")
   ax.axhline(0.1, color="black", linestyle="dotted")
-  ax.text(400, 0.094, "$\\alpha/\\alpha_s \\sim 0.1$")
+  ax.text(400, 0.105, "$\\alpha/\\alpha_s \\sim 0.1$")
 
-fig.legend(frameon=False, loc="upper right", bbox_to_anchor=(0.8, 0.55), ncol=2)
+fig.legend(frameon=False, loc="center", bbox_to_anchor=(0.55, 0.45), ncol=2)
 
 fig.tight_layout()
 fig.savefig(PLOT_DIR/"ratio_qed_qcd.pdf")

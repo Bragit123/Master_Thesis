@@ -22,8 +22,8 @@ int main(int argc, char* argv[]) {
   
   // compute_xsec_over_mass(1e-1);
   // compute_with_pdf_err(1e-1);
-  // compute_xsec_with_scale_err(1e-3);
-  compute_xsec_over_scale(1e-1);
+  // compute_xsec_over_scale(1e-3);
+  compute_xsec_with_scale_err(1e-3);
   
   return 0;
 }
@@ -127,7 +127,7 @@ void compute_xsec_with_scale_err(double epsrel, double maxeval) {
   //Slepton mass
   const double m_min = 100.;
   const double m_max = 1000.;
-  const double dm = 100.;
+  const double dm = 200.;
   const double nm = std::floor((m_max - m_min) / dm) + 1;
   
   std::vector<int> slepton_ids = {1000011, 2000011};
@@ -137,6 +137,7 @@ void compute_xsec_with_scale_err(double epsrel, double maxeval) {
     std::string filename = "output/xsec_mass_scale_err_" + std::to_string(slepton_id) + ".dat";
     std::ofstream outfile(filename);
     outfile << "# mass(GeV) | lo(fb) | lo_scale- | lo_scale+ | nlo(fb) | nlo_scale- | nlo_scale+" << std::endl;
+    // outfile << "# mass(GeV) | lo(fb) | lo_scale_err | nlo(fb) | nlo_scale_err" << std::endl;
     
     for (int im=0; im < nm; ++im) {
       Utils::print_progress(im+1, nm);
@@ -183,7 +184,6 @@ void compute_xsec_with_scale_err(double epsrel, double maxeval) {
       for (int i=0; i<3; ++i) {
         const double muR2 = mu2s.at(i);
         const double muF2 = mu2s.at(i);
-        // setmudim(muF2);
         setmudim(muR2);
 
         CSParams params = params_0;
@@ -198,35 +198,59 @@ void compute_xsec_with_scale_err(double epsrel, double maxeval) {
       const double xsec_lo = xsec_los.at(1);
       const double xsec_nlo = xsec_nlos.at(1);
 
-      double mu_err_lo_max;
-      double mu_err_lo_min;
-      double mu_err_nlo_max;
-      double mu_err_nlo_min;
+      // double mu_err_lo_max;
+      // double mu_err_lo_min;
+      // double mu_err_nlo_max;
+      // double mu_err_nlo_min;
+      double lo_scale_plus;
+      double lo_scale_minus;
+      double nlo_scale_plus;
+      double nlo_scale_minus;
       
-      const double mu_err_lo_up = std::abs(xsec_los.at(2) - xsec_los.at(1));
-      const double mu_err_lo_down = std::abs(xsec_los.at(1) - xsec_los.at(0));
-      if (mu_err_lo_up > mu_err_lo_down) {
-        mu_err_lo_max = mu_err_lo_up;
-        mu_err_lo_min = mu_err_lo_down;
+      // const double mu_err_lo_up = std::abs(xsec_los.at(2) - xsec_los.at(1));
+      // const double mu_err_lo_down = std::abs(xsec_los.at(1) - xsec_los.at(0));
+      // if (mu_err_lo_up > mu_err_lo_down) {
+      //   mu_err_lo_max = mu_err_lo_up;
+      //   mu_err_lo_min = mu_err_lo_down;
+      // } else {
+      //   mu_err_lo_max = mu_err_lo_down;
+      //   mu_err_lo_min = mu_err_lo_up;
+      // }
+      // const double mu_err_lo = std::abs(xsec_los.at(2) - xsec_los.at(0));
+      if (xsec_los.at(2) > xsec_los.at(0)) {
+        lo_scale_plus = xsec_los.at(2);
+        lo_scale_minus = xsec_los.at(0);
       } else {
-        mu_err_lo_max = mu_err_lo_down;
-        mu_err_lo_min = mu_err_lo_up;
+        lo_scale_plus = xsec_los.at(0);
+        lo_scale_minus = xsec_los.at(2);
+      }
+
+      if (xsec_nlos.at(2) > xsec_nlos.at(0)) {
+        nlo_scale_plus = xsec_nlos.at(2);
+        nlo_scale_minus = xsec_nlos.at(0);
+      } else {
+        nlo_scale_plus = xsec_nlos.at(0);
+        nlo_scale_minus = xsec_nlos.at(2);
       }
       
-      const double mu_err_nlo_up = std::abs(xsec_nlos.at(2) - xsec_nlos.at(1));
-      const double mu_err_nlo_down = std::abs(xsec_nlos.at(1) - xsec_nlos.at(0));
-      if (mu_err_nlo_up > mu_err_nlo_down) {
-        mu_err_nlo_max = mu_err_nlo_up;
-        mu_err_nlo_min = mu_err_nlo_down;
-      } else {
-        mu_err_nlo_max = mu_err_nlo_down;
-        mu_err_nlo_min = mu_err_nlo_up;
-      }
+      // const double mu_err_nlo_up = std::abs(xsec_nlos.at(2) - xsec_nlos.at(1));
+      // const double mu_err_nlo_down = std::abs(xsec_nlos.at(1) - xsec_nlos.at(0));
+      // if (mu_err_nlo_up > mu_err_nlo_down) {
+      //   mu_err_nlo_max = mu_err_nlo_up;
+      //   mu_err_nlo_min = mu_err_nlo_down;
+      // } else {
+      //   mu_err_nlo_max = mu_err_nlo_down;
+      //   mu_err_nlo_min = mu_err_nlo_up;
+      // }
+      // const double mu_err_nlo = std::abs(xsec_nlos.at(2) - xsec_nlos.at(0));
       
       
+      // outfile << slepton_mass << " "
+      //         << xsec_lo << " " << mu_err_lo_min << " " << mu_err_lo_max << " "
+      //         << xsec_nlo << " " << mu_err_nlo_min << " " << mu_err_nlo_max << std::endl;
       outfile << slepton_mass << " "
-              << xsec_lo << " " << mu_err_lo_min << " " << mu_err_lo_max << " "
-              << xsec_nlo << " " << mu_err_nlo_min << " " << mu_err_nlo_max << std::endl;
+              << xsec_lo << " " << lo_scale_minus << " " << lo_scale_plus << " "
+              << xsec_nlo << " " << nlo_scale_minus << " " << nlo_scale_plus << std::endl;
     }
     outfile.close();
   }

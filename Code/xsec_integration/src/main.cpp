@@ -12,7 +12,7 @@
 // Function declarations
 void compute_xsec_over_mass(double epsrel=1e-3, double maxeval=1e8);
 void compute_xsec_with_scale_err(double epsrel=1e-3, double maxeval=1e8);
-void compute_xsec_over_scale(double epsrel=1e-3, double maxeval=1e8);
+void compute_xsec_over_scale(double slepton_mass=100, bool varyR=false, double epsrel=1e-3, double maxeval=1e8);
 void compute_with_pdf_err(double epsrel=1e-3, double maxeval=1e8);
 void compute_xsec_with_errs(double epsrel=1e-3, double maxeval=1e8);
 
@@ -21,9 +21,12 @@ void compute_xsec_with_errs(double epsrel=1e-3, double maxeval=1e8);
 int main(int argc, char* argv[]) {
   
   // compute_xsec_over_mass(1e-1);
-  // compute_xsec_with_scale_err(1e-3, 1e8);
-  compute_xsec_with_errs(1e-3);
-  // compute_xsec_over_scale(1e-3);
+  // compute_xsec_with_scale_err(1e-2, 1e8);
+  // compute_xsec_with_errs(1e-3);
+  compute_xsec_over_scale(50, false, 1e-2);
+  compute_xsec_over_scale(100, false, 1e-2);
+  compute_xsec_over_scale(500, false, 1e-2);
+  compute_xsec_over_scale(1000, false, 1e-2);
   // compute_with_pdf_err(1e-2);
   
   return 0;
@@ -142,7 +145,7 @@ void compute_xsec_with_errs(double epsrel, double maxeval) {
   for (int slepton_id : slepton_ids) {
     std::cout << "Slepton " << slepton_id << ":\n";
     
-    std::string filename = "output/xsec_mass_err_1e-3_" + std::to_string(slepton_id) + ".dat";
+    std::string filename = "output/xsec_mass_err_" + std::to_string(slepton_id) + ".dat";
     std::ofstream outfile(filename);
     outfile << "# mass(GeV) | lo(fb) | lo_scale- | lo_scale+ | lo_pdf_err | nlo(fb) | nlo_scale- | nlo_scale+ | nlo_pdf_err" << std::endl;
     
@@ -278,7 +281,7 @@ void compute_xsec_with_scale_err(double epsrel, double maxeval) {
   //Slepton mass
   const double m_min = 100.;
   const double m_max = 1000.;
-  const double dm = 200.;
+  const double dm = 100.;
   const double nm = std::floor((m_max - m_min) / dm) + 1;
   
   std::vector<int> slepton_ids = {1000011, 2000011};
@@ -288,7 +291,6 @@ void compute_xsec_with_scale_err(double epsrel, double maxeval) {
     std::string filename = "output/xsec_mass_scale_err_" + std::to_string(slepton_id) + ".dat";
     std::ofstream outfile(filename);
     outfile << "# mass(GeV) | lo(fb) | lo_scale- | lo_scale+ | nlo(fb) | nlo_scale- | nlo_scale+" << std::endl;
-    // outfile << "# mass(GeV) | lo(fb) | lo_scale_err | nlo(fb) | nlo_scale_err" << std::endl;
     
     for (int im=0; im < nm; ++im) {
       Utils::print_progress(im+1, nm);
@@ -305,15 +307,31 @@ void compute_xsec_with_scale_err(double epsrel, double maxeval) {
       //   muF_0 * muF_0,
       //   muF_max * muF_max
       // };
-      const double mu_0 = 0.5 * mass_tot;
-      const double mu_min = mu_0/2.;
-      const double mu_max = 2.*mu_0;
-      const std::vector<double> mu2s = {
-        mu_min * mu_min,
-        mu_0 * mu_0,
-        mu_max * mu_max
-      };
+      // const double mu_0 = 0.5 * mass_tot;
+      // const double mu_min = mu_0/2.;
+      // const double mu_max = 2.*mu_0;
+      // const std::vector<double> mu2s = {
+      //   mu_min * mu_min,
+      //   mu_0 * mu_0,
+      //   mu_max * mu_max
+      // };
 
+      const double mu_0 = 0.5 * mass_tot;
+      const double mu_half = 0.5 * mu_0;
+      const double mu_double = 2. * mu_0;
+      const double mu2_0 = mu_0*mu_0;
+      const double mu2_half = mu_half*mu_half;
+      const double mu2_double = mu_double*mu_double;
+      // const std::vector<std::vector<double>> mu2RFs = {
+      //   {1., 1.},
+      //   {.5, .5},
+      //   {.5, 1.},
+      //   {1., .5},
+      //   {1., 2.},
+      //   {2., 1.},
+      //   {2., 2.}
+      // };
+      
       const CSParams params_0 {
         .sleptonA_id = slepton_id,
         .sleptonB_id = slepton_id,
@@ -322,86 +340,63 @@ void compute_xsec_with_scale_err(double epsrel, double maxeval) {
         .s = s,
         .Q2_min = Q2_min,
         .Q2_max = Q2_max,
-        .muR2 = mu_0*mu_0,
-        .muF2 = mu_0*mu_0,
+        .muR2 = mu2_0,
+        .muF2 = mu2_0,
         .pdf = pdf,
         .mix_cos = 1.0
       };
       
-      // const double epsrel = 1e-3;
-      // const double maxeval = 1e9;
-      std::array<double, 3> xsec_los;
-      std::array<double, 3> xsec_nlos;
-      for (int i=0; i<3; ++i) {
-        const double muR2 = mu2s.at(i);
-        const double muF2 = mu2s.at(i);
-        setmudim(muR2);
+      //// Central scale
+      setmudim(params_0.muR2);
+      const double xsec_lo_0 = CrossSection::full_xsec(params_0, quark_ids, 0, epsrel, maxeval);
+      const double xsec_hadron_0 = CrossSection::full_xsec(params_0, quark_ids, 1, epsrel, maxeval);
+      const double xsec_slepton_0 = CrossSection::full_xsec(params_0, quark_ids, 2, epsrel, maxeval);
+      const double xsec_nlo_0 = xsec_lo_0 + xsec_hadron_0 + xsec_slepton_0;
+      
+      // const std::vector<std::vector<double>> mu2RFs = {
+      //   {mu2_half, mu2_half},
+      //   {mu2_half, mu2_0},
+      //   {mu2_0, mu2_half},
+      //   {mu2_0, mu2_double},
+      //   {mu2_double, mu2_0},
+      //   {mu2_double, mu2_double}
+      // };
+      
+      // Cross section turns out to be independent of muR, so only need to vary muF
+      const std::vector<std::vector<double>> mu2RFs = {
+        {mu2_0, mu2_half},
+        {mu2_0, mu2_double},
+      };
+      
+      //// Scale uncertainty
+      double lo_scale_minus = xsec_lo_0;
+      double lo_scale_plus = xsec_lo_0;
+      double nlo_scale_minus = xsec_nlo_0;
+      double nlo_scale_plus = xsec_nlo_0;
+      
+      for (int i=0; i<mu2RFs.size(); ++i) {
+        const double muR2 = mu2RFs.at(i).at(0);
+        const double muF2 = mu2RFs.at(i).at(1);
 
+        setmudim(muR2);
         CSParams params = params_0;
         params.muR2 = muR2;
         params.muF2 = muF2;
-
-        xsec_los.at(i) = CrossSection::full_xsec(params, quark_ids, 0, epsrel, maxeval);
+        
+        const double xsec_lo_i = CrossSection::full_xsec(params, quark_ids, 0, epsrel, maxeval);
         const double xsec_hadrons_i = CrossSection::full_xsec(params, quark_ids, 1, epsrel, maxeval);
         const double xsec_sleptons_i = CrossSection::full_xsec(params, quark_ids, 2, epsrel, maxeval);
-        xsec_nlos.at(i) = xsec_los.at(i) + xsec_hadrons_i + xsec_sleptons_i;
-      }
-      const double xsec_lo = xsec_los.at(1);
-      const double xsec_nlo = xsec_nlos.at(1);
+        const double xsec_nlo_i = xsec_lo_i + xsec_hadrons_i + xsec_sleptons_i;
 
-      // double mu_err_lo_max;
-      // double mu_err_lo_min;
-      // double mu_err_nlo_max;
-      // double mu_err_nlo_min;
-      double lo_scale_plus;
-      double lo_scale_minus;
-      double nlo_scale_plus;
-      double nlo_scale_minus;
-      
-      // const double mu_err_lo_up = std::abs(xsec_los.at(2) - xsec_los.at(1));
-      // const double mu_err_lo_down = std::abs(xsec_los.at(1) - xsec_los.at(0));
-      // if (mu_err_lo_up > mu_err_lo_down) {
-      //   mu_err_lo_max = mu_err_lo_up;
-      //   mu_err_lo_min = mu_err_lo_down;
-      // } else {
-      //   mu_err_lo_max = mu_err_lo_down;
-      //   mu_err_lo_min = mu_err_lo_up;
-      // }
-      // const double mu_err_lo = std::abs(xsec_los.at(2) - xsec_los.at(0));
-      if (xsec_los.at(2) > xsec_los.at(0)) {
-        lo_scale_plus = xsec_los.at(2);
-        lo_scale_minus = xsec_los.at(0);
-      } else {
-        lo_scale_plus = xsec_los.at(0);
-        lo_scale_minus = xsec_los.at(2);
+        if (xsec_lo_i < lo_scale_minus) {lo_scale_minus = xsec_lo_i;}
+        if (xsec_lo_i > lo_scale_plus) {lo_scale_plus = xsec_lo_i;}
+        if (xsec_nlo_i < nlo_scale_minus) {nlo_scale_minus = xsec_nlo_i;}
+        if (xsec_nlo_i > nlo_scale_plus) {nlo_scale_plus = xsec_nlo_i;}
       }
 
-      if (xsec_nlos.at(2) > xsec_nlos.at(0)) {
-        nlo_scale_plus = xsec_nlos.at(2);
-        nlo_scale_minus = xsec_nlos.at(0);
-      } else {
-        nlo_scale_plus = xsec_nlos.at(0);
-        nlo_scale_minus = xsec_nlos.at(2);
-      }
-      
-      // const double mu_err_nlo_up = std::abs(xsec_nlos.at(2) - xsec_nlos.at(1));
-      // const double mu_err_nlo_down = std::abs(xsec_nlos.at(1) - xsec_nlos.at(0));
-      // if (mu_err_nlo_up > mu_err_nlo_down) {
-      //   mu_err_nlo_max = mu_err_nlo_up;
-      //   mu_err_nlo_min = mu_err_nlo_down;
-      // } else {
-      //   mu_err_nlo_max = mu_err_nlo_down;
-      //   mu_err_nlo_min = mu_err_nlo_up;
-      // }
-      // const double mu_err_nlo = std::abs(xsec_nlos.at(2) - xsec_nlos.at(0));
-      
-      
-      // outfile << slepton_mass << " "
-      //         << xsec_lo << " " << mu_err_lo_min << " " << mu_err_lo_max << " "
-      //         << xsec_nlo << " " << mu_err_nlo_min << " " << mu_err_nlo_max << std::endl;
       outfile << slepton_mass << " "
-              << xsec_lo << " " << lo_scale_minus << " " << lo_scale_plus << " "
-              << xsec_nlo << " " << nlo_scale_minus << " " << nlo_scale_plus << std::endl;
+              << xsec_lo_0 << " " << lo_scale_minus << " " << lo_scale_plus << " "
+              << xsec_nlo_0 << " " << nlo_scale_minus << " " << nlo_scale_plus << std::endl;
     }
     outfile.close();
   }
@@ -417,7 +412,8 @@ void compute_xsec_with_scale_err(double epsrel, double maxeval) {
 /////////////////////
 /// xsec vs scale ///
 /////////////////////
-void compute_xsec_over_scale(double epsrel, double maxeval) {
+// Always varies muF, but only varies muR if varyR is true
+void compute_xsec_over_scale(double slepton_mass, bool varyR, double epsrel, double maxeval) {
   ltini(); // Initialize LoopTools
   setlambda(0.0);
 
@@ -432,7 +428,6 @@ void compute_xsec_over_scale(double epsrel, double maxeval) {
   const double s = s_sqrt*s_sqrt;
 
   //Slepton mass
-  const double slepton_mass = 500;
   const double mass_tot = slepton_mass + slepton_mass;
   const double Q2_min = mass_tot * mass_tot;
   const double Q2_max = s;
@@ -445,13 +440,13 @@ void compute_xsec_over_scale(double epsrel, double maxeval) {
     const double mu_0 = 0.5 * mass_tot;
     const double mu2_0 = mu_0 * mu_0;
     
-    const double mu_mass_log2_min = -2.;
-    const double mu_mass_log2_max = 2.;
-    const int n_mu_mass_log2 = 5;
+    const double mu_mass_log2_min = -3.;
+    const double mu_mass_log2_max = 3.;
+    const int n_mu_mass_log2 = 7;
+    // const double mu_mass_log2_min = -4.;
+    // const double mu_mass_log2_max = 4.;
+    // const int n_mu_mass_log2 = 9;
     const double dmu_mass = (mu_mass_log2_max - mu_mass_log2_min) / (double) (n_mu_mass_log2 - 1);
-    
-    // const double epsrel = 1e-3;
-    // const double maxeval = 1e9;
     
     const CSParams params_0 {
       .sleptonA_id = slepton_id,
@@ -483,6 +478,7 @@ void compute_xsec_over_scale(double epsrel, double maxeval) {
       const double muF2 = muF * muF;
       
       setmudim(params_0.muR2);
+      clearcache();
 
       CSParams params = params_0;
       params.muF2 = muF2;
@@ -497,36 +493,38 @@ void compute_xsec_over_scale(double epsrel, double maxeval) {
     }
     
     outfileF.close();
-    
-    std::string filenameR = "output/xsec_scaleR_m" + std::to_string((int) slepton_mass) + "_" + std::to_string(slepton_id) + ".dat";
-    std::ofstream outfileR(filenameR);
-    outfileR << "# SLEPTON_MASS = " << slepton_mass << std::endl;
-    outfileR << "# mu/mass | lo(fb) | nlo(fb) | hadronside(fb)"
-            << "| sleptonside(fb)" << std::endl;
-    
-    // Vary muF
-    std::cout << "Varying Renormalization Scale" << std::endl;
-    for (int imu=0; imu<n_mu_mass_log2; ++imu) {
-      Utils::print_progress(imu+1, n_mu_mass_log2);
-      const double muR_mass_log2 = mu_mass_log2_min + (double) imu * dmu_mass;
-      const double muR_mass = pow(2., muR_mass_log2);
-      const double muR = muR_mass * slepton_mass;
-      const double muR2 = muR * muR;
+
+    if (varyR) {
+      std::string filenameR = "output/xsec_scaleR_m" + std::to_string((int) slepton_mass) + "_" + std::to_string(slepton_id) + ".dat";
+      std::ofstream outfileR(filenameR);
+      outfileR << "# SLEPTON_MASS = " << slepton_mass << std::endl;
+      outfileR << "# mu/mass | lo(fb) | nlo(fb) | hadronside(fb)"
+              << "| sleptonside(fb)" << std::endl;
       
-      CSParams params = params_0;
-      params.muR2 = muR2;
-      setmudim(params.muR2);
-
-      const double xsec_lo = CrossSection::full_xsec(params, quark_ids, 0, epsrel, maxeval);
-      const double xsec_hadron = CrossSection::full_xsec(params, quark_ids, 1, epsrel, maxeval);
-      const double xsec_slepton = CrossSection::full_xsec(params, quark_ids, 2, epsrel, maxeval);
-      const double xsec_nlo = xsec_lo + xsec_hadron + xsec_slepton;
-
-      outfileR << muR_mass << " " << xsec_lo << " " << xsec_nlo << " "
-              << xsec_lo+xsec_hadron << " " << xsec_lo+xsec_slepton << std::endl;
+      // Vary muR
+      std::cout << "Varying Renormalization Scale" << std::endl;
+      for (int imu=0; imu<n_mu_mass_log2; ++imu) {
+        Utils::print_progress(imu+1, n_mu_mass_log2);
+        const double muR_mass_log2 = mu_mass_log2_min + (double) imu * dmu_mass;
+        const double muR_mass = pow(2., muR_mass_log2);
+        const double muR = muR_mass * slepton_mass;
+        const double muR2 = muR * muR;
+        
+        CSParams params = params_0;
+        params.muR2 = muR2;
+        setmudim(params.muR2);
+        clearcache();
+        
+        const double xsec_lo = CrossSection::full_xsec(params, quark_ids, 0, epsrel, maxeval);
+        const double xsec_hadron = CrossSection::full_xsec(params, quark_ids, 1, epsrel, maxeval);
+        const double xsec_slepton = CrossSection::full_xsec(params, quark_ids, 2, epsrel, maxeval);
+        const double xsec_nlo = xsec_lo + xsec_hadron + xsec_slepton;
+        
+        outfileR << muR_mass << " " << xsec_lo << " " << xsec_nlo << " "
+                << xsec_lo+xsec_hadron << " " << xsec_lo+xsec_slepton << std::endl;
+      }
+      outfileR.close();
     }
-
-    outfileR.close();
   }
   
   

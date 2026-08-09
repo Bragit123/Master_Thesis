@@ -101,40 +101,124 @@ fig.savefig(PLOT_DIR/"xsec_Kfactor.pdf")
 
 
 
+# ########################
+# ### Scale Dependence ###
+# ########################
+# col_names = ["scale", "lo", "nlo", "hadron", "slepton"]
+
+# scale_slepton_id = 1000011
+# # scale_masses = [100, 500]
+# scale_mass = 100
+# scales = ["R", "F"]
+# dfs_scale = []
+# for scale in scales:
+#     filename = "xsec_scale" + scale + "_m" + str(scale_mass) + "_" + str(scale_slepton_id) + ".dat"
+#     filepath = OUTPUT_DIR/filename
+#     df = pd.read_csv(filepath, comment="#", names=col_names, delimiter=r"\s+")
+#     dfs_scale.append(df)
+
+# ## Plot
+# fig, axs = plt.subplots(
+#     nrows=2,
+#     ncols=1,
+#     sharex=True,
+#     figsize=(fig_width, fig_width/1.3)
+# )
+# axs[1].set_xlabel("$\\mu/m_{\\tilde{e}_L}$")
+
+# for axi in axs:
+#     # axi.set_ylabel("$\\sigma/\\sigma(\\mu_0)$")
+#     axi.set_ylabel("$\\sigma/\\sigma_{\\mu_0}$")
+#     axi.set_xscale("log", base=2)
+#     axi.xaxis.set_major_formatter(ScalarFormatter())
+
+# for i in range(len(scales)):
+#     sid = scale_slepton_id
+#     df = dfs_scale[i]
+#     mu_arr = df["scale"]
+    
+#     xsec_lo = df["lo"]
+#     xsec_nlo = df["nlo"]
+#     xsec_hadron = df["hadron"]
+#     xsec_slepton = df["slepton"]
+    
+#     ind0 = np.argwhere(mu_arr==1).item()
+#     xsec_lo_0 = xsec_lo[ind0]
+#     xsec_nlo_0 = xsec_nlo[ind0]
+#     xsec_hadron_0 = xsec_hadron[ind0]
+#     xsec_slepton_0 = xsec_slepton[ind0]
+#     ratio_lo = xsec_lo/xsec_lo_0
+#     ratio_nlo = xsec_nlo/xsec_nlo_0
+#     ratio_hadron = xsec_hadron/xsec_hadron_0
+#     ratio_slepton = xsec_slepton/xsec_slepton_0
+#     marker = "."
+#     label = id2label(sid)
+#     if i==0:
+#         axs[i].plot(mu_arr, ratio_nlo, linestyle="solid", marker=marker, label=f"NLO")
+#         axs[i].plot(mu_arr, ratio_lo, linestyle="dashed", marker=marker, label=f"LO")
+#         # axs[i].plot(mu_arr, ratio_hadron, linestyle="dashed", marker=marker, label=f"NLO initial-state")
+#         # axs[i].plot(mu_arr, ratio_slepton, linestyle="dashed", marker=marker, label=f"NLO final-state")
+#     else:
+#         axs[i].plot(mu_arr, ratio_nlo, linestyle="solid", marker=marker)
+#         axs[i].plot(mu_arr, ratio_lo, linestyle="dashed", marker=marker)
+#         # axs[i].plot(mu_arr, ratio_hadron, linestyle="dashed", marker=marker)
+#         # axs[i].plot(mu_arr, ratio_slepton, linestyle="dashed", marker=marker)
+
+# box_dict = {
+#     "boxstyle": "round",
+#     "facecolor": "wheat",
+#     "alpha": 0.2
+# }
+# axs[0].text(0.3, 0.994, "$\\mu_R = \\mu$\n$\\mu_F = m_{\\tilde{e}_L}$", bbox=box_dict)
+# axs[1].text(0.3, 1, "$\\mu_R = m_{\\tilde{e}_L}$\n$\\mu_F = \\mu$", bbox=box_dict)
+
+# fig.legend(frameon=False, loc="upper center", bbox_to_anchor=(0.6, 1.1), ncol=2)
+# fig.tight_layout()
+# fig.savefig(PLOT_DIR/f"xsec_scale_ratio_m{scale_mass}.pdf")
+
+
 ########################
 ### Scale Dependence ###
 ########################
 col_names = ["scale", "lo", "nlo", "hadron", "slepton"]
 
 scale_slepton_id = 1000011
-# scale_masses = [100, 500]
-scale_mass = 100
-scales = ["R", "F"]
-dfs_scale = []
-for scale in scales:
-    filename = "xsec_scale" + scale + "_m" + str(scale_mass) + "_" + str(scale_slepton_id) + ".dat"
+masses = [50, 100, 500, 1000]
+# scale_mass = 100
+# scales = ["R", "F"]
+dfs_mass = []
+for mass in masses:
+    filename = "xsec_scaleF_m" + str(mass) + "_" + str(scale_slepton_id) + ".dat"
     filepath = OUTPUT_DIR/filename
     df = pd.read_csv(filepath, comment="#", names=col_names, delimiter=r"\s+")
-    dfs_scale.append(df)
+    dfs_mass.append(df)
 
 ## Plot
+rows = 2
+cols = 2
 fig, axs = plt.subplots(
-    nrows=2,
-    ncols=1,
+    nrows=rows,
+    ncols=cols,
     sharex=True,
-    figsize=(fig_width, fig_width/1.3)
+    sharey=True,
+    figsize=(fig_width, fig_width/1.3),
+    layout="constrained"
 )
-axs[1].set_xlabel("$\\mu/m_{\\tilde{e}_L}$")
+# axs[1].set_xlabel("$\\mu_F/m_{\\tilde{e}_L}$")
+fig.supxlabel("$\\mu_F/m_{\\tilde{e}_L}$")
+fig.supylabel("$\\sigma(\\mu_F)/\\sigma(\\mu_0)$")
 
-for axi in axs:
+for axi in axs.flatten():
     # axi.set_ylabel("$\\sigma/\\sigma(\\mu_0)$")
-    axi.set_ylabel("$\\sigma/\\sigma_{\\mu_0}$")
+    # axi.set_ylabel("$\\sigma(\\mu_F)/\\sigma(\\mu_0)$")
     axi.set_xscale("log", base=2)
     axi.xaxis.set_major_formatter(ScalarFormatter())
 
-for i in range(len(scales)):
+for i, mass in enumerate(masses):
+    r = i // cols
+    c = i % rows
     sid = scale_slepton_id
-    df = dfs_scale[i]
+    df = dfs_mass[i]
     mu_arr = df["scale"]
     
     xsec_lo = df["lo"]
@@ -142,38 +226,42 @@ for i in range(len(scales)):
     xsec_hadron = df["hadron"]
     xsec_slepton = df["slepton"]
     
-    xsec_lo_0 = xsec_lo[2]
-    xsec_nlo_0 = xsec_nlo[2]
-    xsec_hadron_0 = xsec_hadron[2]
-    xsec_slepton_0 = xsec_slepton[2]
+    ind0 = np.argwhere(mu_arr==1).item()
+    xsec_lo_0 = xsec_lo[ind0]
+    xsec_nlo_0 = xsec_nlo[ind0]
+    xsec_hadron_0 = xsec_hadron[ind0]
+    xsec_slepton_0 = xsec_slepton[ind0]
     ratio_lo = xsec_lo/xsec_lo_0
     ratio_nlo = xsec_nlo/xsec_nlo_0
     ratio_hadron = xsec_hadron/xsec_hadron_0
     ratio_slepton = xsec_slepton/xsec_slepton_0
-    marker = "."
     label = id2label(sid)
     if i==0:
-        axs[i].plot(mu_arr, ratio_lo, linestyle="solid", marker=marker, label=f"LO")
-        axs[i].plot(mu_arr, ratio_nlo, linestyle="solid", marker=marker, label=f"NLO")
-        axs[i].plot(mu_arr, ratio_hadron, linestyle="dashed", marker=marker, label=f"NLO initial-state")
-        axs[i].plot(mu_arr, ratio_slepton, linestyle="dashed", marker=marker, label=f"NLO final-state")
+        # axs[i].plot(mu_arr, ratio_nlo, linestyle="solid", marker="x", label=f"NLO")
+        # axs[i].plot(mu_arr, ratio_lo, linestyle="dashed", marker=".", label=f"LO")
+        axs[r,c].plot(mu_arr, ratio_nlo, linestyle="solid", marker="x", label=f"NLO")
+        axs[r,c].plot(mu_arr, ratio_lo, linestyle="dashed", marker=".", label=f"LO")
     else:
-        axs[i].plot(mu_arr, ratio_lo, linestyle="solid", marker=marker)
-        axs[i].plot(mu_arr, ratio_nlo, linestyle="solid", marker=marker)
-        axs[i].plot(mu_arr, ratio_hadron, linestyle="dashed", marker=marker)
-        axs[i].plot(mu_arr, ratio_slepton, linestyle="dashed", marker=marker)
+        axs[r,c].plot(mu_arr, ratio_nlo, linestyle="solid", marker="x")
+        axs[r,c].plot(mu_arr, ratio_lo, linestyle="dashed", marker=".")
+    
+    box_dict = {
+        "boxstyle": "round",
+        "facecolor": "wheat",
+        "alpha": 0.2
+    }
+    # axs[i].text(mu_arr[0], 1, "$m_{\\tilde{e}_L} = " + str(mass) + "$", bbox=box_dict)
+    
+    # Place textbox displaying mass to the left and furthest away from the graph
+    txtboxy = 1.25 if (np.abs(1.25-ratio_nlo[0]) > np.abs(0.75-ratio_nlo[0])) else 0.75
+    axs[r,c].text(mu_arr[0], txtboxy, "$m_{\\tilde{e}_L} = " + str(mass) + "$", bbox=box_dict)
 
-box_dict = {
-    "boxstyle": "round",
-    "facecolor": "wheat",
-    "alpha": 0.2
-}
-axs[0].text(0.3, 0.994, "$\\mu_R = \\mu$\n$\\mu_F = m_{\\tilde{e}_L}$", bbox=box_dict)
-axs[1].text(0.3, 1, "$\\mu_R = m_{\\tilde{e}_L}$\n$\\mu_F = \\mu$", bbox=box_dict)
+# axs[0].text(0.3, 0.994, "$\\mu_R = \\mu$\n$\\mu_F = m_{\\tilde{e}_L}$", bbox=box_dict)
+# axs[1].text(0.3, 1, "$\\mu_R = m_{\\tilde{e}_L}$\n$\\mu_F = \\mu$", bbox=box_dict)
 
-fig.legend(frameon=False, loc="upper center", bbox_to_anchor=(0.6, 1.1), ncol=2)
-fig.tight_layout()
-fig.savefig(PLOT_DIR/f"xsec_scale_ratio_m{scale_mass}.pdf")
+fig.legend(frameon=False, loc="upper center", bbox_to_anchor=(0.55, 1.05), ncol=2)
+# fig.tight_layout()
+fig.savefig(PLOT_DIR/f"xsec_muF_ratio.pdf")
 
 
 
@@ -320,7 +408,8 @@ col_names = [
 slepton_ids = [1000011, 2000011]
 dfs = []
 for slepton_id in slepton_ids:
-    filename = "xsec_mass_err_" + str(slepton_id) + ".dat"
+    # filename = "xsec_mass_err_" + str(slepton_id) + ".dat"
+    filename = "xsec_mass_err_1e-3_" + str(slepton_id) + ".dat"
     filepath = OUTPUT_DIR/filename
     df = pd.read_csv(filepath, comment="#", names=col_names, delimiter=r"\s+")
     dfs.append(df)

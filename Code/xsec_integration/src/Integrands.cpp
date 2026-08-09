@@ -20,14 +20,6 @@ namespace Integrands {
     
     const double jacobian_Q2 = Q2_max - Q2_min;
     const double Q2 = Q2_min + jacobian_Q2 * xx[0];
-    // const double MZ = Const::MZ;
-    // const double GZ = Const::GAMMAZ;
-    // const double thetaMin = atan((Q2_min - MZ*MZ) / (MZ*GZ));
-    // const double thetaMax = atan((Q2_max - MZ*MZ) / (MZ*GZ));
-    // const double theta = thetaMin + (thetaMax - thetaMin) * xx[0];
-    // const double Q2 = MZ*MZ + MZ*GZ * tan(theta);
-    // const double cos_theta = cos(theta);
-    // const double jacobian_Q2 = (thetaMax - thetaMin) * MZ*GZ / (cos_theta*cos_theta);
 
     const double tau = Q2/s;
 
@@ -74,14 +66,6 @@ namespace Integrands {
     
     const double jacobian_Q2 = Q2_max - Q2_min;
     const double Q2 = Q2_min + jacobian_Q2 * xx[0];
-    // const double MZ = Const::MZ;
-    // const double GZ = Const::GAMMAZ;
-    // const double thetaMin = atan((Q2_min - MZ*MZ) / (MZ*GZ));
-    // const double thetaMax = atan((Q2_max - MZ*MZ) / (MZ*GZ));
-    // const double theta = thetaMin + (thetaMax - thetaMin) * xx[0];
-    // const double Q2 = MZ*MZ + MZ*GZ * tan(theta);
-    // const double cos_theta = cos(theta);
-    // const double jacobian_Q2 = (thetaMax - thetaMin) * MZ*GZ / (cos_theta*cos_theta);
 
     const double tau = Q2/s;
     
@@ -134,14 +118,6 @@ namespace Integrands {
     
     const double jacobian_Q2 = Q2_max - Q2_min;
     const double Q2 = Q2_min + jacobian_Q2 * xx[0];
-    // const double MZ = Const::MZ;
-    // const double GZ = Const::GAMMAZ;
-    // const double thetaMin = atan((Q2_min - MZ*MZ) / (MZ*GZ));
-    // const double thetaMax = atan((Q2_max - MZ*MZ) / (MZ*GZ));
-    // const double theta = thetaMin + (thetaMax - thetaMin) * xx[0];
-    // const double Q2 = MZ*MZ + MZ*GZ * tan(theta);
-    // const double cos_theta = cos(theta);
-    // const double jacobian_Q2 = (thetaMax - thetaMin) * MZ*GZ / (cos_theta*cos_theta);
 
     const double tau = Q2/s;
     
@@ -164,8 +140,8 @@ namespace Integrands {
     
     const double z = tau/(x1*x2);
     const double w_prefac = Const::ALPHA * Qq*Qq * M_1_PI;
-    // double w_rad = 0.0;
-    double w_rad = 2. * w_prefac;
+    
+    double w_rad = 2. * w_prefac; // explicit z->1 limit to avoid large small denominator
     if (std::abs(1.0 - z) > tol) {
       w_rad = -w_prefac * (1.0 + z*z) * log(z) / (1.0 - z);
     }
@@ -216,14 +192,6 @@ namespace Integrands {
     
     const double jacobian_Q2 = Q2_max - Q2_min;
     const double Q2 = Q2_min + jacobian_Q2 * xx[0];
-    // const double MZ = Const::MZ;
-    // const double GZ = Const::GAMMAZ;
-    // const double thetaMin = atan((Q2_min - MZ*MZ) / (MZ*GZ));
-    // const double thetaMax = atan((Q2_max - MZ*MZ) / (MZ*GZ));
-    // const double theta = thetaMin + (thetaMax - thetaMin) * xx[0];
-    // const double Q2 = MZ*MZ + MZ*GZ * tan(theta);
-    // const double cos_theta = cos(theta);
-    // const double jacobian_Q2 = (thetaMax - thetaMin) * MZ*GZ / (cos_theta*cos_theta);
 
     const double tau = Q2/s;
     
@@ -298,22 +266,16 @@ namespace Integrands {
     const double w_soft = w_prefac * (Iv_real
                             - (log(4.*lambda) + log(muR2/Q2))*lambda_sqrt_inv * I1
                             + lambda_sqrt_inv * I2);
-    // const double w_plus_1 = w_prefac * 2. * z * lambda_z_sqrt_inv * I1;
-    // const double w_plus_1 = w_prefac * 2. * lambda_inv * (z*z*z * lambda_z * lambda_sqrt_inv * I1 + (1.-z)*(1.-z)/z);
-    // const double w_plus_1 = w_prefac * 2. * lambda_inv*lambda_sqrt_inv * z*z*z * lambda_z * I1;
     const double w_plus_1 = w_prefac * 2. * lambda_inv*lambda_sqrt_inv * lambda_z * I1;
 
-    // const double F1 = log(1.0 - tau/x1);
     double F1 = 0.0;
     if (std::abs(1.0 - x2) > tol) {
       F1 = log(1.0 - x2);
     }
-    // const double F1 = log(1.0 - tau/x1);
     
     const double xfq = pdf->xfxQ2(quark_id, x1, muF2);
     const double xfqbar = pdf->xfxQ2(-quark_id, x2, muF2);
     
-    // const double s_parton = Q2/z;
     const double born = CrossSection::born_xsec(s_parton, Q2, params);
     
     // Factor 2 to account for changing which particle is (anti-)quark
@@ -337,14 +299,6 @@ namespace Integrands {
     
     const double jacobian_Q2 = Q2_max - Q2_min;
     const double Q2 = Q2_min + jacobian_Q2 * xx[0];
-    // const double MZ = Const::MZ;
-    // const double GZ = Const::GAMMAZ;
-    // const double thetaMin = atan((Q2_min - MZ*MZ) / (MZ*GZ));
-    // const double thetaMax = atan((Q2_max - MZ*MZ) / (MZ*GZ));
-    // const double theta = thetaMin + (thetaMax - thetaMin) * xx[0];
-    // const double Q2 = MZ*MZ + MZ*GZ * tan(theta);
-    // const double cos_theta = cos(theta);
-    // const double jacobian_Q2 = (thetaMax - thetaMin) * MZ*GZ / (cos_theta*cos_theta);
 
     const double tau = Q2/s;
     
@@ -384,22 +338,13 @@ namespace Integrands {
                       - lambda_sqrt;
 
     const double w_prefac = Const::ALPHA * M_1_PI;
-    // const double w_rad = w_prefac * 2. * (1. - z) * lambda_sqrt * lambda_z_inv * lambda_z_sqrt_inv;
-    // const double w_rad = 0.0;
-    // const double w_rad = w_prefac * 2. * lambda_inv * (1.-z)/z;
     double w_rad = 0.0;
     if (lambda > tol) {
       // Avoid overflow and segmentation fault when lambda->0
       // (in this case, born xsec is dominates, and full expression should be zero!)
       w_rad = w_prefac * 2. * lambda_inv * (1.-z)/z;
     }
-    // const double w_rad = w_prefac * 2. * lambda_inv * (1.-z)/z;
-    // const double w_plus_1 = w_prefac * 2. * z * lambda_z_sqrt_inv * I1;
-    // const double w_plus_1 = w_prefac * 2. * lambda_inv * (z*z*z * lambda_z * lambda_sqrt_inv * I1 + (1.-z)*(1.-z)/z);
-    // const double w_plus_1 = w_prefac * 2. * lambda_inv*lambda_sqrt_inv * z*z*z * lambda_z * I1;
     const double w_plus_1 = w_prefac * 2. * lambda_inv*lambda_sqrt_inv * lambda_z * I1;
-    // const double w_plus_1_one = w_prefac * 2. * z / lambda_sqrt * I1;
-    // const double w_plus_1_one = w_prefac * 2. * lambda_inv * lambda_sqrt * I1;
     const double w_plus_1_one = w_prefac * 2. * lambda_sqrt_inv * I1;
     
     const double xfq = pdf->xfxQ2(quark_id, x1, muF2);
@@ -413,38 +358,12 @@ namespace Integrands {
     // a common factor 1/x2 in the following terms that we include in ff[0] after
     const double rad_term = xfqbar_x2 * w_rad;
     
-    // double f_term = 0.0;
-    // if (std::abs(1.0 - z) > tol) {
-    //   const double f1_term = xfqbar_x2 * w_plus_1 - xfqbar_tau_x1 * w_plus_1_one;
-    //   const double f1 = 1.0 / (1.0 - z);
-    //   f_term = f1_term * f1;
-    // }
-    const double threshold = 1e-5;
-    double f_term;
-    if (std::abs(1.0 - z) > threshold) {
+    double f_term = 0.0;
+    if (std::abs(1.0 - z) > tol) {
       const double f1_term = xfqbar_x2 * w_plus_1 - xfqbar_tau_x1 * w_plus_1_one;
       const double f1 = 1.0 / (1.0 - z);
       f_term = f1_term * f1;
-    } else {
-      // const double xmin = pdf->xMin();
-      // const double xmax = pdf->xMax();
-      const double xmin = 0.101563e-5;
-      const double xmax = 1.0;
-      const double h = 1e-4 * x2_start;
-      const double x2_hi = std::min(x2_start + h, xmax - 1e-12);
-      const double x2_lo = std::max(x2_start - h, xmin * (1.+1e-6));
-      // const double xfqbar_plus_h = pdf->xfxQ2(-quark_id, x2_start + h, muF2);
-      // const double xfqbar_minus_h = pdf->xfxQ2(-quark_id, x2_start - h, muF2);
-      const double xfqbar_plus_h = pdf->xfxQ2(-quark_id, x2_hi, muF2);
-      const double xfqbar_minus_h = pdf->xfxQ2(-quark_id, x2_lo, muF2);
-      const double xfqbar_prime1 = (xfqbar_plus_h - xfqbar_minus_h) / (x2_hi-x2_lo);
-      const double lambda_z_prime1 = 2*(mt12-mt22)*(mt12-mt22) - 2*(mt12+mt22);
-      const double w_plus_1_prime1 = w_plus_1_one * lambda_z_prime1 * lambda_inv;
-      f_term = x2_start * xfqbar_prime1 * w_plus_1_one - xfqbar_tau_x1 * w_plus_1_prime1;
     }
-    // const double f1_term = xfqbar_x2 * w_plus_1 - xfqbar_tau_x1 * w_plus_1_one;
-    // const double f1 = 1.0 / (1.0 - z);
-    // const double f_term = f1_term * f1;
     
     // Factor 2 to account for changing which particle is (anti-)quark
     const double result = born * jacobian * xfq / (x1*x1 * x2*x2) * (rad_term + f_term);

@@ -20,13 +20,13 @@ void compute_xsec_with_errs(double epsrel=1e-3, double maxeval=1e8);
 
 int main(int argc, char* argv[]) {
   
-  // compute_xsec_over_mass(1e-1);
+  compute_xsec_over_mass(1e-3);
   // compute_xsec_with_scale_err(1e-2, 1e8);
   // compute_xsec_with_errs(1e-3);
-  compute_xsec_over_scale(50, false, 1e-2);
-  compute_xsec_over_scale(100, false, 1e-2);
-  compute_xsec_over_scale(500, false, 1e-2);
-  compute_xsec_over_scale(1000, false, 1e-2);
+  // compute_xsec_over_scale(400, true, 1e-3);
+  // compute_xsec_over_scale(600, true, 1e-3);
+  // compute_xsec_over_scale(800, true, 1e-3);
+  // compute_xsec_over_scale(1000, true, 1e-3);
   // compute_with_pdf_err(1e-2);
   
   return 0;
@@ -50,7 +50,7 @@ void compute_xsec_over_mass(double epsrel, double maxeval) {
   const double s = s_sqrt*s_sqrt;
 
   //Slepton mass
-  const double m_min = 100.;
+  const double m_min = 300.;
   const double m_max = 1000.;
   const double dm = 100.;
   const double nm = std::floor((m_max - m_min) / dm) + 1;

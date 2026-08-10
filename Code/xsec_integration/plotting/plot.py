@@ -56,23 +56,110 @@ for slepton_id in slepton_ids:
 
     dfs_qed.append(df)
 
-## Plot total xsec
-fig, ax = plt.subplots(figsize=(fig_width, fig_width/1.3))
-ax.set_xlabel("$m_{\\tilde\\ell}$ [GeV]")
+qed_err_col_names = [
+    "mass",
+    "lo", "lo_scale_minus", "lo_scale_plus", "lo_pdf",
+    "nlo", "nlo_scale_minus", "nlo_scale_plus", "nlo_pdf"
+]
+dfs_err = []
+for slepton_id in slepton_ids:
+    filename = "xsec_mass_err_" + str(slepton_id) + ".dat"
+    filepath = OUTPUT_DIR/filename
+    df = pd.read_csv(filepath, comment="#", names=qed_err_col_names, delimiter=r"\s+")
+    
+    dfs_err.append(df)
+
+####################
+### QED with err ###
+####################
+fig, (ax, ax_ratio) = plt.subplots(
+    nrows=2,
+    ncols=1,
+    sharex=True,
+    figsize=(fig_width, fig_width/1.3),
+    gridspec_kw={"height_ratios": [3,1]}
+)
+ax_ratio.set_xlabel("$m_{\\tilde{e}}$ [GeV]")
 ax.set_ylabel("$\\sigma$ [fb]")
+ax_ratio.set_ylabel("$\\sigma/\\sigma^{\\mathrm{LO}}$")
 ax.set_yscale("log")
-for i in range(len(slepton_ids)):
+for i, sid in enumerate(slepton_ids):
     sid = slepton_ids[i]
-    df = dfs_qed[i]
+    df = dfs_err[i]
+    
     m_arr = df["mass"]
-    xsec_lo = df["lo"]
-    xsec_nlo = df["nlo"]
+    
+    lo = df["lo"]
+    lo_scale_minus = df["lo_scale_minus"]
+    lo_scale_plus = df["lo_scale_plus"]
+    lo_pdf = df["lo_pdf"]
+    lo_pdf_minus = lo - lo_pdf
+    lo_pdf_plus = lo + lo_pdf
+    
+    nlo = df["nlo"]
+    nlo_scale_minus = df["nlo_scale_minus"]
+    nlo_scale_plus = df["nlo_scale_plus"]
+    nlo_pdf = df["nlo_pdf"]
+    nlo_pdf_minus = nlo - nlo_pdf
+    nlo_pdf_plus = nlo + nlo_pdf
+    
     label = id2label(sid)
-    ax.plot(m_arr, xsec_nlo, linestyle="solid", marker="x", label=label+" (NLO)")
-    ax.plot(m_arr, xsec_lo, linestyle="dashed", marker=".", label=label+" (LO)")
-fig.legend(frameon=False, loc="upper right", bbox_to_anchor=(0.95,0.95), ncol=1)
+    nlo_line, = ax.plot(m_arr, nlo, linestyle="solid", marker="x", label=label+" (NLO)")
+    ax.fill_between(m_arr, nlo_pdf_minus, nlo_pdf_plus, linestyle="dashed", alpha=0.3, color=nlo_line.get_color())
+    ax.fill_between(m_arr, nlo_scale_minus, nlo_scale_plus, linestyle="dotted", alpha=0.3, color=nlo_line.get_color())
+    lo_line, = ax.plot(m_arr, lo, linestyle="solid", marker=".", label=label+" (LO)")
+    ax.fill_between(m_arr, lo_pdf_minus, lo_pdf_plus, linestyle="dashed", alpha=0.3, color=lo_line.get_color())
+    ax.fill_between(m_arr, lo_scale_minus, lo_scale_plus, linestyle="dotted", alpha=0.3, color=lo_line.get_color())
+    
+    lo_pdf_ratio_minus = lo_pdf_minus/lo
+    lo_pdf_ratio_plus = lo_pdf_plus/lo
+    nlo_pdf_ratio_minus = nlo_pdf_minus/lo
+    nlo_pdf_ratio_plus = nlo_pdf_plus/lo
+    lo_scale_ratio_minus = lo_scale_minus/lo
+    lo_scale_ratio_plus = lo_scale_plus/lo
+    nlo_scale_ratio_minus = nlo_scale_minus/nlo
+    nlo_scale_ratio_plus = nlo_scale_plus/nlo
+    if i==0:
+        ax_ratio.plot(m_arr, lo/lo, linestyle=lo_line.get_linestyle(), color=lo_line.get_color())
+        ax_ratio.fill_between(m_arr, lo_pdf_ratio_minus, lo_pdf_ratio_plus, linestyle="dashed", alpha=0.2, color=lo_line.get_color())
+        ax_ratio.fill_between(m_arr, lo_scale_ratio_minus, lo_scale_ratio_plus, linestyle="dotted", alpha=0.2, color=lo_line.get_color())
+        ax_ratio.plot(m_arr, nlo/lo, linestyle=nlo_line.get_linestyle(), color=nlo_line.get_color())
+        ax_ratio.fill_between(m_arr, nlo_pdf_ratio_minus, nlo_pdf_ratio_plus, linestyle="dashed", alpha=0.2, color=nlo_line.get_color())
+        ax_ratio.fill_between(m_arr, nlo_scale_ratio_minus, nlo_scale_ratio_plus, linestyle="dotted", alpha=0.2, color=nlo_line.get_color())
+
+ax.fill_between([],[],[],color="k",linestyle="dotted", alpha=0.2, label="Scale error")
+ax.fill_between([],[],[],color="k",linestyle="dashed", alpha=0.2, label="PDF error")
+
+handles, labels = ax.get_legend_handles_labels()
+handles.insert(2, handles.pop())
+labels.insert(2, labels.pop())
+# leg1 = fig.legend(handles[:4], labels[:4], frameon=False, loc="upper right", bbox_to_anchor=(0.95, 0.95), ncol=2)
+# leg2 = fig.legend(handles[4:], labels[4:], frameon=False, loc="upper right", bbox_to_anchor=(0.95, 0.8), ncol=1)
+# fig.add_artist(leg1)
+
+fig.legend(handles=handles, labels=labels, frameon=False, loc="upper right", bbox_to_anchor=(0.97,0.95), ncol=2)
+# fig.legend(frameon=False, loc="upper right", bbox_to_anchor=(0.95,0.95), ncol=2)
 fig.tight_layout()
 fig.savefig(PLOT_DIR/"xsec_over_mass.pdf")
+    
+
+# ## Plot total xsec
+# fig, ax = plt.subplots(figsize=(fig_width, fig_width/1.3))
+# ax.set_xlabel("$m_{\\tilde\\ell}$ [GeV]")
+# ax.set_ylabel("$\\sigma$ [fb]")
+# ax.set_yscale("log")
+# for i in range(len(slepton_ids)):
+#     sid = slepton_ids[i]
+#     df = dfs_qed[i]
+#     m_arr = df["mass"]
+#     xsec_lo = df["lo"]
+#     xsec_nlo = df["nlo"]
+#     label = id2label(sid)
+#     ax.plot(m_arr, xsec_nlo, linestyle="solid", marker="x", label=label+" (NLO)")
+#     ax.plot(m_arr, xsec_lo, linestyle="dashed", marker=".", label=label+" (LO)")
+# fig.legend(frameon=False, loc="upper right", bbox_to_anchor=(0.95,0.95), ncol=1)
+# fig.tight_layout()
+# fig.savefig(PLOT_DIR/"xsec_over_mass.pdf")
 
 
 
@@ -566,9 +653,18 @@ for slepton_name in slepton_names:
 ### K factor ###
 ################
 ## Plot K-factor (xsec/xsecLO) and separate contributions
-fig, ax = plt.subplots(figsize=(fig_width, fig_width/1.3))
-ax.set_xlabel("$m_{\\tilde\\ell}$ [GeV]")
+fig, (ax_qcd, ax) = plt.subplots(
+    nrows=2,
+    ncols=1,
+    sharex=True,
+    figsize=(fig_width, fig_width/1.3),
+    # figsize=(fig_width, fig_width),
+    gridspec_kw={"height_ratios": [1,3]}
+)
+# ax.set_xlabel("$m_{\\tilde\\ell}$ [GeV]")
+ax.set_xlabel("$m_{\\tilde{e}}$ [GeV]")
 ax.set_ylabel("$\\sigma/\\sigma^{\\mathrm{LO}}$")
+ax_qcd.set_ylabel("$\\sigma/\\sigma^{\\mathrm{LO}}$")
 for i in range(len(slepton_ids)):
     sid = slepton_ids[i]
     df_qed = dfs_qed[i]
@@ -582,6 +678,7 @@ for i in range(len(slepton_ids)):
     K_slepton = df_qed["slepton"]/xsec_lo_qed
     K_lpnll = (df_lpnll["resum"][2:]-df_lpnll["nlo"][2:]+df_lpnll["lo"][2:])/xsec_lo_qcd
     K_nlpll = (df_nlpll["resum"][2:]-df_nlpll["nlo"][2:]+df_nlpll["lo"][2:])/xsec_lo_qcd
+    K_nlo_qcd = df_nlpll["nlo"][2:]/xsec_lo_qcd
     label = id2label(sid)
     marker = "." if i==0 else "x"
     linestyle = "solid" if i==0 else "dashed"
@@ -593,27 +690,40 @@ for i in range(len(slepton_ids)):
     # # ax.plot(m_arr, K_nlpll, linestyle=linestyle, marker=marker, label=label+" (QCD NLP LL)")
     # ax.plot(m_arr, K_lpnll, linestyle=linestyle, marker=marker, label=label+" (LP NLL)")
     # ax.plot(m_arr, K_nlpll, linestyle=linestyle, marker=marker, label=label+" (LP NLL + NLP LL)")
+    colors = plt.rcParams["axes.prop_cycle"].by_key()["color"]
     if i==0:
-        ax.plot(m_arr, K_nlo, linestyle=linestyle, marker=marker, label="(NLO)")
-        ax.plot(m_arr, K_hadron, linestyle=linestyle, marker=marker, label="(IS only)")
-        ax.plot(m_arr, K_slepton, linestyle=linestyle, marker=marker, label="(FS only)")
-        # ax.plot(m_arr, K_lpnll, linestyle=linestyle, marker=marker, label="(QCD LP NLL)")
-        # ax.plot(m_arr, K_nlpll, linestyle=linestyle, marker=marker, label="(QCD NLP LL)")
-        ax.plot(m_arr, K_lpnll, linestyle=linestyle, marker=marker, label="(LP NLL)")
-        ax.plot(m_arr, K_nlpll, linestyle=linestyle, marker=marker, label="(LP NLL + NLP LL)")
+        ax.plot(m_arr, K_nlo, linestyle=linestyle, marker=marker, color=colors[0], label="NLO QED")
+        ax.plot(m_arr, K_hadron, linestyle=linestyle, marker=marker, color=colors[1], label="NLO QED (IS only)")
+        ax.plot(m_arr, K_slepton, linestyle=linestyle, marker=marker, color=colors[2], label="NLO QED (FS only)")
+        ax_qcd.plot(m_arr, K_nlo_qcd, linestyle=linestyle, marker=marker, color=colors[3], label="NLO QCD")
+        ax.plot(m_arr, K_lpnll, linestyle=linestyle, marker=marker, color=colors[4], label="LP NLL")
+        ax.plot(m_arr, K_nlpll, linestyle=linestyle, marker=marker, color=colors[5], label="LP NLL + NLP LL")
     else:
-        ax.plot(m_arr, K_nlo, linestyle=linestyle, marker=marker)
-        ax.plot(m_arr, K_hadron, linestyle=linestyle, marker=marker)
-        ax.plot(m_arr, K_slepton, linestyle=linestyle, marker=marker)
-        # ax.plot(m_arr, K_lpnll, linestyle=linestyle, marker=marker)
-        # ax.plot(m_arr, K_nlpll, linestyle=linestyle, marker=marker)
-        ax.plot(m_arr, K_lpnll, linestyle=linestyle, marker=marker)
-        ax.plot(m_arr, K_nlpll, linestyle=linestyle, marker=marker)
-ax.plot([],[], linestyle="solid", color="k", label=id2label(slepton_ids[0]))
-ax.plot([],[], linestyle="dashed", color="k", label=id2label(slepton_ids[1]))
+        ax.plot(m_arr, K_nlo, linestyle=linestyle, marker=marker, color=colors[0])
+        ax.plot(m_arr, K_hadron, linestyle=linestyle, marker=marker, color=colors[1])
+        ax.plot(m_arr, K_slepton, linestyle=linestyle, marker=marker, color=colors[2])
+        ax_qcd.plot(m_arr, K_nlo_qcd, linestyle=linestyle, marker=marker, color=colors[3])
+        ax.plot(m_arr, K_lpnll, linestyle=linestyle, marker=marker, color=colors[4])
+        ax.plot(m_arr, K_nlpll, linestyle=linestyle, marker=marker, color=colors[5])
+ax.plot([],[], linestyle="solid", marker=".", color="k", label=id2label(slepton_ids[0]))
+ax.plot([],[], linestyle="dashed", marker="x", color="k", label=id2label(slepton_ids[1]))
 handles, labels = ax.get_legend_handles_labels()
-leg1 = fig.legend(handles[:5], labels[:5], frameon=False, loc="upper left", bbox_to_anchor=(0.18, 0.77), ncol=1)
-leg2 = fig.legend(handles[5:], labels[5:], frameon=False, loc="upper left", bbox_to_anchor=(0.55, 0.77), ncol=1)
+handle_qcd, label_qcd = ax_qcd.get_legend_handles_labels()
+handles.insert(3, handle_qcd[0])
+labels.insert(3, label_qcd[0])
+# leg1 = fig.legend(handles[:6], labels[:6], frameon=False, loc="lower left", bbox_to_anchor=(0.18, 0.38), ncol=2)
+# leg2 = fig.legend(handles[6:], labels[6:], frameon=False, loc="upper left", bbox_to_anchor=(0.18, 0.42), ncol=2)
+# leg1 = fig.legend(handles[:6], labels[:6], frameon=False, loc="lower left", bbox_to_anchor=(0.18, 0.40), ncol=2)
+# leg2 = fig.legend(handles[6:], labels[6:], frameon=False, loc="upper left", bbox_to_anchor=(0.18, 0.42), ncol=2)
+# leg1 = fig.legend(handles[:6], labels[:6], frameon=False, loc="lower left", bbox_to_anchor=(0.18, 1), ncol=2)
+# leg2 = fig.legend(handles[6:], labels[6:], frameon=False, loc="upper left", bbox_to_anchor=(0.18, 1.04), ncol=2)
+# leg1 = fig.legend(handles, labels, frameon=False, loc="upper left", bbox_to_anchor=(0.97, 0.8), ncol=1)
+# leg1 = fig.legend(handles[:6], labels[:6], frameon=False, loc="upper left", bbox_to_anchor=(0.97, 0.9), ncol=1)
+# leg2 = fig.legend(handles[6:], labels[6:], frameon=False, loc="upper left", bbox_to_anchor=(0.97, 0.55), ncol=1)
+# leg1 = fig.legend(handles[:6], labels[:6], frameon=False, loc="upper left", bbox_to_anchor=(0.05, 0.04), ncol=2)
+# leg2 = fig.legend(handles[6:], labels[6:], frameon=False, loc="upper left", bbox_to_anchor=(0.8, 0.04), ncol=1)
+leg1 = fig.legend(handles[:6], labels[:6], frameon=False, loc="lower left", bbox_to_anchor=(0.05, 0.95), ncol=2)
+leg2 = fig.legend(handles[6:], labels[6:], frameon=False, loc="lower left", bbox_to_anchor=(0.8, 0.95), ncol=1)
 fig.add_artist(leg1)
 # fig.legend(frameon=False, loc="upper left", bbox_to_anchor=(0.18, 0.77), ncol=2)
 fig.tight_layout()
@@ -672,45 +782,102 @@ fig.tight_layout()
 fig.savefig(PLOT_DIR/"xsec_Kfactor_qed_qcd.pdf")
 
 
-# ###############
-# ### QED/QCD ###
-# ###############
-# fig, ax = plt.subplots(figsize=(fig_width, fig_width/1.3))
+
+################################################
+### xsec over mass for QED and QCD with errs ###
+################################################
+fig, ax = plt.subplots(figsize=(fig_width, fig_width/1.3))
+ax.set_xlabel("$m_{\\tilde\\ell}$ [GeV]")
+ax.set_ylabel("$\\sigma$ [fb]")
+# ax.set_yscale("log")
+for i, sid in enumerate(slepton_ids):
+    df_qed = dfs_qed[i]
+    df_qcd = dfs_nlpll[i]
+    
+    m_qed = df_qed["mass"]
+    lo_qed = df_qed["lo"]
+    nlo_qed = df_qed["nlo"]
+    
+    m_qcd = df_qcd["mass"]
+    
+    lo_qcd = df_qcd["lo"]
+    lo_scale_minus = df_qcd["lo_scale_minus"]
+    lo_scale_plus = df_qcd["lo_scale_plus"]
+    lo_pdf_alphas_err = df_qcd["resum_pdf"] + df_qcd["resum_alphas"]
+    
+    resum_qcd = df_qcd["resum"]
+    scale_minus = df_qcd["resum_scale_minus"]
+    scale_plus = df_qcd["resum_scale_plus"]
+    pdf_alphas_err = df_qcd["resum_pdf"] + df_qcd["resum_alphas"]
+    
+    sid_label = id2label(sid)
+    if i == 0:
+        ax.plot(m_qed, nlo_qed/lo_qed, linestyle="solid", marker="x", label=sid_label+" (NLO QED)")
+        
+        resum_line, = ax.plot(m_qcd, resum_qcd/lo_qcd, linestyle="solid", marker="x", label=sid_label+" (NLO + LP NLL + NLP LL)")
+        # ax.fill_between(m_qcd, scale_minus/lo_qcd, scale_plus/lo_qcd, linestyle="dashed", alpha=0.2, color=resum_line.get_color())
+        ax.fill_between(m_qcd, (resum_qcd-pdf_alphas_err)/lo_qcd, (resum_qcd+pdf_alphas_err)/lo_qcd, linestyle="dotted", alpha=0.2, color=resum_line.get_color())
+        
+        lo_line, = ax.plot(m_qcd, lo_qcd/lo_qcd, linestyle="solid", marker="x", label=sid_label+" (LO)")
+        # ax.fill_between(m_qcd, lo_scale_minus/lo_qcd, lo_scale_plus/lo_qcd, linestyle="dashed", alpha=0.2, color=lo_line.get_color())
+        ax.fill_between(m_qcd, (lo_qcd-lo_pdf_alphas_err)/lo_qcd, (lo_qcd+lo_pdf_alphas_err)/lo_qcd, linestyle="dotted", alpha=0.2, color=lo_line.get_color())
+    
+fig.legend(frameon=False, loc="lower left", bbox_to_anchor=(0.4, 0.6), ncol=1)
+fig.tight_layout()
+fig.savefig(PLOT_DIR/"xsec_qed_qcd.pdf")
+
+
+###############
+### QED/QCD ###
+###############
+fig, ax = plt.subplots(figsize=(fig_width, fig_width/1.3))
 # ax.set_xlabel("$m_{\\tilde\\ell}$ [GeV]")
-# ax.set_ylabel("$\\sigma^{\\mathrm{NLO}}_{\\mathrm{QED}}/\\sigma^{\\mathrm{NLO}}_{\\mathrm{QCD}}$")
+ax.set_xlabel("$m_{\\tilde{e}}$ [GeV]")
+ax.set_ylabel("$\\sigma^{\\mathrm{NLO}}_{\\mathrm{QED}}/\\sigma^{\\mathrm{NLO}}_{\\mathrm{QCD}}$")
 
-# for i in range(len(slepton_ids)):
-#     sid = slepton_ids[i]
-#     df_qed = dfs_qed[i]
-#     df_lpnll = dfs_lpnll[i]
-#     df_nlpll = dfs_nlpll[i]
+for i in range(len(slepton_ids)):
+    sid = slepton_ids[i]
+    df_qed = dfs_qed[i]
+    df_lpnll = dfs_lpnll[i]
+    df_nlpll = dfs_nlpll[i]
 
-#     qed_nlo_only = df_qed["nlo"] - df_qed["lo"]
-#     qed_hadron_only = df_qed["hadron"] - df_qed["lo"]
-#     qed_slepton_only = df_qed["slepton"] - df_qed["lo"]
-#     qcd_nlo_only = df_nlpll["nlo"] - df_nlpll["lo"]
+    qed_nlo_only = df_qed["nlo"] - df_qed["lo"]
+    qed_hadron_only = df_qed["hadron"] - df_qed["lo"]
+    qed_slepton_only = df_qed["slepton"] - df_qed["lo"]
+    qcd_nlo_only = np.array(df_nlpll["nlo"][2:] - df_nlpll["lo"][2:])
 
-#     ratio_qed = qed_nlo_only / qcd_nlo_only
-#     ratio_hadron = qed_hadron_only / qcd_nlo_only
-#     ratio_slepton = qed_slepton_only / qcd_nlo_only
+    ratio_qed = qed_nlo_only / qcd_nlo_only
+    ratio_hadron = qed_hadron_only / qcd_nlo_only
+    ratio_slepton = qed_slepton_only / qcd_nlo_only
 
-#     linestyle = "solid" if i==0 else "dashed"
-#     marker = "." if i==0 else "x"
+    linestyle = "solid" if i==0 else "dashed"
+    marker = "." if i==0 else "x"
 
-#     label = id2label(sid)
-#     plt.gca().set_prop_cycle(None)
-#     ax.plot(df_qed["mass"], ratio_qed, marker=marker, label=label+" (QED)", linestyle=linestyle)
-#     ax.plot(df_qed["mass"], ratio_hadron, marker=marker, label=label+" (Hadronside)", linestyle=linestyle)
-#     ax.plot(df_qed["mass"], ratio_slepton, marker=marker, label=label+" (Sleptonside)", linestyle=linestyle)
-#     ax.axhline(0.025, color="black", linestyle="dotted")
-#     ax.text(80, 0.032, "$\\alpha Q_q^2 / (\\alpha_s C_F) \\sim 0.025$")
-#     ax.axhline(0.1, color="black", linestyle="dotted")
-#     ax.text(450, 0.105, "$\\alpha/\\alpha_s \\sim 0.1$")
+    label = id2label(sid)
+    plt.gca().set_prop_cycle(None)
+    if i == 0:
+        ax.plot(df_qed["mass"], ratio_qed, linestyle=linestyle, marker=marker, label="NLO (full)")
+        ax.plot(df_qed["mass"], ratio_hadron, linestyle=linestyle, marker=marker, label="NLO (IS only)")
+        ax.plot(df_qed["mass"], ratio_slepton, linestyle=linestyle, marker=marker, label="NLO (FS only)")
+    else:
+        ax.plot(df_qed["mass"], ratio_qed, marker=marker, linestyle=linestyle)
+        ax.plot(df_qed["mass"], ratio_hadron, marker=marker, linestyle=linestyle)
+        ax.plot(df_qed["mass"], ratio_slepton, marker=marker, linestyle=linestyle)
+    ax.axhline(0.025, color="black", linestyle="dotted")
+    ax.text(300, 0.032, "$\\alpha Q_q^2 / (\\alpha_s C_F) \\sim 0.025$")
+    ax.axhline(0.1, color="black", linestyle="dotted")
+    ax.text(300, 0.105, "$\\alpha/\\alpha_s \\sim 0.1$")
 
-# fig.legend(frameon=False, loc="center", bbox_to_anchor=(0.55, 0.45), ncol=2)
+ax.plot([],[], linestyle="solid", marker=".", color="k", label=id2label(slepton_ids[0]))
+ax.plot([],[], linestyle="dashed", marker="x", color="k", label=id2label(slepton_ids[1]))
+handles, labels = ax.get_legend_handles_labels()
+# leg1 = fig.legend(handles[:3], labels[:3], frameon=False, loc="upper left", bbox_to_anchor=(0.2, 0.55), ncol=1)
+# leg2 = fig.legend(handles[3:], labels[3:], frameon=False, loc="upper left", bbox_to_anchor=(0.5, 0.55), ncol=1)
+# fig.add_artist(leg1)
+fig.legend(frameon=False, loc="upper center", bbox_to_anchor=(0.55, 0.57), ncol=2)
 
-# fig.tight_layout()
-# fig.savefig(PLOT_DIR/"ratio_qed_qcd.pdf")
+fig.tight_layout()
+fig.savefig(PLOT_DIR/"ratio_qed_qcd.pdf")
 
 
 # #############################
@@ -726,38 +893,134 @@ fig.savefig(PLOT_DIR/"xsec_Kfactor_qed_qcd.pdf")
 #     df_lpnll = dfs_lpnll[i]
 #     df_nlpll = dfs_nlpll[i]
 
+#     qed_lo = df_qed["lo"]
 #     qed_nlo_only = df_qed["nlo"] - df_qed["lo"]
 #     qed_hadron_only = df_qed["hadron"] - df_qed["lo"]
 #     qed_slepton_only = df_qed["slepton"] - df_qed["lo"]
     
-#     qcd_lo = df_nlpll["lo"]
-#     qcd_resum = df_nlpll["resum"]
+#     # qcd_lo = df_nlpll["lo"][2:]
+#     # qcd_resum = df_nlpll["resum"][2:]
 
 #     # ratio_qed = qed_nlo_only / qcd_resum
 #     # qcd_pdf_rel_err = df_nlpll["resum_pdf"] / qcd_resum
 #     # qcd_scale_rel_err = (df_nlpll["resum_scale_plus"] - df_nlpll["resum_scale_minus"]) / qcd_resum
-#     ratio_qed = qed_nlo_only / qcd_lo
-#     ratio_qcd = qcd_resum / qcd_lo
-#     qcd_pdf_rel_err = df_nlpll["resum_pdf"] / qcd_lo
-#     qcd_scale_rel_err = (df_nlpll["resum_scale_plus"] - df_nlpll["resum_scale_minus"]) / qcd_lo
+#     # ratio_qed = np.array(qed_nlo_only) / qed_lo
+#     # ratio_qcd = np.array(qcd_resum) / qcd_lo
+#     # qcd_pdf_rel_err = np.array(df_nlpll["lo_pdf"][2:]) / qcd_lo
+#     # qcd_scale_rel_err = np.array(df_nlpll["lo_scale_plus"][2:] - df_nlpll["lo_scale_minus"][2:]) / qcd_lo
 
+#     ratio_nlo = np.array(qed_nlo_only) / qed_lo
+    
 #     linestyle = "solid" if i==0 else "dashed"
-#     marker = "x" if i==0 else "."
+#     marker = "." if i==0 else "x"
 
 #     sid_label = id2label(sid)
 #     # qed_label = f"QED ({sid_label})"
 #     # pdf_label = f"PDF ({sid_label})"
 #     # scale_label = f"Scale ({sid_label})"
-#     qed_label = "$\\sigma^{\\mathrm{NLO}}_{\\mathrm{QED}}$" + f" ({sid_label})"
-#     pdf_label = "$\\delta\\sigma^{\\mathrm{PDF}}$" + f" ({sid_label})"
-#     scale_label = "$\\delta\\sigma^{\\mu}$" + f" ({sid_label})"
+#     # qed_label = "$\\sigma^{\\mathrm{NLO}}_{\\mathrm{QED}}$" + f" ({sid_label})"
+#     # pdf_label = "$\\delta\\sigma^{\\mathrm{PDF}}$" + f" ({sid_label})"
+#     # scale_label = "$\\delta\\sigma^{\\mu}$" + f" ({sid_label})"
+#     qed_label = "$\\sigma_{\\mathrm{QED}}^{\\mathrm{NLO}}$"
+#     pdf_label = "$\\delta\\sigma_{\\mathrm{LO}}^{\\mathrm{PDF}}$"
+#     scale_label = "$\\delta\\sigma^{\\mu}$"
     
-#     # plt.gca().set_prop_cycle(None)
-#     ax.plot(df_qed["mass"], ratio_qed, marker=marker, label=qed_label, linestyle=linestyle)
-#     ax.plot(df_qed["mass"], qcd_pdf_rel_err, marker=marker, label=pdf_label, linestyle=linestyle)
-#     ax.plot(df_qed["mass"], qcd_scale_rel_err, marker=marker, label=scale_label, linestyle=linestyle)
+#     plt.gca().set_prop_cycle(None)
+#     if i==0:
+#         ax.plot(df_qed["mass"], ratio_qed, marker=marker, linestyle=linestyle, label=qed_label)
+#         ax.plot(df_qcd["mass"][2:], qcd_pdf_rel_err, marker=marker, linestyle=linestyle, label=pdf_label)
+#     else:
+#         ax.plot(df_qed["mass"], ratio_qed, marker=marker, linestyle=linestyle)
+#         ax.plot(df_qcd["mass"][2:], qcd_pdf_rel_err, marker=marker, linestyle=linestyle)
+#     # ax.plot(df_qcd["mass"][2:], qcd_scale_rel_err, marker=marker, label=scale_label, linestyle=linestyle)
 
+# ax.plot([],[], linestyle="solid", marker=".", color="k", label=id2label(slepton_ids[0]))
+# ax.plot([],[], linestyle="dashed", marker="x", color="k", label=id2label(slepton_ids[1]))
+# handles, labels = ax.get_legend_handles_labels()
+# # leg1 = fig.legend(handles[:3], labels[:3], frameon=False, loc="upper left", bbox_to_anchor=(0.2, 0.55), ncol=1)
+# # leg2 = fig.legend(handles[3:], labels[3:], frameon=False, loc="upper left", bbox_to_anchor=(0.5, 0.55), ncol=1)
+# # fig.add_artist(leg1)
 # fig.legend(frameon=False, loc="upper left", bbox_to_anchor=(0.2, 0.9), ncol=2)
-
 # fig.tight_layout()
 # fig.savefig(PLOT_DIR/"ratio_qed_qcdnlo.pdf")
+
+
+
+
+
+
+
+
+
+
+#######################
+### QED vs PDF errs ###
+#######################
+## Load QED data
+qed_col_names = [
+    "mass",
+    "lo", "lo_scale_minus", "lo_scale_plus", "lo_pdf",
+    "nlo", "nlo_scale_minus", "nlo_scale_plus", "nlo_pdf"
+]
+slepton_ids = [1000011, 2000011]
+dfs = []
+
+for slepton_id in slepton_ids:
+    filename = "xsec_mass_err_" + str(slepton_id) + ".dat"
+    filepath = OUTPUT_DIR/filename
+    df = pd.read_csv(filepath, comment="#", names=qed_col_names, delimiter=r"\s+")
+
+    dfs.append(df)
+
+fig, ax = plt.subplots(figsize=(fig_width, fig_width/1.3))
+ax.set_xlabel("$m_{\\tilde{e}}$ [GeV]")
+ax.set_ylabel("$\\sigma/\\sigma^{\\mathrm{LO}}$")
+
+for i, sid in enumerate(slepton_ids):
+    df = dfs[i]
+
+    mass = np.array(df["mass"])
+    lo = np.array(df["lo"])
+    # lo_plus_nlo = np.array(df["nlo"])
+    # nlo = lo_plus_nlo - lo
+    nlo = np.array(df["nlo"]) - np.array(df["lo"])
+    pdf_err = np.array(df["lo_pdf"])
+    # pdf_plus = lo+pdf_err
+    # pdf_minus = lo-pdf_err
+
+    ratio_nlo = nlo/lo
+    ratio_pdf = pdf_err/lo
+    # ratio_pdf_plus = pdf_plus/lo
+    # ratio_pdf_minus = pdf_minus/lo
+    
+    linestyle = "solid" if i==0 else "dashed"
+    marker = "x" if i==0 else "."
+
+    lo_label = "$\\sigma^{\\mathrm{LO}}$"
+    qed_label = "$\\sigma_{\\mathrm{QED}}^{\\mathrm{NLO}}$"
+    pdf_label = "$\\delta\\sigma_{\\mathrm{LO}}^{\\mathrm{PDF}}$"
+    # qed_label = "$\\sigma_{\\mathrm{QED}}^{\\mathrm{NLO}}$ (" + id2label(sid) + ")"
+    # pdf_label = "$\\delta\\sigma_{\\mathrm{LO}}^{\\mathrm{PDF}}$ (" + id2label(sid) + ")"
+    
+    plt.gca().set_prop_cycle(None)
+    if i==0:
+        ax.plot(mass, ratio_nlo, marker=marker, linestyle=linestyle, label=qed_label)
+        ax.plot(mass, ratio_pdf, marker=marker, linestyle=linestyle, label=pdf_label)
+    else:
+        ax.plot(mass, ratio_nlo, marker=marker, linestyle=linestyle)
+        ax.plot(mass, ratio_pdf, marker=marker, linestyle=linestyle)
+        # ax.plot(mass, ratio_nlo, marker=marker, linestyle=linestyle)
+        # lo_line, = ax.plot(mass, lo/lo, marker=marker, linestyle=linestyle)
+    # line, = ax.plot([],[])
+    # if i==0:
+    #     plt.fill_between(mass, ratio_pdf_minus, ratio_pdf_plus, linestyle="dashed", color=line.get_color(), alpha=0.2, label=pdf_label)
+    # else:
+    #     plt.fill_between(mass, ratio_pdf_minus, ratio_pdf_plus, linestyle="dotted", color=line.get_color(), alpha=0.2, label=pdf_label)
+
+# ax.plot([],[], linestyle="solid", marker=".", color="k", label=id2label(slepton_ids[0]))
+# ax.plot([],[], linestyle="dashed", marker="x", color="k", label=id2label(slepton_ids[1]))
+handles, labels = ax.get_legend_handles_labels()
+
+fig.legend(frameon=False, loc="upper left", bbox_to_anchor=(0.15, 0.95), ncol=2)
+fig.tight_layout()
+fig.savefig(PLOT_DIR/"ratio_qed_pdf.pdf")

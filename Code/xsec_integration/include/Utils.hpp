@@ -53,6 +53,18 @@ namespace Utils {
       double* error,
       double* prob
   );
+  void integrate_cuhre(
+      int ndim,
+      int ncomp,
+      integrand_t integrand,
+      void* userdata,
+      double epsrel,
+      double epsabs,
+      int maxeval,
+      double* integral,
+      double* error,
+      double* prob
+  );
 }
 
 #endif

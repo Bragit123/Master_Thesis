@@ -100,33 +100,38 @@ namespace CrossSection {
       // NOTE: Factor 2 to account for interchange of particle--anti-particle
       if (subset == 0) {
         double integral[1], error[1], prob[1];
-        Utils::integrate_vegas(2, 1, Integrands::LO_x1_Q, &params_q, epsrel, epsabs,
+        Utils::integrate_cuhre(2, 1, Integrands::LO_x1_Q, &params_q, epsrel, epsabs,
                               maxeval, integral, error, prob);
         xsec += 2.*integral[0];
+        clearcache();
       } else if (subset == 1) {
         // Integral over x1:
         double integral1[1], error1[1], prob1[1];
-        Utils::integrate_vegas(2, 1, Integrands::hadron_x1_Q, &params_q, epsrel, epsabs,
+        Utils::integrate_cuhre(2, 1, Integrands::hadron_x1_Q, &params_q, epsrel, epsabs,
                               maxeval, integral1, error1, prob1);
         xsec += 2.*integral1[0];
-        
+        clearcache();
+
         // Integral over x1 and x2:
         double integral2[1], error2[1], prob2[1];
-        Utils::integrate_vegas(3, 1, Integrands::hadron_x1_x2_Q, &params_q, epsrel, epsabs,
+        Utils::integrate_cuhre(3, 1, Integrands::hadron_x1_x2_Q, &params_q, epsrel, epsabs,
                               maxeval, integral2, error2, prob2);
         xsec += 2.*integral2[0];
+        clearcache();
       } else if (subset == 2) {
         // Integral over x1:
         double integral1[1], error1[1], prob1[1];
-        Utils::integrate_vegas(2, 1, Integrands::slepton_x1_Q, &params_q, epsrel, epsabs,
+        Utils::integrate_cuhre(2, 1, Integrands::slepton_x1_Q, &params_q, epsrel, epsabs,
                               maxeval, integral1, error1, prob1);
         xsec += 2.*integral1[0];
+        clearcache();
         
         // Integral over x1 and x2:
         double integral2[1], error2[1], prob2[1];
-        Utils::integrate_vegas(3, 1, Integrands::slepton_x1_x2_Q, &params_q, epsrel, epsabs,
+        Utils::integrate_cuhre(3, 1, Integrands::slepton_x1_x2_Q, &params_q, epsrel, epsabs,
                               maxeval, integral2, error2, prob2);
         xsec += 2.*integral2[0];
+        clearcache();
       }
     }
     

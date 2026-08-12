@@ -28,6 +28,21 @@ namespace Integrands {
     const double jacobian_x1 = x1_end - x1_start;
     double x1 = x1_start + jacobian_x1 * xx[1];
     double x2 = tau / x1;
+
+    auto clamp01 = [](double x) {
+      if (x < 0.0) return 0.0;
+      if (x > 1.0) return 1.0;
+      return x;
+    };
+
+    if (x1 < 0.0 || x1 > 1.0 || x2 < 0.0 || x2 > 1.0) {
+      std::cerr << "WARNING: x1,x2 out of [0,1]: "
+                << "x1=" << x1 << ", x2=" << x2
+                << " tau=" << tau << " Q2=" << Q2 << " s=" << s << "\n";
+    }
+
+    x1 = clamp01(x1);
+    x2 = clamp01(x2);
     
     const double weight = 1.0;
     
@@ -75,6 +90,21 @@ namespace Integrands {
     double x1 = x1_start + jacobian_x1 * xx[1];
     double x2 = tau / x1;
     const double jacobian = jacobian_Q2 * jacobian_x1;
+
+    auto clamp01 = [](double x) {
+      if (x < 0.0) return 0.0;
+      if (x > 1.0) return 1.0;
+      return x;
+    };
+
+    if (x1 < 0.0 || x1 > 1.0 || x2 < 0.0 || x2 > 1.0) {
+      std::cerr << "WARNING: x1,x2 out of [0,1]: "
+                << "x1=" << x1 << ", x2=" << x2
+                << " tau=" << tau << " Q2=" << Q2 << " s=" << s << "\n";
+    }
+
+    x1 = clamp01(x1);
+    x2 = clamp01(x2);
     
     // Making sure x1,x2 max at 1, not 1+eps, so xfxQ2 doesn't reject them:
     const double tol = 1e-10;
@@ -130,6 +160,21 @@ namespace Integrands {
     const double x2_end = 1.0;
     const double jacobian_x2 = x2_end - x2_start;
     double x2 = x2_start + jacobian_x2 * xx[2];
+
+    auto clamp01 = [](double x) {
+      if (x < 0.0) return 0.0;
+      if (x > 1.0) return 1.0;
+      return x;
+    };
+
+    if (x1 < 0.0 || x1 > 1.0 || x2 < 0.0 || x2 > 1.0) {
+      std::cerr << "WARNING: x1,x2 out of [0,1]: "
+                << "x1=" << x1 << ", x2=" << x2
+                << " tau=" << tau << " Q2=" << Q2 << " s=" << s << "\n";
+    }
+
+    x1 = clamp01(x1);
+    x2 = clamp01(x2);
     
     const double jacobian = jacobian_Q2 * jacobian_x1 * jacobian_x2;
     
@@ -201,6 +246,21 @@ namespace Integrands {
     double x1 = x1_start + jacobian_x1 * xx[1];
     double x2 = tau / x1;
     const double jacobian = jacobian_Q2 * jacobian_x1;
+
+    auto clamp01 = [](double x) {
+      if (x < 0.0) return 0.0;
+      if (x > 1.0) return 1.0;
+      return x;
+    };
+
+    if (x1 < 0.0 || x1 > 1.0 || x2 < 0.0 || x2 > 1.0) {
+      std::cerr << "WARNING: x1,x2 out of [0,1]: "
+                << "x1=" << x1 << ", x2=" << x2
+                << " tau=" << tau << " Q2=" << Q2 << " s=" << s << "\n";
+    }
+
+    x1 = clamp01(x1);
+    x2 = clamp01(x2);
     
     // Making sure x1,x2 max at 1, not 1+eps, so xfxQ2 doesn't reject them:
     const double tol = 1e-10;
@@ -311,6 +371,21 @@ namespace Integrands {
     const double x2_end = 1.0;
     const double jacobian_x2 = x2_end - x2_start;
     double x2 = x2_start + jacobian_x2 * xx[2];
+
+    auto clamp01 = [](double x) {
+      if (x < 0.0) return 0.0;
+      if (x > 1.0) return 1.0;
+      return x;
+    };
+
+    if (x1 < 0.0 || x1 > 1.0 || x2 < 0.0 || x2 > 1.0) {
+      std::cerr << "WARNING: x1,x2 out of [0,1]: "
+                << "x1=" << x1 << ", x2=" << x2
+                << " tau=" << tau << " Q2=" << Q2 << " s=" << s << "\n";
+    }
+
+    x1 = clamp01(x1);
+    x2 = clamp01(x2);
     
     const double jacobian = jacobian_Q2 * jacobian_x1 * jacobian_x2;
     

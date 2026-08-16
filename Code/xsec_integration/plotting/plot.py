@@ -174,12 +174,18 @@ def plot_qed_err(
         nlo_scale_ratio_minus = nlo_scale_minus/nlo
         nlo_scale_ratio_plus = nlo_scale_plus/nlo
         if i==0:
-            ax_ratio.plot(m_arr, lo/lo, linestyle=lo_line.get_linestyle(), color=lo_line.get_color())
+            ax_ratio.plot(m_arr, lo/lo, marker=lo_line.get_marker(), linestyle=lo_line.get_linestyle(), color=lo_line.get_color())
             ax_ratio.fill_between(m_arr, lo_pdf_ratio_minus, lo_pdf_ratio_plus, linestyle="dashed", alpha=0.2, color=lo_line.get_color())
             ax_ratio.fill_between(m_arr, lo_scale_ratio_minus, lo_scale_ratio_plus, linestyle="dotted", alpha=0.2, color=lo_line.get_color())
-            ax_ratio.plot(m_arr, nlo/lo, linestyle=nlo_line.get_linestyle(), color=nlo_line.get_color())
+            ax_ratio.plot(m_arr, nlo/lo, marker=nlo_line.get_marker(), linestyle=nlo_line.get_linestyle(), color=nlo_line.get_color())
             ax_ratio.fill_between(m_arr, nlo_pdf_ratio_minus, nlo_pdf_ratio_plus, linestyle="dashed", alpha=0.2, color=nlo_line.get_color())
             ax_ratio.fill_between(m_arr, nlo_scale_ratio_minus, nlo_scale_ratio_plus, linestyle="dotted", alpha=0.2, color=nlo_line.get_color())
+        # ax_ratio.plot(m_arr, lo/lo, marker=lo_line.get_marker(), linestyle=lo_line.get_linestyle(), color=lo_line.get_color())
+        # ax_ratio.fill_between(m_arr, lo_pdf_ratio_minus, lo_pdf_ratio_plus, linestyle="dashed", alpha=0.2, color=lo_line.get_color())
+        # ax_ratio.fill_between(m_arr, lo_scale_ratio_minus, lo_scale_ratio_plus, linestyle="dotted", alpha=0.2, color=lo_line.get_color())
+        # ax_ratio.plot(m_arr, nlo/lo, marker=nlo_line.get_marker(), linestyle=nlo_line.get_linestyle(), color=nlo_line.get_color())
+        # ax_ratio.fill_between(m_arr, nlo_pdf_ratio_minus, nlo_pdf_ratio_plus, linestyle="dashed", alpha=0.2, color=nlo_line.get_color())
+        # ax_ratio.fill_between(m_arr, nlo_scale_ratio_minus, nlo_scale_ratio_plus, linestyle="dotted", alpha=0.2, color=nlo_line.get_color())
 
     ax.fill_between([],[],[],color="k",linestyle="dotted", alpha=0.2, label="Scale error")
     ax.fill_between([],[],[],color="k",linestyle="dashed", alpha=0.2, label="PDF error")
@@ -300,68 +306,6 @@ def plot_scale_dep(
     fig.savefig(PLOT_DIR/f"xsec_scale_ratio_{s_sqrt}.pdf")
     print(f"Plotted: xsec_scale_ratio_{s_sqrt}.pdf")
 
-def plot_xsec_with_err(
-    s_sqrt=13600,
-    slepton_ids=[1000011, 2000011]
-):
-    dfs = load_qed_err_data(s_sqrt, slepton_ids)
-
-    fig, axs = plt.subplots(
-        nrows=2,
-        ncols=1,
-        sharex=True,
-        figsize=(fig_width, fig_width/1.3),
-        gridspec_kw={"height_ratios": [3,1]}
-    )
-    axs[1].set_xlabel("$m_{\\tilde\\ell}$ [GeV]")
-    axs[0].set_ylabel("$\\sigma$")
-    axs[1].set_ylabel("$\\delta\\sigma^{\\mathrm{PDF}}/\\sigma$")
-    axs[0].set_yscale("log")
-    for i in range(len(slepton_ids)):
-        sid = slepton_ids[i]
-        df = dfs[i]
-        
-        m_arr = df["mass"]
-        xsec_lo = df["lo"]
-        xsec_nlo = df["nlo"]
-        
-        lo_scale_minus = df["lo_scale_minus"]
-        lo_scale_plus = df["lo_scale_plus"]
-        nlo_scale_minus = df["nlo_scale_minus"]
-        nlo_scale_plus = df["nlo_scale_plus"]
-        
-        lo_pdf_err = df["lo_pdf"]
-        nlo_pdf_err = df["nlo_pdf"]
-        
-        lo_pdf_err_rel = lo_pdf_err/xsec_lo
-        nlo_pdf_err_rel = nlo_pdf_err/xsec_nlo
-
-        label = id2label(sid)
-        
-        nlo_line, = axs[0].plot(m_arr, xsec_nlo, linestyle="solid", marker="x", label=label+" (NLO)")
-        axs[0].fill_between(m_arr, nlo_scale_minus, nlo_scale_plus, linestyle="dashed", color=nlo_line.get_color(), alpha=0.3)
-        axs[0].fill_between(m_arr, xsec_nlo - nlo_pdf_err, xsec_nlo + nlo_pdf_err, linestyle="dotted", color=nlo_line.get_color(), alpha=0.3)
-        
-        lo_line, = axs[0].plot(m_arr, xsec_lo, linestyle="solid", marker=".", label=label+" (LO)")
-        axs[0].fill_between(m_arr, lo_scale_minus, lo_scale_plus, linestyle="dashed", color=lo_line.get_color(), alpha=0.3)
-        axs[0].fill_between(m_arr, xsec_lo - lo_pdf_err, xsec_lo + lo_pdf_err, linestyle="dotted", color=lo_line.get_color(), alpha=0.3)
-        
-        axs[1].plot(m_arr, nlo_pdf_err_rel, linestyle="solid", marker="x", color=nlo_line.get_color())
-        axs[1].plot(m_arr, lo_pdf_err_rel, linestyle="solid", marker=".", color=lo_line.get_color())
-        # line, = ax.plot(m_arr, ratio, label=label)
-        # ax.fill_between(m_arr, ratio-ratio_err, ratio+ratio_err, linestyle="dashed", color=line.get_color(), alpha=0.1)
-    axs[0].fill_between([],[],[],color="k",linestyle="dotted", alpha=0.2, label="Scale error")
-    axs[0].fill_between([],[],[],color="k",linestyle="dashed", alpha=0.2, label="PDF error")
-
-    handles, labels = axs[0].get_legend_handles_labels()
-    leg1 = fig.legend(handles[:4], labels[:4], frameon=False, loc="upper right", bbox_to_anchor=(0.97, 0.95), ncol=1)
-    leg2 = fig.legend(handles[4:], labels[4:], frameon=False, loc="upper right", bbox_to_anchor=(0.7, 0.95), ncol=1)
-    fig.add_artist(leg1)
-    # fig.legend(frameon=False, loc="upper right", bbox_to_anchor=(0.95, 0.95), ncol=1)
-    fig.tight_layout()
-    fig.savefig(PLOT_DIR/f"xsec_err_{s_sqrt}.pdf")
-    print(f"Plotted: xsec_err_{s_sqrt}.pdf")
-
 def plot_Kfactor(
     s_sqrt=13600,
     slepton_ids=[1000011, 2000011]
@@ -435,7 +379,8 @@ def plot_ratio_qed_qcd(
     
     fig, ax = plt.subplots(figsize=(fig_width, fig_width/1.3))
     ax.set_xlabel("$m_{\\tilde{e}}$ [GeV]")
-    ax.set_ylabel("$\\sigma^{\\mathrm{NLO}}_{\\mathrm{QED}}/\\sigma^{\\mathrm{NLO}}_{\\mathrm{QCD}}$")
+    # ax.set_ylabel("$\\sigma^{\\mathrm{NLO}}_{\\mathrm{QED}}/\\sigma^{\\mathrm{NLO}}_{\\mathrm{QCD}}$")
+    ax.set_ylabel("$\\sigma^{\\mathrm{NLO}-\\mathrm{LO}}_{\\mathrm{QED}}/\\sigma^{\\mathrm{NLO}-\\mathrm{LO}}_{\\mathrm{QCD}}$")
 
     for i in range(len(slepton_ids)):
         sid = slepton_ids[i]
@@ -501,7 +446,8 @@ def plot_qed_vs_pdf(
         linestyle = "solid" if i==0 else "dashed"
         marker = "x" if i==0 else "."
 
-        qed_label = "$\\sigma_{\\mathrm{QED}}^{\\mathrm{NLO}}$"
+        # qed_label = "$\\sigma_{\\mathrm{QED}}^{\\mathrm{NLO}}$"
+        qed_label = "$\\sigma_{\\mathrm{QED}}^{\\mathrm{NLO}-\\mathrm{LO}}$"
         pdf_label = "$\\delta\\sigma_{\\mathrm{LO}}^{\\mathrm{PDF}}$"
         
         plt.gca().set_prop_cycle(None)
@@ -528,10 +474,11 @@ def plot_lo_compare(
     dfs_qed = load_qed_data(s_sqrt, slepton_ids)
     _, dfs_qcd = load_qcd_data(s_sqrt)    
     
-    fig, ax = plt.subplots(figsize=(fig_width, fig_width/1.3))
+    fig, ax = plt.subplots(figsize=(fig_width, fig_width/2))
     ax.set_xlabel("$m_{\\tilde{e}}$ [GeV]")
     ax.set_ylabel("Relative error")
 
+    print("Rel Errs:")
     for i, sid in enumerate(slepton_ids):
         df_qed = dfs_qed[i]
         df_qcd = dfs_qcd[i]
@@ -552,6 +499,8 @@ def plot_lo_compare(
         
         sid_label = id2label(sid)
         ax.plot(mass, rel_err, marker=marker, linestyle=linestyle, label=sid_label)
+        
+        print(f"\t{rel_err}")
 
     fig.legend(frameon=False, loc="upper left", bbox_to_anchor=(0.2, 0.8), ncol=1)
     fig.tight_layout()
@@ -560,7 +509,7 @@ def plot_lo_compare(
 
 def plot_pdf_err_s(s_sqrts=[13000, 13600, 20000, 50000, 80000]):
     fig, ax = plt.subplots(figsize=(fig_width, fig_width/1.3))
-    ax.set_xlabel("$m_{\\tilde{e}}$ [GeV]")
+    ax.set_xlabel("$m_{\\tilde{e}_L}$ [GeV]")
     ax.set_ylabel("$\\delta^{\\mathrm{PDF}}\\sigma/\\sigma^{\\mathrm{LO}}$")
 
     for i, s_sqrt in enumerate(s_sqrts):
@@ -569,20 +518,28 @@ def plot_pdf_err_s(s_sqrts=[13000, 13600, 20000, 50000, 80000]):
 
         mass = np.array(df["mass"])
         lo = np.array(df["lo"])
+        nlo = np.array(df["nlo"])
         # nlo = np.array(df["nlo"]) - np.array(df["lo"])
         pdf_err = np.array(df["lo_pdf"])
 
         # ratio_nlo = nlo/lo
         ratio_pdf = pdf_err/lo
+        ratio_nlo = (nlo-lo)/lo
         
         # linestyle = "solid" if i==0 else "dashed"
         # marker = "x" if i==0 else "."
 
         # qed_label = "$\\sigma_{\\mathrm{QED}}^{\\mathrm{NLO}}$"
         # pdf_label = "$\\delta\\sigma_{\\mathrm{LO}}^{\\mathrm{PDF}}$"
-        label = "$\\sqrt{s} = " + str(s_sqrt) + "$"
+        # label = "$\\sqrt{s} = " + f"{s_sqrt:,}".replace(",", "\\,") + "$"
+        label = "$\\sqrt{s} = " + f"{s_sqrt/1000}".removesuffix(".0") + "$TeV"
         # plt.gca().set_prop_cycle(None)
-        ax.plot(mass, ratio_pdf, marker=".", linestyle="solid", label=label)
+        line_pdf, = ax.plot(mass, ratio_pdf, marker=".", linestyle="solid", label=label)
+        if i==len(s_sqrts)-1:
+            ax.plot(mass, ratio_nlo, marker="x", linestyle="dashed", color="k")
+            ax.plot([], [], marker="x", linestyle="dashed", color="k", label="$\\sigma^{\\mathrm{NLO}-\\mathrm{LO}}/\\sigma^{\\mathrm{LO}}$" + f" ({label})")
+        #     ax.plot(mass, ratio_nlo, linestyle="dashed", color=line_pdf.get_color())
+        #     ax.text(700, 0.03, "NLO at "+label)
 
     # ax.plot([],[], linestyle="solid", marker=".", color="k", label=id2label(slepton_ids[0]))
     # ax.plot([],[], linestyle="dashed", marker="x", color="k", label=id2label(slepton_ids[1]))
@@ -597,22 +554,86 @@ def plot_pdf_err_s(s_sqrts=[13000, 13600, 20000, 50000, 80000]):
 
 
 if __name__=="__main__":
-    plot_qed_err(s_sqrt=13000)
-    plot_scale_dep(s_sqrt=13000)
-    plot_xsec_with_err(s_sqrt=13000)
-    plot_Kfactor(s_sqrt=13000)
-    plot_ratio_qed_qcd(s_sqrt=13000)
-    plot_qed_vs_pdf(s_sqrt=13000, legend_placement=(0.17, 0.95))
-    plot_lo_compare(s_sqrt=13000)
-    
     plot_qed_err(s_sqrt=13600)
     plot_scale_dep(s_sqrt=13600)
-    plot_xsec_with_err(s_sqrt=13600)
     plot_Kfactor(s_sqrt=13600)
     plot_ratio_qed_qcd(s_sqrt=13600)
     plot_qed_vs_pdf(s_sqrt=13600, legend_placement=(0.17, 0.95))
     plot_lo_compare(s_sqrt=13600)
     
-    plot_pdf_err_s()
+    plot_pdf_err_s(s_sqrts=[13600, 20000, 80000])
     plot_qed_err(s_sqrt=80000)
     plot_qed_vs_pdf(s_sqrt=80000)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+
+# def plot_xsec_with_err(
+#     s_sqrt=13600,
+#     slepton_ids=[1000011, 2000011]
+# ):
+#     dfs = load_qed_err_data(s_sqrt, slepton_ids)
+
+#     fig, axs = plt.subplots(
+#         nrows=2,
+#         ncols=1,
+#         sharex=True,
+#         figsize=(fig_width, fig_width/1.3),
+#         gridspec_kw={"height_ratios": [3,1]}
+#     )
+#     axs[1].set_xlabel("$m_{\\tilde\\ell}$ [GeV]")
+#     axs[0].set_ylabel("$\\sigma$")
+#     axs[1].set_ylabel("$\\delta\\sigma^{\\mathrm{PDF}}/\\sigma$")
+#     axs[0].set_yscale("log")
+#     for i in range(len(slepton_ids)):
+#         sid = slepton_ids[i]
+#         df = dfs[i]
+        
+#         m_arr = df["mass"]
+#         xsec_lo = df["lo"]
+#         xsec_nlo = df["nlo"]
+        
+#         lo_scale_minus = df["lo_scale_minus"]
+#         lo_scale_plus = df["lo_scale_plus"]
+#         nlo_scale_minus = df["nlo_scale_minus"]
+#         nlo_scale_plus = df["nlo_scale_plus"]
+        
+#         lo_pdf_err = df["lo_pdf"]
+#         nlo_pdf_err = df["nlo_pdf"]
+        
+#         lo_pdf_err_rel = lo_pdf_err/xsec_lo
+#         nlo_pdf_err_rel = nlo_pdf_err/xsec_nlo
+
+#         label = id2label(sid)
+        
+#         nlo_line, = axs[0].plot(m_arr, xsec_nlo, linestyle="solid", marker="x", label=label+" (NLO)")
+#         axs[0].fill_between(m_arr, nlo_scale_minus, nlo_scale_plus, linestyle="dashed", color=nlo_line.get_color(), alpha=0.3)
+#         axs[0].fill_between(m_arr, xsec_nlo - nlo_pdf_err, xsec_nlo + nlo_pdf_err, linestyle="dotted", color=nlo_line.get_color(), alpha=0.3)
+        
+#         lo_line, = axs[0].plot(m_arr, xsec_lo, linestyle="solid", marker=".", label=label+" (LO)")
+#         axs[0].fill_between(m_arr, lo_scale_minus, lo_scale_plus, linestyle="dashed", color=lo_line.get_color(), alpha=0.3)
+#         axs[0].fill_between(m_arr, xsec_lo - lo_pdf_err, xsec_lo + lo_pdf_err, linestyle="dotted", color=lo_line.get_color(), alpha=0.3)
+        
+#         axs[1].plot(m_arr, nlo_pdf_err_rel, linestyle="solid", marker="x", color=nlo_line.get_color())
+#         axs[1].plot(m_arr, lo_pdf_err_rel, linestyle="solid", marker=".", color=lo_line.get_color())
+#         # line, = ax.plot(m_arr, ratio, label=label)
+#         # ax.fill_between(m_arr, ratio-ratio_err, ratio+ratio_err, linestyle="dashed", color=line.get_color(), alpha=0.1)
+#     axs[0].fill_between([],[],[],color="k",linestyle="dotted", alpha=0.2, label="Scale error")
+#     axs[0].fill_between([],[],[],color="k",linestyle="dashed", alpha=0.2, label="PDF error")
+
+#     handles, labels = axs[0].get_legend_handles_labels()
+#     leg1 = fig.legend(handles[:4], labels[:4], frameon=False, loc="upper right", bbox_to_anchor=(0.97, 0.95), ncol=1)
+#     leg2 = fig.legend(handles[4:], labels[4:], frameon=False, loc="upper right", bbox_to_anchor=(0.7, 0.95), ncol=1)
+#     fig.add_artist(leg1)
+#     # fig.legend(frameon=False, loc="upper right", bbox_to_anchor=(0.95, 0.95), ncol=1)
+#     fig.tight_layout()
+#     fig.savefig(PLOT_DIR/f"xsec_err_{s_sqrt}.pdf")
+#     print(f"Plotted: xsec_err_{s_sqrt}.pdf")

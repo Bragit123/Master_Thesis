@@ -39,8 +39,32 @@ namespace Utils {
     }
     return Qq;
   }
-  double get_ZqL(int quark_id) {
-    double ZqL;
+  // double get_ZqL(int quark_id) {
+  //   double ZqL;
+  //   if (quark_id % 2 == 0) {
+  //     // up-type quark
+  //     ZqL = Const::ZuL;
+  //   }
+  //   else {
+  //     // down-type quark
+  //     ZqL = Const::ZdL;
+  //   }
+  //   return ZqL;
+  // }
+  // double get_ZqR(int quark_id) {
+  //   double ZqR;
+  //   if (quark_id % 2 == 0) {
+  //     // up-type quark
+  //     ZqR = Const::ZuR;
+  //   }
+  //   else {
+  //     // down-type quark
+  //     ZqR = Const::ZdR;
+  //   }
+  //   return ZqR;
+  // }
+  std::complex<double> get_ZqL(int quark_id) {
+    std::complex<double> ZqL;
     if (quark_id % 2 == 0) {
       // up-type quark
       ZqL = Const::ZuL;
@@ -51,8 +75,8 @@ namespace Utils {
     }
     return ZqL;
   }
-  double get_ZqR(int quark_id) {
-    double ZqR;
+  std::complex<double> get_ZqR(int quark_id) {
+    std::complex<double> ZqR;
     if (quark_id % 2 == 0) {
       // up-type quark
       ZqR = Const::ZuR;

@@ -19,34 +19,20 @@ void compute_xsec_with_errs(double s_sqrt=13'600, double epsrel=1e-3, double max
 
 
 int main(int argc, char* argv[]) {
-  
-  // std::cout << "# Xsec over mass 13 TeV" << std::endl;
-  // compute_xsec_over_mass(13'000, 1e-3, 1e7);
-  // std::cout << "# Xsec over mass 13.6 TeV" << std::endl;
-  // compute_xsec_over_mass(13'600, 1e-3, 1e7);
+  std::cout << "# Xsec over mass 13.6 TeV" << std::endl;
+  compute_xsec_over_mass(13'600, 1e-3, 1e7);
 
-  // std::cout << "# Xsec with err 13 TeV" << std::endl;
-  // compute_xsec_with_errs(13'000, 1e-3, 1e7);
-  // std::cout << "# Xsec with err 13.6 TeV" << std::endl;
-  // compute_xsec_with_errs(13'600, 1e-3, 1e7);
+  std::cout << "# Xsec with err 13.6 TeV" << std::endl;
+  compute_xsec_with_errs(13'600, 1e-3, 1e7);
   
-  // std::cout << "# Xsec over scale 13 TeV m=400" << std::endl;
-  // compute_xsec_over_scale(13'000, 400, true, 1e-3, 1e7);
-  // std::cout << "# Xsec over scale 13 TeV m=600" << std::endl;
-  // compute_xsec_over_scale(13'000, 600, true, 1e-3, 1e7);
-  // std::cout << "# Xsec over scale 13 TeV m=800" << std::endl;
-  // compute_xsec_over_scale(13'000, 800, true, 1e-3, 1e7);
-  // std::cout << "# Xsec over scale 13 TeV m=1000" << std::endl;
-  // compute_xsec_over_scale(13'000, 1000, true, 1e-3, 1e7);
-  
-  // std::cout << "# Xsec over scale 13.6 TeV m=400" << std::endl;
-  // compute_xsec_over_scale(13'600, 400, true, 1e-3, 1e7);
-  // std::cout << "# Xsec over scale 13.6 TeV m=600" << std::endl;
-  // compute_xsec_over_scale(13'600, 600, true, 1e-3, 1e7);
-  // std::cout << "# Xsec over scale 13.6 TeV m=800" << std::endl;
-  // compute_xsec_over_scale(13'600, 800, true, 1e-3, 1e7);
-  // std::cout << "# Xsec over scale 13.6 TeV m=1000" << std::endl;
-  // compute_xsec_over_scale(13'600, 1000, true, 1e-3, 1e7);
+  std::cout << "# Xsec over scale 13.6 TeV m=400" << std::endl;
+  compute_xsec_over_scale(13'600, 400, true, 1e-3, 1e7);
+  std::cout << "# Xsec over scale 13.6 TeV m=600" << std::endl;
+  compute_xsec_over_scale(13'600, 600, true, 1e-3, 1e7);
+  std::cout << "# Xsec over scale 13.6 TeV m=800" << std::endl;
+  compute_xsec_over_scale(13'600, 800, true, 1e-3, 1e7);
+  std::cout << "# Xsec over scale 13.6 TeV m=1000" << std::endl;
+  compute_xsec_over_scale(13'600, 1000, true, 1e-3, 1e7);
 
   std::cout << "s_sqrt = 20 TeV" << std::endl;
   compute_xsec_with_errs(20'000, 1e-3, 1e7);

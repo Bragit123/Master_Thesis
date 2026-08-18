@@ -11,7 +11,23 @@
 
 
 namespace CrossSection {
-  double get_ZliAB(CSParams* params) {
+  // double get_ZliAB(CSParams* params) {
+  //   const int sleptonA_id = params->sleptonA_id;
+  //   const int sleptonB_id = params->sleptonB_id;
+  //   const double mix_cos = params->mix_cos;
+    
+  //   const int A = Utils::first_digit(sleptonA_id);
+  //   const int B = Utils::first_digit(sleptonB_id);
+
+  //   if (A == B && A == 1) {
+  //     return 0.5 * mix_cos*mix_cos - Const::SW2;
+  //   } else if (A == B && A == 2) {
+  //     return 0.5 * (1.0 - mix_cos*mix_cos) - Const::SW2;
+  //   } else {
+  //     return 0.5 * mix_cos * std::sqrt(1.0 - mix_cos*mix_cos);
+  //   }
+  // }
+  std::complex<double> get_ZliAB(CSParams* params) {
     const int sleptonA_id = params->sleptonA_id;
     const int sleptonB_id = params->sleptonB_id;
     const double mix_cos = params->mix_cos;
@@ -28,14 +44,42 @@ namespace CrossSection {
     }
   }
 
+  // double get_FqliAB(double q2, CSParams* params) {
+  //   const int quark_id = params->quark_id.value();
+  //   const int sleptonA_id = params->sleptonA_id;
+  //   const int sleptonB_id = params->sleptonB_id;
+    
+  //   const double Qq = Utils::get_Qq(quark_id);
+  //   const double ZqL = Utils::get_ZqL(quark_id);
+  //   const double ZqR = Utils::get_ZqR(quark_id);
+    
+  //   double deltaAB;
+  //   if (sleptonA_id == sleptonB_id) {
+  //     deltaAB = 1.0;
+  //   } else {
+  //     deltaAB = 0.0;
+  //   }
+
+  //   const double ZliAB = get_ZliAB(params);
+  //   const double cwsw2inv = 1.0 / (Const::SW2 * Const::CW2);
+  //   const double q2MZ2 = q2 - Const::MZ2;
+  //   const double propagator2inv = 1.0 / (q2MZ2*q2MZ2 + Const::MZ2 * Const::GAMMAZ2);
+  //   const double term1 = Qq*Qq * deltaAB;
+  //   const double term2 = -2.0*Qq*deltaAB * ZliAB*cwsw2inv 
+  //                         * (ZqL+ZqR) * q2*q2MZ2*propagator2inv;
+  //   const double term3 = 2.0 * ZliAB*ZliAB*cwsw2inv*cwsw2inv
+  //                         * (ZqL*ZqL + ZqR*ZqR) * q2*q2*propagator2inv;
+    
+  //   return term1 + term2 + term3;
+  // }
   double get_FqliAB(double q2, CSParams* params) {
     const int quark_id = params->quark_id.value();
     const int sleptonA_id = params->sleptonA_id;
     const int sleptonB_id = params->sleptonB_id;
     
     const double Qq = Utils::get_Qq(quark_id);
-    const double ZqL = Utils::get_ZqL(quark_id);
-    const double ZqR = Utils::get_ZqR(quark_id);
+    const std::complex<double> ZqL = Utils::get_ZqL(quark_id);
+    const std::complex<double> ZqR = Utils::get_ZqR(quark_id);
     
     double deltaAB;
     if (sleptonA_id == sleptonB_id) {
@@ -44,15 +88,15 @@ namespace CrossSection {
       deltaAB = 0.0;
     }
 
-    const double ZliAB = get_ZliAB(params);
-    const double cwsw2inv = 1.0 / (Const::SW2 * Const::CW2);
+    const std::complex<double> ZliAB = get_ZliAB(params);
+    const std::complex<double> cwsw2inv = 1.0 / (Const::SW2 * Const::CW2);
     const double q2MZ2 = q2 - Const::MZ2;
     const double propagator2inv = 1.0 / (q2MZ2*q2MZ2 + Const::MZ2 * Const::GAMMAZ2);
     const double term1 = Qq*Qq * deltaAB;
-    const double term2 = -2.0*Qq*deltaAB * ZliAB*cwsw2inv 
-                          * (ZqL+ZqR) * q2*q2MZ2*propagator2inv;
-    const double term3 = 2.0 * ZliAB*ZliAB*cwsw2inv*cwsw2inv
-                          * (ZqL*ZqL + ZqR*ZqR) * q2*q2*propagator2inv;
+    const double term2 = -2.0*Qq*deltaAB * std::real(ZliAB*cwsw2inv 
+                          * (ZqL+ZqR) * q2*(q2-Const::muZ2)*propagator2inv);
+    const double term3 = 2.0 * std::norm(ZliAB)*std::norm(cwsw2inv)
+                          * (std::norm(ZqL) + std::norm(ZqR)) * q2*q2*propagator2inv;
     
     return term1 + term2 + term3;
   }
